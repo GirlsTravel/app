@@ -1,6 +1,9 @@
 <template lang="pug">
 div(class='post')
-  h1(class='post__title') {{ title }}
+  nuxt-link(
+    :to='{ name: "posts-id", params: { id: id }}'
+    class='post__title'
+  ) {{ title }}
   p(class='post__body') {{ body }}
   UserAvatar(
     :author='author'
@@ -24,6 +27,10 @@ export default {
     PostMetrics
   },
   props: {
+    id: {
+      type: String,
+      required: true
+    },
     title: {
       type: String,
       required: true
@@ -60,7 +67,7 @@ export default {
 .post
   display: grid
   grid-template-columns: 1fr auto
-  grid-gap: $unit*5
+  grid-gap: $unit
   // background: $pri-cl
   border-bottom: 2px solid $pri-cl
   // margin: $unit*2
@@ -68,9 +75,9 @@ export default {
 
   &__title
     font-weight: $fw-bold
-    font-size: $fs1
     grid-row: 1 / 2
     grid-column: 1 / -1
+    color: $blue
 
   &__body
     grid-row: 2 / 3

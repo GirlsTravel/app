@@ -20,3 +20,16 @@ $ npm run generate
 ```
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+
+
+
+TODO
+
+- Create new post page
+- Implement search functionality
+- Create search results page
+- Login / Sign up page
+- Post page
+- User page
+- User settings
+- Allow users to upload profile image

@@ -2,32 +2,41 @@
 div(class='container')
   header(class='')
     h1 All Posts
-    a New Post
+    nuxt-link(
+      :to='{ name: "posts-new" }'
+    ) New Post
 
   ul
     li(
-      v-for='(post, index) in posts'
+      v-for='(post, index) in Object.values(posts)'
       :key='post + index'
     )
-      Post(
+      PostSummary(
+        :id='post.id'
         :title='post.title'
         :body='post.body'
         :author='post.author'
+        :likes='post.likes'
+        :dislikes='post.dislikes'
+        :comments='post.comments'
       )
 </template>
 
 <script>
 import { mapState } from 'vuex'
-import Post from '~/components/modules/Post.vue'
+import PostSummary from '~/components/modules/PostSummary.vue'
 
 export default {
   components: {
-    Post
+    PostSummary
   },
   computed: {
     ...mapState({
       posts: (state) => state.posts.posts
     })
+  },
+  async fetch({ store }) {
+    await store.dispatch('posts/init')
   },
   methods: {}
 }

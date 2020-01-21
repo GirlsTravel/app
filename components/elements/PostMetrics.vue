@@ -2,13 +2,13 @@
 div(class='post-metrics')
   div
     IconComment(class='icon')
-    span 5
+    span {{ comments }}
   div
     IconLike(class='icon')
-    span 2k
+    span {{ likes }}
   div
     IconDislike(class='icon')
-    span 201
+    span {{ dislikes }}
 </template>
 
 <script>
@@ -22,7 +22,20 @@ export default {
     IconLike,
     IconDislike
   },
-  props: {},
+  props: {
+    likes: {
+      type: Number,
+      required: true
+    },
+    dislikes: {
+      type: Number,
+      required: true
+    },
+    comments: {
+      type: Number,
+      default: 0
+    }
+  },
   data() {
     return {}
   },

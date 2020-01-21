@@ -23,11 +23,19 @@ export default {
   /*
    ** Global CSS
    */
-  css: ['@assets/sass/main.sass'],
+  css: [
+    '@assets/sass/main.sass',
+    'quill/dist/quill.snow.css',
+    'quill/dist/quill.bubble.css',
+    'quill/dist/quill.core.css'
+  ],
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: [
+    { src: '~/plugins/global-components.js' },
+    { src: '~plugins/vue-quill-editor.js', ssr: false }
+  ],
   /*
    ** Nuxt.js dev-modules
    */

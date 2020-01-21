@@ -42,6 +42,7 @@ export default {
 
     & a
       font-weight: $fw-bold
+      color: $blue
 
     & p
       color: $dark
