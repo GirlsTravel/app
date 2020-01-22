@@ -7,25 +7,40 @@ div(class='navigation-bar')
     span Share
     span Overflow
   SearchForm
-  BaseButton(
-    text='Join or Login'
+  nuxt-link(
+    v-if='!isAuthUser'
+    :to='{ name: "auth-signup" }'
+  )
+    BaseButton(
+      text='Join'
+    )
+  UserAvatar(
+    v-if='isAuthUser'
+    author='test name'
   )
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import Hamburger from '~/components/elements/Hamburger.vue'
 import SearchForm from '~/components/modules/SearchForm.vue'
+import UserAvatar from '~/components/elements/UserAvatar.vue'
 
 export default {
   components: {
     Hamburger,
-    SearchForm
+    SearchForm,
+    UserAvatar
   },
   props: {},
   data() {
     return {}
   },
-  computed: {},
+  computed: {
+    ...mapGetters({
+      isAuthUser: 'auth/isAuthUser'
+    })
+  },
   methods: {}
 }
 </script>

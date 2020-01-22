@@ -8,11 +8,12 @@ div(class='')
     v-model='body'
     label='Message'
   )
-  BaseButton()
+  BaseButton(@click='handleSubmit')
   RichTextEditor
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import RichTextEditor from '~/components/modules/RichTextEditor.vue'
 
 export default {
@@ -27,7 +28,18 @@ export default {
     }
   },
   computed: {},
-  methods: {}
+  methods: {
+    async handleSubmit() {
+      const { questionId } = await this.createQuestion({
+        title: this.title,
+        body: this.body
+      })
+      this.$router.push({ name: 'posts-id', params: { id: questionId } })
+    },
+    ...mapActions({
+      createQuestion: 'posts/createQuestion'
+    })
+  }
 }
 </script>
 

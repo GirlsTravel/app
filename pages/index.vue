@@ -1,10 +1,10 @@
 <template lang="pug">
 div(class='container')
   header(class='')
-    h1 All Posts
+    h1 All Questions
     nuxt-link(
       :to='{ name: "posts-new" }'
-    ) New Post
+    ) Ask Question
 
   ul
     li(

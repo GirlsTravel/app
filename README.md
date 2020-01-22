@@ -33,3 +33,11 @@ TODO
 - User page
 - User settings
 - Allow users to upload profile image
+
+
+<!-- firebase.json -->
+"functions": {
+  "predeploy": [
+    "npm --prefix \"$RESOURCE_DIR\" run lint"
+  ]
+},

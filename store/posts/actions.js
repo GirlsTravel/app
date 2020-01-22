@@ -1,4 +1,4 @@
-import { firestore } from '~/plugins/firebase'
+import { firestore, functions } from '~/plugins/firebase'
 
 export default {
   async init({ commit }) {
@@ -30,5 +30,18 @@ export default {
     querySnapshot.forEach((doc) => {
       commit('ADD_COMMENT', { comment: doc.data() })
     })
+  },
+
+  async createQuestion({ state }, { title, body }) {
+    try {
+      const createQuestion = functions.httpsCallable('https-createQuestion')
+      const { data } = await createQuestion({ title, body })
+      console.log('state: ', state)
+      return { questionId: data.questionId }
+    } catch (e) {
+      console.log('error: ', e)
+      console.log('error message: ', e.message)
+      console.log('error details: ', e.details)
+    }
   }
 }

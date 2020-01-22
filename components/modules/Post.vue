@@ -75,6 +75,7 @@ export default {
   &__body
     grid-row: 2 / 3
     grid-column: 1 / -1
+    white-space: pre-line
 
   &__author
     grid-row: 3 / 4

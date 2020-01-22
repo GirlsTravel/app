@@ -26,6 +26,7 @@
     "firebase": "^7.7.0",
     "lodash": "^4.17.15",
     "nuxt": "^2.0.0",
+    "nuxt-client-init-module": "^0.1.7",
     "vue-quill-editor": "^3.0.6"
   },
   "devDependencies": {
