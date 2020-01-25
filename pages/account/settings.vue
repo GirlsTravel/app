@@ -1,6 +1,14 @@
 <template lang="pug">
 div(class='')
-  ImageUploader
+  //- ImageUploader
+  UserAvatar(
+    author='Juma Stevens'
+    :photoURL='currentUser.photoURL'
+  )
+  client-only
+    image-uploader(
+      @input='onSubmit'
+    )
   form(
     @submit.stop.prevent='blur'
   )
@@ -26,12 +34,13 @@ div(class='')
 </template>
 
 <script>
-import ImageUploader from '~/components/modules/ImageUploader.vue'
+import { mapGetters, mapActions } from 'vuex'
+import UserAvatar from '~/components/elements/UserAvatar.vue'
 
 export default {
   name: 'AuthSettings',
   components: {
-    ImageUploader
+    UserAvatar
   },
   props: {},
   data() {
@@ -42,11 +51,21 @@ export default {
       lastName: ''
     }
   },
-  computed: {},
+  computed: {
+    ...mapGetters({
+      currentUser: 'users/currentUser'
+    })
+  },
   methods: {
-    onSubmit() {
+    async onSubmit(image) {
       console.log('submitted')
-    }
+      console.log(image)
+      await this.uploadProfileImage({ image })
+    },
+
+    ...mapActions({
+      uploadProfileImage: 'account/uploadProfileImage'
+    })
   }
 }
 </script>

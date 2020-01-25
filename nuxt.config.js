@@ -34,7 +34,8 @@ export default {
    */
   plugins: [
     { src: '~/plugins/global-components.js' },
-    { src: '~plugins/vue-quill-editor.js', ssr: false }
+    { src: '~plugins/vue-quill-editor.js', ssr: false },
+    { src: '~plugins/vue-image-upload-resize.js', ssr: false }
   ],
   /*
    ** Nuxt.js dev-modules

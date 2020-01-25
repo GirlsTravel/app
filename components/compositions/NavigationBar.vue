@@ -17,6 +17,7 @@ div(class='navigation-bar')
   UserAvatar(
     v-if='isAuthUser'
     author='test name'
+    :photoURL='currentUser.photoURL'
   )
 </template>
 
@@ -38,7 +39,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      isAuthUser: 'auth/isAuthUser'
+      isAuthUser: 'auth/isAuthUser',
+      currentUser: 'users/currentUser'
     })
   },
   methods: {}

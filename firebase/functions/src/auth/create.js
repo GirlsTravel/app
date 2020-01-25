@@ -6,17 +6,18 @@ const createUser = async ({ uid, email, emailVerified }) => {
   const docRef = admin
     .firestore()
     .collection('users')
-    .doc()
+    .doc(uid)
+
   const data = {
     uid,
     email,
     emailVerified,
-    id: docRef.id,
     firstName: '',
     lastName: '',
     displayName: '',
     photoURL: ''
   }
+  
   await docRef.set(data)
   return data.id
 }

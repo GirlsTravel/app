@@ -6,6 +6,7 @@ export default {
       if (authUser) {
         commit('SET_AUTH_USER', { authUser })
         console.log('authUser: ', authUser)
+        dispatch('users/fetchSelf', null, { root: true })
       } else {
         commit('DELETE_AUTH_USER')
         // dispatch('signInAnonymously')
@@ -60,22 +61,6 @@ export default {
       console.log('incorrect URL')
     } catch (err) {
       this.errorMessage = err.message
-    }
-  },
-
-  async createUserWithEmailAndPassword(_, { email, password }) {
-    try {
-      await auth().createUserWithEmailAndPassword(email, password)
-    } catch (e) {
-      console.error(e)
-    }
-  },
-
-  async signInWithEmailAndPassword(_, { email, password }) {
-    try {
-      await auth().signInWithEmailAndPassword(email, password)
-    } catch (e) {
-      console.error(e)
     }
   },
 

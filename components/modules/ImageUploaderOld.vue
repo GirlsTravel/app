@@ -66,9 +66,11 @@ export default {
 
       const error = (err) => console.error(err)
 
-      this.uploadTask.on('state_changed',
+      this.uploadTask.on(
+        'state_changed',
         (snapshot) => success(snapshot),
-        (err) => error(err))
+        (err) => error(err)
+      )
     }
   },
   methods: {
@@ -84,6 +86,7 @@ export default {
     },
 
     upload(file) {
+      console.log('file: ', file)
       // const key = database.ref().push().key
       // const url = `${this.configData.url}/${this.currentUser.uid}/${key}`
       //

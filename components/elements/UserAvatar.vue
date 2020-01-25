@@ -1,8 +1,11 @@
 <template lang="pug">
 div(class='user-avatar')
-  a(class='user-avatar__image')
+  a(
+    :style='{ backgroundImage: `url(${photoURL})` }'
+    class='user-avatar__image'
+  )
   div(class='user-avatar__info')
-    a(class='') Jason Masion
+    a(class='') {{ author || "Jason Masion" }}
     p(class='') 3 days ago • 26 replies
 </template>
 
@@ -11,6 +14,10 @@ export default {
   components: {},
   props: {
     author: {
+      type: String,
+      required: true
+    },
+    photoURL: {
       type: String,
       required: true
     }
@@ -34,6 +41,9 @@ export default {
     border-radius: 50%
     width: $unit*4
     height: $unit*4
+    overflow: hidden
+    background-position: center
+    background-size: contain
 
   &__info
     display: flex
