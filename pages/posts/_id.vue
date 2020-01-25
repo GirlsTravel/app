@@ -11,7 +11,15 @@ div(class='container')
   )
 
   section
-    h2 {{ posts.length }} Answers
+    div(class='answer')
+      div
+        h2 {{ posts.length }} 16 Answers
+        p Add Answer
+      //- BaseTextarea(
+      //-   class='textarea'
+      //-   placeholder='Write your answer'
+      //- )
+
     ul
       li(
         v-for='(post, index) in Object.values(comments)'
@@ -58,15 +66,37 @@ export default {
     display: flex
     justify-content: space-between
     align-items: center
-    border-bottom: 2px solid $pri-cl
+    // border-bottom: 2px solid $pri-cl
     padding: $unit*2
 
   & h1
     font-size: $fs1
     font-weight: $fw-bold
 
+  & h2
+    font-weight: $fw-bold
+    font-size: $fs1
+
   & a
     padding: $unit*2
     background: $sec-cl
     color: $white
+
+  & .answer
+    border-bottom: 4px solid $pri-cl
+    padding: $unit*2 $unit*2
+
+    & div
+      display: flex
+      align-items: center
+
+    & p
+      padding: $unit $unit*2
+      background: $blue
+      border-radius: $unit*2
+      margin-left: auto
+      color: $white
+
+    & .textarea
+      margin-top: $unit*2
 </style>

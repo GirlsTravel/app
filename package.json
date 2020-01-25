@@ -14,11 +14,7 @@
   "lint-staged": {
     "*.{js,vue}": "eslint"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
+  "husky": {},
   "dependencies": {
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/dotenv": "^1.4.0",

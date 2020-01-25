@@ -41,3 +41,10 @@ TODO
     "npm --prefix \"$RESOURCE_DIR\" run lint"
   ]
 },
+
+<!-- package.json -->
+"husky": {
+  "hooks": {
+    "pre-commit": "lint-staged"
+  }
+},

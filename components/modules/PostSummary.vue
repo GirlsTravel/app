@@ -4,17 +4,16 @@ div(class='post')
     :to='{ name: "posts-id", params: { id: id }}'
     class='post__title'
   ) {{ title }}
-  p(class='post__body') {{ body }}
   UserAvatar(
     :author='author'
     class='post__author'
   )
-  PostMetrics(
-    :likes='likes'
-    :dislikes='dislikes'
-    :comments='comments'
-    class='post__metrics'
-  )
+  //- PostMetrics(
+  //-   :likes='likes'
+  //-   :dislikes='dislikes'
+  //-   :comments='comments'
+  //-   class='post__metrics'
+  //- )
 </template>
 
 <script>
@@ -67,17 +66,19 @@ export default {
 .post
   display: grid
   grid-template-columns: 1fr auto
-  grid-gap: $unit
+  grid-gap: $unit/2
   // background: $pri-cl
+  border-top: 2px solid $pri-cl
   border-bottom: 2px solid $pri-cl
   // margin: $unit*2
   padding: $unit*2
 
   &__title
     font-weight: $fw-bold
+    font-size: 18px
     grid-row: 1 / 2
     grid-column: 1 / -1
-    color: $blue
+    // color: $blue
 
   &__body
     grid-row: 2 / 3

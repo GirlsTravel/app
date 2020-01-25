@@ -2,8 +2,8 @@
 div(class='user-avatar')
   a(class='user-avatar__image')
   div(class='user-avatar__info')
-    a(class='') {{ author }}
-    p(class='') 3 days ago
+    a(class='') Jason Masion
+    p(class='') 3 days ago • 26 replies
 </template>
 
 <script>
@@ -27,7 +27,7 @@ export default {
 .user-avatar
   display: flex
   align-items: center
-  width: $unit*20
+  // width: $unit*20
 
   &__image
     background: lightblue
@@ -42,13 +42,13 @@ export default {
 
     & a
       font-weight: $fw-bold
-      color: $blue
+      // color: $blue
 
     & p
       color: $dark
 
     & p, & a
-      max-width: $unit*15
+      // max-width: $unit*15
       white-space: nowrap
       text-overflow: ellipsis
       overflow: hidden
