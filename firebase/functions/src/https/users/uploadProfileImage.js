@@ -16,7 +16,6 @@ const uploadImage = async ({ image }) => {
 
 // update the profile image URL for that user
 const updateUserProfileImage = async ({ uid, photoURL }) => {
-  // check if user exists
   return await admin
     .firestore()
     .collection('users')

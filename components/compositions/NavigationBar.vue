@@ -14,11 +14,10 @@ div(class='navigation-bar')
     BaseButton(
       text='Join'
     )
-  UserAvatar(
-    v-if='isAuthUser'
-    author='test name'
-    :photoURL='currentUser.photoURL'
-  )
+  //- UserAvatar(
+  //-   :author='currentUser.username'
+  //-   :photoURL='currentUser.photoURL'
+  //- )
 </template>
 
 <script>
@@ -54,12 +53,14 @@ export default {
   left: 0
   z-index: 99
   width: 100%
+  height: $navigation-bar
   background: rgba(255, 255, 255, 0.98)
   display: grid
   grid-template-columns: auto auto 1fr auto
   grid-auto-flow: column
   align-items: center
   grid-gap: $unit*2
+  // box-shadow: 0px $unit/2 $unit rgba(34, 34, 34, 0.1)
 
   & a span:last-child
     font-weight: $fw-bold

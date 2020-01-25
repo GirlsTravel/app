@@ -1,25 +1,23 @@
 <template lang="pug">
-div(class='')
-  //- ImageUploader
+div(class='settings')
+  header(class='settings__header')
+    span Cancel
+    span Settings
+    a(@click='submitUserForm') Save
+
   UserAvatar(
-    author='Juma Stevens'
+    :author='currentUser.username'
     :photoURL='currentUser.photoURL'
   )
   client-only
     image-uploader(
-      @input='onSubmit'
+      @input='changeProfilePhoto'
     )
+
   form(
-    @submit.stop.prevent='blur'
+    @submit.stop.prevent=''
   )
-    BaseInput(
-      label='Username'
-      v-model='username'
-    )
-    BaseInput(
-      label='Email'
-      v-model='email'
-    )
+    h3 Edit Profile
     BaseInput(
       label='First Name'
       v-model='firstName'
@@ -28,9 +26,34 @@ div(class='')
       label='Last Name'
       v-model='lastName'
     )
-    BaseButton(
-      text='Save'
+    BaseInput(
+      label='Username'
+      v-model='username'
     )
+    BaseTextarea(
+      label='Bio'
+      v-model='bio'
+    )
+
+    h3 Private Information
+    BaseInput(
+      label='Gender'
+      v-model='gender'
+    )
+    BaseInput(
+      label='Date of Birth'
+      v-model='dateOfBirth'
+    )
+    
+    h3 Security
+    BaseInput(
+      label='Email'
+      v-model='email'
+    )
+  h3 Logins
+  a(
+    @click='signOut'
+  ) Log Out {{ `${currentUser.firstName} ${currentUser.lastName}` }}
 </template>
 
 <script>
@@ -48,7 +71,10 @@ export default {
       username: '',
       email: '',
       firstName: '',
-      lastName: ''
+      lastName: '',
+      bio: '',
+      gender: '',
+      dateOfBirth: ''
     }
   },
   computed: {
@@ -56,21 +82,61 @@ export default {
       currentUser: 'users/currentUser'
     })
   },
+  watch: {
+    currentUser() {
+      this.initUserData()
+    }
+  },
   methods: {
-    async onSubmit(image) {
-      console.log('submitted')
+    initUserData() {
+      if (this.currentUser) {
+        this.username = this.currentUser.username
+        this.email = this.currentUser.email
+        this.firstName = this.currentUser.firstName
+        this.lastName = this.currentUser.lastName
+        this.bio = this.currentUser.bio
+      }
+    },
+
+    async changeProfilePhoto(image) {
+      console.log('changeProfilePhoto')
       console.log(image)
       await this.uploadProfileImage({ image })
     },
 
+    async submitUserForm() {
+      console.log('submitUserForm')
+      await this.updateUserInformation({
+        username: this.username,
+        email: this.email,
+        firstName: this.firstName,
+        lastName: this.lastName,
+        bio: this.bio
+      })
+    },
+
     ...mapActions({
-      uploadProfileImage: 'account/uploadProfileImage'
+      uploadProfileImage: 'account/uploadProfileImage',
+      updateUserInformation: 'account/updateUserInformation',
+      signOut: 'auth/signOut'
     })
+  },
+  beforeMount() {
+    this.initUserData()
   }
 }
 </script>
 
 <style lang="sass" scoped>
-.test
-  background: white
+.settings
+  padding: 0 $unit*2
+
+  &__header
+    position: sticky
+    top: $navigation-bar
+    background: $white
+
+  & h3
+    font-weight: $fw-bold
+    margin: $unit*2 0
 </style>

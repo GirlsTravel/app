@@ -3,6 +3,7 @@ div(class='post')
   h1(class='post__title') {{ title }}
   UserAvatar(
     :author='author'
+    :photoURL='photoURL'
     class='post__author'
   )
   p(class='post__body') {{ body }}
@@ -36,6 +37,10 @@ export default {
       type: String,
       required: true
     },
+    photoURL: {
+      type: String,
+      required: true
+    },
     likes: {
       type: Number,
       required: true
@@ -61,7 +66,7 @@ export default {
   display: grid
   grid-gap: $unit*2
   // background: $pri-cl
-  border-top: 4px solid $pri-cl
+  // border-top: 4px solid $pri-cl
   border-bottom: 4px solid $pri-cl
   // margin: $unit*2
   padding: $unit*2

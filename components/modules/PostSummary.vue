@@ -6,6 +6,7 @@ div(class='post')
   ) {{ title }}
   UserAvatar(
     :author='author'
+    :photoURL='photoURL'
     class='post__author'
   )
   //- PostMetrics(
@@ -39,6 +40,10 @@ export default {
       required: true
     },
     author: {
+      type: String,
+      required: true
+    },
+    photoURL: {
       type: String,
       required: true
     },

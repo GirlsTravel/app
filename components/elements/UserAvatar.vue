@@ -5,7 +5,7 @@ div(class='user-avatar')
     class='user-avatar__image'
   )
   div(class='user-avatar__info')
-    a(class='') {{ author || "Jason Masion" }}
+    a(class='') {{ author }}
     p(class='') 3 days ago • 26 replies
 </template>
 
