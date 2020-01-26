@@ -1,5 +1,6 @@
 export default () => ({
   posts: {},
   comments: {},
-  replies: {}
+  replies: {},
+  likes: {}
 })

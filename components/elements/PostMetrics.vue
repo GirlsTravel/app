@@ -1,6 +1,10 @@
 <template lang="pug">
 div(class='metrics')
-  div(class='metrics__button')
+  button(
+    @click='$emit("likeClicked")'
+    :class='{ active: isLiked }'
+    class='metrics__button'
+  )
     IconLike(class='metrics__icon')
     span(class='metrics__text') {{ likes }}
 
@@ -41,6 +45,10 @@ export default {
     comments: {
       type: Number,
       default: 0
+    },
+    isLiked: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -63,6 +71,9 @@ export default {
     padding: $unit/2 $unit*1.5
     border-radius: $unit*2
     // border: 2px solid $pri-cl
+
+    &.active
+      background: $blue
 
   &__icon
     width: $unit*2

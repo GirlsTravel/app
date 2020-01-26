@@ -7,6 +7,7 @@ export default {
         commit('SET_AUTH_USER', { authUser })
         console.log('authUser: ', authUser)
         dispatch('users/fetchSelf', null, { root: true })
+        dispatch('posts/watchPostMeta', null, { root: true })
       } else {
         commit('DELETE_AUTH_USER')
         // dispatch('signInAnonymously')

@@ -1,4 +1,4 @@
-import { firestore, functions } from '~/plugins/firebase'
+import { auth, firestore, functions } from '~/plugins/firebase'
 
 // stores a reference to firestore listeners
 const allListeners = []
@@ -66,6 +66,26 @@ export default {
     allListeners.push(listener)
   },
 
+  watchPostMeta({ commit, rootState }) {
+    const uid = auth().currentUser?.uid
+    const isQuestionRoute = rootState.route.name === 'posts-id'
+    if (!uid || !isQuestionRoute) return
+    const questionId = rootState.route.params.id
+    console.log('rootState.route: ', rootState.route)
+    const docRef = firestore
+      .collection('postMeta')
+      .where('questionId', '==', questionId)
+      .where('uid', '==', uid)
+
+    const listener = docRef.onSnapshot((querySnapshot) => {
+      querySnapshot.forEach((docSnapshot) => {
+        commit('ADD_LIKE', { like: docSnapshot.data() })
+      })
+    })
+
+    allListeners.push(listener)
+  },
+
   async createQuestion(_, { title, body }) {
     try {
       const createQuestion = functions.httpsCallable('https-createQuestion')
@@ -100,6 +120,34 @@ export default {
       console.log('commentId: ', commentId)
       const { data } = await createReply({ questionId, commentId, body })
       return { replyId: data.replyId }
+    } catch (e) {
+      console.log('error: ', e)
+      console.log('error message: ', e.message)
+      console.log('error details: ', e.details)
+    }
+  },
+
+  async createLike(_, { questionId, commentId }) {
+    try {
+      const createLike = functions.httpsCallable('https-createQuestionLike')
+      console.log('questionId: ', questionId)
+      console.log('commentId: ', commentId)
+      const { data } = await createLike({ questionId, commentId })
+      return { likeId: data.likeId }
+    } catch (e) {
+      console.log('error: ', e)
+      console.log('error message: ', e.message)
+      console.log('error details: ', e.details)
+    }
+  },
+
+  async deleteLike({ commit }, { id }) {
+    try {
+      const deleteLike = functions.httpsCallable('https-deleteQuestionLike')
+      console.log('like id: ', id)
+      const { data } = await deleteLike({ id })
+      commit('DELETE_LIKE', { id: data.id })
+      return { likeId: data.id }
     } catch (e) {
       console.log('error: ', e)
       console.log('error message: ', e.message)

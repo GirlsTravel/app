@@ -21,5 +21,12 @@ export default {
     const { replies } = state
     if (isEmpty(replies)) return []
     return Object.values(replies).filter((reply) => reply.questionId === id)
+  },
+
+  currentLikes(state, getters, rootState) {
+    const { id } = rootState.route.params
+    const { likes } = state
+    if (isEmpty(likes)) return []
+    return Object.values(likes).filter((like) => like.questionId === id)
   }
 }

@@ -9,6 +9,7 @@ div(class='container')
     :createdAt='currentQuestion.createdAt'
     :likes='currentQuestion.likes'
     :comments='currentQuestion.comments'
+    :id='currentQuestion.id'
   )
 
   section
@@ -89,12 +90,14 @@ export default {
     ...mapActions({
       createComment: 'posts/createComment',
       watchPostComments: 'posts/watchPostComments',
+      watchPostMeta: 'posts/watchPostMeta',
       unsubscribeAllListeners: 'posts/unsubscribeAllListeners'
     })
   },
   beforeMount() {
     const { id } = this.$route.params
     this.watchPostComments({ questionId: id })
+    this.watchPostMeta()
   },
   beforeDestroy() {
     console.log('beforeDestroy')

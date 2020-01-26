@@ -11,6 +11,8 @@ div(class='post-comment')
   PostMetrics(
     :likes='likes'
     :comments='comments'
+    :isLiked='isLiked'
+    @likeClicked='toggleLike'
     class='post-comment__metrics'
     @commentClicked='loadReplies'
   )
@@ -100,8 +102,20 @@ export default {
       return this.currentReplies.filter((reply) => reply.commentId === this.id)
     },
 
+    isLiked() {
+      return Boolean(this.currentLike)
+    },
+
+    currentLike() {
+      return this.currentLikes.find(
+        (like) =>
+          like.questionId === this.questionId && like.commentId === this.id
+      )
+    },
+
     ...mapGetters({
-      currentReplies: 'posts/currentReplies'
+      currentReplies: 'posts/currentReplies',
+      currentLikes: 'posts/currentLikes'
     })
   },
   methods: {
@@ -125,9 +139,24 @@ export default {
       }
     },
 
+    toggleLike() {
+      if (this.isLiked) {
+        console.log('delete like')
+        this.deleteLike({ id: this.currentLike.id })
+      } else {
+        console.log('create like')
+        this.createLike({
+          questionId: this.questionId,
+          commentId: this.id
+        })
+      }
+    },
+
     ...mapActions({
       createReply: 'posts/createReply',
-      fetchPostCommentReplies: 'posts/fetchPostCommentReplies'
+      fetchPostCommentReplies: 'posts/fetchPostCommentReplies',
+      createLike: 'posts/createLike',
+      deleteLike: 'posts/deleteLike'
     })
   }
 }

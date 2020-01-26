@@ -11,11 +11,14 @@ div(class='post')
   PostMetrics(
     :likes='likes'
     :comments='comments'
+    :isLiked='isLiked'
+    @likeClicked='toggleLike'
     class='post__metrics'
   )
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 import UserAvatar from '~/components/elements/UserAvatar.vue'
 import PostMetrics from '~/components/elements/PostMetrics.vue'
 
@@ -25,6 +28,10 @@ export default {
     PostMetrics
   },
   props: {
+    id: {
+      type: String,
+      required: true
+    },
     title: {
       type: String,
       required: true
@@ -57,8 +64,37 @@ export default {
   data() {
     return {}
   },
-  computed: {},
-  methods: {}
+  computed: {
+    isLiked() {
+      return Boolean(this.currentLike)
+    },
+
+    currentLike() {
+      return this.currentLikes.find(
+        (like) => like.questionId === this.id && !like.commentId
+      )
+    },
+
+    ...mapGetters({
+      currentLikes: 'posts/currentLikes'
+    })
+  },
+  methods: {
+    toggleLike() {
+      if (this.isLiked) {
+        console.log('delete like')
+        this.deleteLike({ id: this.currentLike.id })
+      } else {
+        console.log('create like')
+        this.createLike({ questionId: this.id })
+      }
+    },
+
+    ...mapActions({
+      createLike: 'posts/createLike',
+      deleteLike: 'posts/deleteLike'
+    })
+  }
 }
 </script>
 <style lang="sass" scoped>
