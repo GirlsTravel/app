@@ -3,6 +3,7 @@ div(class='auth-user-sidebar')
   UserAvatar(
     :author='currentUser.username'
     :photoURL='currentUser.photoURL'
+    :createdAt='{ seconds: 0 }'
   )
   ul
     li(

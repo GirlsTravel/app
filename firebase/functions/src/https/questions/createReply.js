@@ -16,11 +16,11 @@ const getUserInformation = async ({ uid }) => {
   return doc.data()
 }
 
-// add comment to questions database collection
-const createComment = async ({ body, uid, username, photoURL, questionId }) => {
+// add reply to a question answer in the replies collection database
+const createReply = async ({ body, uid, username, photoURL, questionId, commentId }) => {
   const docRef = admin
     .firestore()
-    .collection('postComments')
+    .collection('postCommentReplies')
     .doc()
   const data = {
     body,
@@ -29,6 +29,7 @@ const createComment = async ({ body, uid, username, photoURL, questionId }) => {
     photoURL,
     id: docRef.id,
     questionId,
+    commentId,
     likes: 0,
     dislikes: 0,
     comments: 0,
@@ -38,13 +39,13 @@ const createComment = async ({ body, uid, username, photoURL, questionId }) => {
   return data.id
 }
 
-export const listener = functions.https.onCall(async ({ body, questionId }, { auth }) => {
+export const listener = functions.https.onCall(async ({ body, questionId, commentId }, { auth }) => {
   try {
     const { uid } = auth
     const { username, photoURL, } = await getUserInformation({ uid })
-    const commentId = await createComment({ body, uid, questionId, username, photoURL })
-    console.log('commentId: ', commentId)
-    return { commentId }
+    const replyId = await createReply({ body, uid, questionId, commentId, username, photoURL })
+    console.log('replyId: ', replyId)
+    return { replyId }
   } catch (e) {
     console.error('catch error: ', e)
     throw new functions.https.HttpsError(

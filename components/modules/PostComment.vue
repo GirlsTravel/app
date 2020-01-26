@@ -1,27 +1,59 @@
 <template lang="pug">
-div(class='post')
+div(class='post-comment')
   UserAvatar(
     :author='author'
-    class='post__author'
+    :photoURL='photoURL'
+    :createdAt='createdAt'
+    class='post-comment__author'
   )
-  p(class='post__body') {{ body }}
+  p(class='post-comment__body') {{ body }}
 
-  //- PostMetrics(
-  //-   class='post__metrics'
-  //- )
-  p(class='m') Like Reply
-  a Show replies
-  BaseInput
+  PostMetrics(
+    :likes='likes'
+    :comments='comments'
+    class='post-comment__metrics'
+    @commentClicked='loadReplies'
+  )
+
+  ul(
+    v-if='areRepliesShown'
+    class='post-comment__replies'
+  )
+    li(
+      v-for='(reply, index) in commentReplies'
+    )
+      PostCommentReply(
+        :body='reply.body'
+        :author='reply.username'
+        :photoURL='reply.photoURL'
+        :id='reply.id'
+        :commentId='reply.id'
+        :questionId='reply.questionId'
+      )
+
+  form(
+    v-if='areRepliesShown'
+    @submit.stop.prevent='submitReply'
+  )
+    BaseTextarea(
+      v-model='reply'
+      class='textarea'
+      placeholder='Write your reply'
+    )
+    BaseButton
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 import UserAvatar from '~/components/elements/UserAvatar.vue'
 import PostMetrics from '~/components/elements/PostMetrics.vue'
+import PostCommentReply from '~/components/modules/PostCommentReply.vue'
 
 export default {
   components: {
     UserAvatar,
-    PostMetrics
+    PostMetrics,
+    PostCommentReply
   },
   props: {
     body: {
@@ -31,17 +63,77 @@ export default {
     author: {
       type: String,
       required: true
+    },
+    photoURL: {
+      type: String,
+      required: true
+    },
+    questionId: {
+      type: String,
+      required: true
+    },
+    id: {
+      type: String,
+      required: true
+    },
+    createdAt: {
+      type: Object,
+      required: true
+    },
+    likes: {
+      type: Number,
+      required: true
+    },
+    comments: {
+      type: Number,
+      required: true
     }
   },
   data() {
-    return {}
+    return {
+      reply: '',
+      areRepliesShown: false
+    }
   },
-  computed: {},
-  methods: {}
+  computed: {
+    commentReplies() {
+      return this.currentReplies.filter((reply) => reply.commentId === this.id)
+    },
+
+    ...mapGetters({
+      currentReplies: 'posts/currentReplies'
+    })
+  },
+  methods: {
+    async submitReply() {
+      const replyId = await this.createReply({
+        questionId: this.questionId,
+        commentId: this.id,
+        body: this.reply
+      })
+      console.log('replyId: ', replyId)
+      this.reply = ''
+    },
+
+    async loadReplies() {
+      if (!this.areRepliesShown) {
+        this.areRepliesShown = true
+        await this.fetchPostCommentReplies({
+          questionId: this.questionId,
+          commentId: this.id
+        })
+      }
+    },
+
+    ...mapActions({
+      createReply: 'posts/createReply',
+      fetchPostCommentReplies: 'posts/fetchPostCommentReplies'
+    })
+  }
 }
 </script>
 <style lang="sass" scoped>
-.post
+.post-comment
   display: grid
   grid-gap: $unit*2
   // background: $pri-cl
@@ -53,12 +145,13 @@ export default {
   &__author
 
   &__body
+    color: $dark
 
   &__metrics
     justify-self: start
 
-  & .m
-    color: $dark
+  &__replies
+    // border-top: 4px solid $pri-cl
 
   & a
     // text-align: center

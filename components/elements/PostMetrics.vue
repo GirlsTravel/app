@@ -1,33 +1,40 @@
 <template lang="pug">
-div(class='post-metrics')
-  div
-    IconComment(class='icon')
-    span {{ comments }}
-  div
-    IconLike(class='icon')
-    span {{ likes }}
-  div
-    IconDislike(class='icon')
-    span {{ dislikes }}
+div(class='metrics')
+  div(class='metrics__button')
+    IconLike(class='metrics__icon')
+    span(class='metrics__text') {{ likes }}
+
+  button(
+    @click='$emit("commentClicked")'
+    class='metrics__button'
+  )
+    IconComment(class='metrics__icon')
+    span(class='metrics__text') {{ comments }}
+
+  //- div(class='metrics__button')
+  //-   IconEdit(class='metrics__icon')
+  //-   span(class='metrics__text') Edit
+  //-
+  //- div(class='metrics__button')
+  //-   IconDelete(class='metrics__icon')
+  //-   span(class='metrics__text') Delete
 </template>
 
 <script>
 import IconComment from '~/assets/svg/comment.svg'
-import IconLike from '~/assets/svg/thumbs-up.svg'
-import IconDislike from '~/assets/svg/thumbs-down.svg'
+import IconDelete from '~/assets/svg/trash.svg'
+import IconEdit from '~/assets/svg/edit.svg'
+import IconLike from '~/assets/svg/heart.svg'
 
 export default {
   components: {
     IconComment,
     IconLike,
-    IconDislike
+    IconEdit,
+    IconDelete
   },
   props: {
     likes: {
-      type: Number,
-      required: true
-    },
-    dislikes: {
       type: Number,
       required: true
     },
@@ -45,16 +52,23 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.post-metrics
+.metrics
   display: grid
   grid-auto-flow: column
   grid-gap: $unit*2
 
-.icon
-  width: $unit*2
-  fill: $dark
+  &__button
+    @extend %flex--row-center
+    background: $pri-cl
+    padding: $unit/2 $unit*1.5
+    border-radius: $unit*2
+    // border: 2px solid $pri-cl
 
-span
-  margin-left: $unit
-  color: $dark
+  &__icon
+    width: $unit*2
+    fill: $dark
+
+  &__text
+    margin-left: $unit
+    color: $dark
 </style>

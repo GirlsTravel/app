@@ -1,39 +1,55 @@
 <template lang="pug">
 div(class='container')
   Post(
-    v-if='post'
-    :title='post.title'
-    :body='post.body'
-    :author='post.username'
-    :photoURL='post.photoURL'
-    :likes='post.likes'
-    :dislikes='post.dislikes'
-    :comments='post.comments'
+    v-if='currentQuestion'
+    :title='currentQuestion.title'
+    :body='currentQuestion.body'
+    :author='currentQuestion.username'
+    :photoURL='currentQuestion.photoURL'
+    :createdAt='currentQuestion.createdAt'
+    :likes='currentQuestion.likes'
+    :comments='currentQuestion.comments'
   )
 
   section
     div(class='answer')
       div
-        h2 {{ posts.length }} 16 Answers
-        p Add Answer
-      //- BaseTextarea(
-      //-   class='textarea'
-      //-   placeholder='Write your answer'
-      //- )
+        h2 {{ currentComments.length }} Answers
+        a(
+          v-if='!isAnswerFormShown'
+          @click='isAnswerFormShown = true'
+          class='answer__button'
+        ) Add Answer
+      form(
+        v-if='isAnswerFormShown'
+        @submit.stop.prevent='submitAnswer'
+      )
+        BaseTextarea(
+          v-model='answer'
+          class='textarea'
+          placeholder='Write your answer'
+        )
+        BaseButton()
 
     ul
       li(
-        v-for='(post, index) in Object.values(comments)'
-        :key='post + index'
+        v-for='(comment, index) in currentComments'
+        :key='comment + index'
       )
         PostComment(
-          :body='post.body'
-          :author='post.author'
+          :body='comment.body'
+          :author='comment.username'
+          :photoURL='comment.photoURL'
+          :createdAt='comment.createdAt'
+          :id='comment.id'
+          :questionId='currentQuestion.id'
+          :likes='comment.likes'
+          :comments='comment.comments'
         )
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import Post from '~/components/modules/Post.vue'
 import PostComment from '~/components/modules/PostComment.vue'
 
@@ -42,22 +58,48 @@ export default {
     Post,
     PostComment
   },
+  data() {
+    return {
+      answer: '',
+      isAnswerFormShown: false
+    }
+  },
   computed: {
-    post() {
-      const { id } = this.$route.params
-      return this.posts[id]
-    },
-    ...mapState({
-      posts: (state) => state.posts.posts,
-      comments: (state) => state.posts.comments
+    ...mapGetters({
+      currentQuestion: 'posts/currentQuestion',
+      currentComments: 'posts/currentComments'
     })
   },
   async fetch({ store, params }) {
     const { id } = params
     await store.dispatch('posts/fetchPost', { id })
-    await store.dispatch('posts/fetchPostComments', { postId: id })
+    await store.dispatch('posts/fetchPostComments', { questionId: id })
   },
-  methods: {}
+  methods: {
+    async submitAnswer() {
+      const { id } = this.$route.params
+      const commentId = await this.createComment({
+        questionId: id,
+        body: this.answer
+      })
+      console.log('commentId: ', commentId)
+      this.answer = ''
+    },
+
+    ...mapActions({
+      createComment: 'posts/createComment',
+      watchPostComments: 'posts/watchPostComments',
+      unsubscribeAllListeners: 'posts/unsubscribeAllListeners'
+    })
+  },
+  beforeMount() {
+    const { id } = this.$route.params
+    this.watchPostComments({ questionId: id })
+  },
+  beforeDestroy() {
+    console.log('beforeDestroy')
+    this.unsubscribeAllListeners()
+  }
 }
 </script>
 
@@ -91,7 +133,7 @@ export default {
       display: flex
       align-items: center
 
-    & p
+    &__button
       padding: $unit $unit*2
       background: $blue
       border-radius: $unit*2

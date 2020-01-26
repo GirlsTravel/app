@@ -23,12 +23,14 @@
     "lodash": "^4.17.15",
     "nuxt": "^2.0.0",
     "nuxt-client-init-module": "^0.1.7",
+    "nuxt-vuex-router-sync": "0.0.3",
     "vue-image-upload-resize": "^2.2.1",
     "vue-quill-editor": "^3.0.6"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^1.0.1",
     "@nuxtjs/eslint-module": "^1.0.0",
+    "@nuxtjs/moment": "^1.5.0",
     "@nuxtjs/style-resources": "^1.0.0",
     "@nuxtjs/stylelint-module": "^3.1.0",
     "babel-eslint": "^10.0.1",

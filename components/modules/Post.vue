@@ -4,12 +4,12 @@ div(class='post')
   UserAvatar(
     :author='author'
     :photoURL='photoURL'
+    :createdAt='createdAt'
     class='post__author'
   )
   p(class='post__body') {{ body }}
   PostMetrics(
     :likes='likes'
-    :dislikes='dislikes'
     :comments='comments'
     class='post__metrics'
   )
@@ -41,11 +41,11 @@ export default {
       type: String,
       required: true
     },
-    likes: {
-      type: Number,
+    createdAt: {
+      type: Object,
       required: true
     },
-    dislikes: {
+    likes: {
       type: Number,
       required: true
     },
@@ -79,6 +79,7 @@ export default {
 
   &__body
     white-space: pre-line
+    color: $dark
 
   &__metrics
     justify-self: start

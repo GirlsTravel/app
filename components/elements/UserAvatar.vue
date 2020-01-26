@@ -6,7 +6,7 @@ div(class='user-avatar')
   )
   div(class='user-avatar__info')
     a(class='') {{ author }}
-    p(class='') 3 days ago • 26 replies
+    p(class='') {{ createdAtFromNow }}
 </template>
 
 <script>
@@ -20,12 +20,22 @@ export default {
     photoURL: {
       type: String,
       required: true
+    },
+    createdAt: {
+      type: Object,
+      required: true
     }
   },
   data() {
     return {}
   },
-  computed: {},
+  computed: {
+    createdAtFromNow() {
+      if (!this.createdAt) return ''
+      const date = new Date(this.createdAt.seconds * 1000)
+      return this.$moment(date).fromNow()
+    }
+  },
   methods: {}
 }
 </script>
@@ -37,10 +47,10 @@ export default {
   // width: $unit*20
 
   &__image
-    background: lightblue
+    background: $pri-cl
     border-radius: 50%
-    width: $unit*4
-    height: $unit*4
+    width: $unit*7
+    height: $unit*7
     overflow: hidden
     background-position: center
     background-size: contain
@@ -55,12 +65,12 @@ export default {
       // color: $blue
 
     & p
-      color: $dark
+      color: $grey
+      // font-size: 12px
 
     & p, & a
       // max-width: $unit*15
       white-space: nowrap
       text-overflow: ellipsis
       overflow: hidden
-      font-size: 12px
 </style>

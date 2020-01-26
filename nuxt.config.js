@@ -42,7 +42,8 @@ export default {
    */
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
-    '@nuxtjs/eslint-module'
+    '@nuxtjs/eslint-module',
+    '@nuxtjs/moment'
     // Doc: https://github.com/nuxt-community/stylelint-module
     // '@nuxtjs/stylelint-module'
   ],
@@ -57,7 +58,8 @@ export default {
     '@nuxtjs/dotenv',
     '@nuxtjs/style-resources',
     'nuxt-svg-loader',
-    'nuxt-client-init-module'
+    'nuxt-client-init-module',
+    'nuxt-vuex-router-sync'
   ],
   /*
    ** Nuxt.js modules
