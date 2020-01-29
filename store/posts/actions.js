@@ -141,6 +141,44 @@ export default {
     }
   },
 
+  async deleteQuestion({ commit }, { id }) {
+    try {
+      console.log('deleteQuestion: ', id)
+      const deleteQuestion = functions.httpsCallable('https-deleteQuestion')
+      const { data } = await deleteQuestion({ id })
+      commit('DELETE_QUESTION', { id: data.id })
+      return { id }
+    } catch (e) {
+      console.log('error: ', e)
+    }
+  },
+
+  async deleteComment({ commit }, { id }) {
+    try {
+      console.log('deleteComment: ', id)
+      const deleteComment = functions.httpsCallable(
+        'https-deleteQuestionComment'
+      )
+      const { data } = await deleteComment({ id })
+      commit('DELETE_COMMENT', { id: data.id })
+      return { id }
+    } catch (e) {
+      console.log('error: ', e)
+    }
+  },
+
+  async deleteReply({ commit }, { id }) {
+    try {
+      console.log('deleteReply: ', id)
+      const deleteReply = functions.httpsCallable('https-deleteQuestionReply')
+      const { data } = await deleteReply({ id })
+      commit('DELETE_REPLY', { id: data.id })
+      return { id }
+    } catch (e) {
+      console.log('error: ', e)
+    }
+  },
+
   async deleteLike({ commit }, { id }) {
     try {
       const deleteLike = functions.httpsCallable('https-deleteQuestionLike')

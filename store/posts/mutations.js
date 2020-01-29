@@ -17,6 +17,24 @@ export default {
     Vue.set(state.likes, like.id, like)
   },
 
+  DELETE_QUESTION(state, { id }) {
+    console.log('delete post id: ', id)
+    Vue.delete(state.posts, id)
+    console.log('delete post after: ', state.posts)
+  },
+
+  DELETE_COMMENT(state, { id }) {
+    console.log('delete comment id: ', id)
+    Vue.delete(state.comments, id)
+    console.log('delete comment after: ', state.comments)
+  },
+
+  DELETE_REPLY(state, { id }) {
+    console.log('delete reply id: ', id)
+    Vue.delete(state.replies, id)
+    console.log('delete reply after: ', state.replies)
+  },
+
   DELETE_LIKE(state, { id }) {
     console.log('delete like id: ', id)
     Vue.delete(state.likes, id)

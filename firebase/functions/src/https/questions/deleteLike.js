@@ -29,7 +29,7 @@ export const listener = functions.https.onCall(async ({ id }, { auth }) => {
     const { uid } = auth
     const doesLikeExist = await checkIfLikeExists({ uid, id })
     if (!doesLikeExist) throw new Error('The targeted document does not exist')
-    await deleteLike({ uid, id })
+    await deleteLike({ id })
     return { id }
   } catch (e) {
     console.error('catch error: ', e)

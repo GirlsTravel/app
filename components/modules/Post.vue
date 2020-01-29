@@ -13,6 +13,7 @@ div(class='post')
     :comments='comments'
     :isLiked='isLiked'
     @likeClicked='toggleLike'
+    @deleteClicked='deleteQuestion({ id })'
     class='post__metrics'
   )
 </template>
@@ -92,7 +93,8 @@ export default {
 
     ...mapActions({
       createLike: 'posts/createLike',
-      deleteLike: 'posts/deleteLike'
+      deleteLike: 'posts/deleteLike',
+      deleteQuestion: 'posts/deleteQuestion'
     })
   }
 }

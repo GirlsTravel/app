@@ -24,6 +24,9 @@ const config = {
     new Dotenv()
   ],
   resolve: {
+    alias: {
+      utils: path.resolve(__dirname, 'src/utilities')
+    },
     extensions: ['.js']
   },
   externals: [nodeExternals()]

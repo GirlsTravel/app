@@ -15,6 +15,7 @@ div(class='post-comment')
     @likeClicked='toggleLike'
     class='post-comment__metrics'
     @commentClicked='loadReplies'
+    @deleteClicked='deleteComment({ id })'
   )
 
   ul(
@@ -156,7 +157,8 @@ export default {
       createReply: 'posts/createReply',
       fetchPostCommentReplies: 'posts/fetchPostCommentReplies',
       createLike: 'posts/createLike',
-      deleteLike: 'posts/deleteLike'
+      deleteLike: 'posts/deleteLike',
+      deleteComment: 'posts/deleteComment'
     })
   }
 }

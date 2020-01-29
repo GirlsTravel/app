@@ -15,13 +15,16 @@ div(class='metrics')
     IconComment(class='metrics__icon')
     span(class='metrics__text') {{ comments }}
 
-  //- div(class='metrics__button')
-  //-   IconEdit(class='metrics__icon')
-  //-   span(class='metrics__text') Edit
-  //-
-  //- div(class='metrics__button')
-  //-   IconDelete(class='metrics__icon')
-  //-   span(class='metrics__text') Delete
+  button(class='metrics__button')
+    IconEdit(class='metrics__icon')
+    span(class='metrics__text') Edit
+
+  button(
+    @click='$emit("deleteClicked")'
+    class='metrics__button'
+  )
+    IconDelete(class='metrics__icon')
+    span(class='metrics__text') Delete
 </template>
 
 <script>
