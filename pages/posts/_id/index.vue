@@ -23,14 +23,21 @@ div(class='container')
         ) Add Answer
       form(
         v-if='isAnswerFormShown'
-        @submit.stop.prevent='submitAnswer'
+        @submit.stop.prevent=''
       )
         BaseTextarea(
           v-model='answer'
+          ref='answerTextarea'
           class='textarea'
           placeholder='Write your answer'
         )
-        BaseButton()
+        BaseButton(
+          @click='submitAnswer'
+        )
+        BaseButton(
+          text='Cancel'
+          @click='cancelAnswer'
+        )
 
     ul
       li(
@@ -46,6 +53,7 @@ div(class='container')
           :questionId='currentQuestion.id'
           :likes='comment.likes'
           :comments='comment.comments'
+          @edit='editComment'
         )
 </template>
 
@@ -62,7 +70,8 @@ export default {
   data() {
     return {
       answer: '',
-      isAnswerFormShown: false
+      isAnswerFormShown: false,
+      editAnswerData: null
     }
   },
   computed: {
@@ -78,17 +87,44 @@ export default {
   },
   methods: {
     async submitAnswer() {
-      const { id } = this.$route.params
-      const commentId = await this.createComment({
-        questionId: id,
-        body: this.answer
-      })
-      console.log('commentId: ', commentId)
+      if (this.editAnswerData) {
+        // Edit an existing answer
+        const { commentId } = await this.updateComment({
+          id: this.editAnswerData.id,
+          body: this.answer
+        })
+        console.log('commentId: ', commentId)
+      } else {
+        // Create a new answer
+        const { id } = this.$route.params
+        const commentId = await this.createComment({
+          questionId: id,
+          body: this.answer
+        })
+        console.log('commentId: ', commentId)
+      }
+      this.cancelAnswer()
+    },
+
+    editComment({ commentId }) {
+      const comment = this.currentComments.find(
+        (comment) => comment.id === commentId
+      )
+      this.editAnswerData = comment
+      this.answer = comment.body
+      this.isAnswerFormShown = true
+      this.$nextTick(() => this.$refs.answerTextarea.$el.focus())
+    },
+
+    cancelAnswer() {
       this.answer = ''
+      this.isAnswerFormShown = false
+      this.editAnswerData = null
     },
 
     ...mapActions({
       createComment: 'posts/createComment',
+      updateComment: 'posts/updateComment',
       watchPostComments: 'posts/watchPostComments',
       watchPostMeta: 'posts/watchPostMeta',
       unsubscribeAllListeners: 'posts/unsubscribeAllListeners'

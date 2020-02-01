@@ -14,6 +14,7 @@ div(class='post')
     :isLiked='isLiked'
     @likeClicked='toggleLike'
     @deleteClicked='deleteQuestion({ id })'
+    @editClicked='editQuestion'
     class='post__metrics'
   )
 </template>
@@ -89,6 +90,10 @@ export default {
         console.log('create like')
         this.createLike({ questionId: this.id })
       }
+    },
+
+    editQuestion() {
+      this.$router.push({ name: 'posts-id-edit', params: { id: this.id } })
     },
 
     ...mapActions({

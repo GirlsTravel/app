@@ -7,6 +7,9 @@ import * as DeleteQuestion from './questions/deleteQuestion'
 import * as DeleteQuestionComment from './questions/deleteComment'
 import * as DeleteQuestionReply from './questions/deleteReply'
 import * as DeleteQuestionLike from './questions/deleteLike'
+import * as UpdateQuestion from './questions/updateQuestion'
+import * as UpdateQuestionComment from './questions/updateComment'
+import * as UpdateQuestionReply from './questions/updateReply'
 
 
 // Import users
@@ -22,6 +25,9 @@ export const deleteQuestion = DeleteQuestion.listener
 export const deleteQuestionComment = DeleteQuestionComment.listener
 export const deleteQuestionReply = DeleteQuestionReply.listener
 export const deleteQuestionLike = DeleteQuestionLike.listener
+export const updateQuestion = UpdateQuestion.listener
+export const updateQuestionComment = UpdateQuestionComment.listener
+export const updateQuestionReply = UpdateQuestionReply.listener
 
 // Export users
 export const uploadUserProfileImage = UploadUserProfileImage.listener

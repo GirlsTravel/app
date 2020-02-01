@@ -9,11 +9,14 @@ div(class='comment-reply')
     //- a(
     //-   class='comment-reply__author'
     //- ) {{ author }}&nbsp;
-  p(class='comment-reply__body')
+  p(
+    class='comment-reply__body'
+  )
     | {{ body }}
   //- p(class='comment-reply__actions') Like Reply
   PostMetrics(
     @deleteClicked='deleteReply({ id })'
+    @editClicked='$emit("edit", { replyId: id })'
   )
 </template>
 

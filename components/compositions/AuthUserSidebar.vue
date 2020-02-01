@@ -1,17 +1,19 @@
 <template lang="pug">
 div(class='auth-user-sidebar')
-  UserAvatar(
-    :author='currentUser.username'
-    :photoURL='currentUser.photoURL'
-    :createdAt='{ seconds: 0 }'
-  )
-  ul
+  //- UserAvatar(
+  //-   :author='currentUser.username'
+  //-   :photoURL='currentUser.photoURL'
+  //-   :createdAt='{ seconds: 0 }'
+  //- )
+  ul(class='auth-user-sidebar__menu-list')
     li(
       v-for='(item, index) in menuList'
+      class='auth-user-sidebar__menu-item'
     )
       MenuTile(
         :text='item.text'
         :to='item.to'
+        class='auth-user-sidebar__menu-link'
       )
 </template>
 
@@ -63,4 +65,20 @@ export default {
   top: $navigation-bar
   left: 0
   min-height: calc(100vh - #{$navigation-bar})
+  justify-items: end
+  align-items: start
+
+  &__menu-list
+    display: grid
+    grid-gap: $unit 0
+    // justify-items: end
+
+  &__menu-item
+    display: flex
+
+  &__menu-link
+    padding: $unit $unit*3
+    background: $pri-cl
+    border-radius: $unit*2
+    width: 100%
 </style>

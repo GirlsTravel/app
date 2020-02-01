@@ -1,7 +1,11 @@
 <template lang="pug">
 div(class='user-avatar')
-  a(
-    :style='{ backgroundImage: `url(${photoURL})` }'
+  //- a(
+  //-   :style='{ backgroundImage: `url(${photoURL})` }'
+  //-   class='user-avatar__image'
+  //- )
+  UserProfilePhoto(
+    :photoURL='photoURL'
     class='user-avatar__image'
   )
   div(class='user-avatar__info')
@@ -10,8 +14,12 @@ div(class='user-avatar')
 </template>
 
 <script>
+import UserProfilePhoto from '~/components/elements/UserProfilePhoto.vue'
+
 export default {
-  components: {},
+  components: {
+    UserProfilePhoto
+  },
   props: {
     author: {
       type: String,

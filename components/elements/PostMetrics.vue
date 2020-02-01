@@ -15,7 +15,10 @@ div(class='metrics')
     IconComment(class='metrics__icon')
     span(class='metrics__text') {{ comments }}
 
-  button(class='metrics__button')
+  button(
+    @click='$emit("editClicked")'
+    class='metrics__button'
+  )
     IconEdit(class='metrics__icon')
     span(class='metrics__text') Edit
 

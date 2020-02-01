@@ -1,5 +1,5 @@
 <template lang="pug">
-a(
+div(
   :style='{ backgroundImage: `url(${photoURL})` }'
   class='user-profile-photo'
 )
@@ -26,9 +26,8 @@ export default {
 .user-profile-photo
   background: $pri-cl
   border-radius: 50%
-  width: $unit*4
-  height: $unit*4
   overflow: hidden
   background-position: center
   background-size: contain
+  height: 100%
 </style>

@@ -9,11 +9,14 @@ div(class='')
     label='Message'
   )
   BaseButton(@click='handleSubmit')
+  nuxt-link(
+    :to='{ name: "posts-id", params: { id } }'
+  ) Cancel
   //- RichTextEditor
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapMutations, mapActions } from 'vuex'
 import RichTextEditor from '~/components/modules/RichTextEditor.vue'
 
 export default {
@@ -28,16 +31,34 @@ export default {
     }
   },
   computed: {},
+  async asyncData({ store, params }) {
+    const { id } = params
+    const question = await store.dispatch('posts/fetchPost', { id })
+    return { id, question }
+  },
+  beforeMount() {
+    if (!this.question) return
+    const { title, body } = this.question
+    this.title = title
+    this.body = body
+  },
   methods: {
     async handleSubmit() {
-      const { questionId } = await this.createQuestion({
+      const { questionId } = await this.updateQuestion({
+        id: this.id,
         title: this.title,
         body: this.body
       })
+      await this.DELETE_QUESTION({ id: this.id })
       this.$router.push({ name: 'posts-id', params: { id: questionId } })
     },
+
+    ...mapMutations({
+      DELETE_QUESTION: 'posts/DELETE_QUESTION'
+    }),
+
     ...mapActions({
-      createQuestion: 'posts/createQuestion'
+      updateQuestion: 'posts/updateQuestion'
     })
   }
 }

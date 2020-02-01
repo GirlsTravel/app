@@ -1,7 +1,7 @@
 <template lang="pug">
 div(class='post')
   nuxt-link(
-    :to='{ name: "posts-id", params: { id: id }}'
+    :to='{ name: "posts-id", params: { id } }'
     class='post__title'
   ) {{ title }}
   UserAvatar(

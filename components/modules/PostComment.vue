@@ -16,6 +16,7 @@ div(class='post-comment')
     class='post-comment__metrics'
     @commentClicked='loadReplies'
     @deleteClicked='deleteComment({ id })'
+    @editClicked='$emit("edit", { commentId: id })'
   )
 
   ul(
@@ -32,18 +33,26 @@ div(class='post-comment')
         :id='reply.id'
         :commentId='reply.id'
         :questionId='reply.questionId'
+        @edit='editReply'
       )
 
   form(
     v-if='areRepliesShown'
-    @submit.stop.prevent='submitReply'
+    @submit.stop.prevent=''
   )
     BaseTextarea(
       v-model='reply'
+      ref='replyTextarea'
       class='textarea'
       placeholder='Write your reply'
     )
-    BaseButton
+    BaseButton(
+      @click='submitReply'
+    )
+    BaseButton(
+      @click='cancelReply'
+      text='cancel'
+    )
 </template>
 
 <script>
@@ -95,6 +104,7 @@ export default {
   data() {
     return {
       reply: '',
+      editReplyData: null,
       areRepliesShown: false
     }
   },
@@ -121,23 +131,44 @@ export default {
   },
   methods: {
     async submitReply() {
-      const replyId = await this.createReply({
-        questionId: this.questionId,
-        commentId: this.id,
-        body: this.reply
-      })
-      console.log('replyId: ', replyId)
-      this.reply = ''
+      if (this.editReplyData) {
+        const { replyId } = await this.updateReply({
+          id: this.editReplyData.id,
+          body: this.reply
+        })
+        console.log('edit replyId: ', replyId)
+      } else {
+        const { replyId } = await this.createReply({
+          questionId: this.questionId,
+          commentId: this.id,
+          body: this.reply
+        })
+        console.log('create replyId: ', replyId)
+      }
+
+      this.cancelReply()
     },
 
-    async loadReplies() {
+    editReply({ replyId }) {
+      const reply = this.currentReplies.find((reply) => reply.id === replyId)
+      this.editReplyData = reply
+      this.reply = reply.body
+      this.$nextTick(() => this.$refs.replyTextarea.$el.focus())
+    },
+
+    loadReplies() {
       if (!this.areRepliesShown) {
         this.areRepliesShown = true
-        await this.fetchPostCommentReplies({
+        this.watchPostCommentReplies({
           questionId: this.questionId,
           commentId: this.id
         })
       }
+    },
+
+    cancelReply() {
+      this.reply = ''
+      this.editReplyData = null
     },
 
     toggleLike() {
@@ -155,7 +186,9 @@ export default {
 
     ...mapActions({
       createReply: 'posts/createReply',
+      updateReply: 'posts/updateReply',
       fetchPostCommentReplies: 'posts/fetchPostCommentReplies',
+      watchPostCommentReplies: 'posts/watchPostCommentReplies',
       createLike: 'posts/createLike',
       deleteLike: 'posts/deleteLike',
       deleteComment: 'posts/deleteComment'
