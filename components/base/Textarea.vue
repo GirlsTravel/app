@@ -39,15 +39,14 @@ export default {
   display: grid
   grid-gap: $unit/2 0
 
-  &__label
-    font-size: 14px
-
 .base-input
-  height: $unit*6
-  padding: 0 $unit*2
+  min-height: $unit*20
+  // height: 100%
+  padding: $unit*2
   border: 1px solid #fafafa
   border-radius: $unit/2
   background: #fafafa
+  resize: vertical
 
   &:focus,
   &:hover

@@ -5,11 +5,11 @@ div(class='navigation-bar')
     to='/'
     class='navigation-bar__logo'
   )
-    span Share
-    span Overflow
-  SearchForm(
-    class='navigation-bar__search-form'
-  )
+    span Girls
+    span Travel
+  //- SearchForm(
+  //-   class='navigation-bar__search-form'
+  //- )
   nuxt-link(
     v-if='!isAuthUser'
     :to='{ name: "auth-signup" }'

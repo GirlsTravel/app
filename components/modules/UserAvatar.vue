@@ -57,8 +57,8 @@ export default {
   &__image
     background: $pri-cl
     border-radius: 50%
-    width: $unit*7
-    height: $unit*7
+    width: $unit*5
+    height: $unit*5
     overflow: hidden
     background-position: center
     background-size: contain

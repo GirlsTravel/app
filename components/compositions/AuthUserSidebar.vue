@@ -19,7 +19,7 @@ div(class='auth-user-sidebar')
 
 <script>
 import { mapGetters } from 'vuex'
-import UserAvatar from '~/components/elements/UserAvatar.vue'
+import UserAvatar from '~/components/modules/UserAvatar.vue'
 import MenuTile from '~/components/elements/MenuTile.vue'
 
 export default {
@@ -36,15 +36,15 @@ export default {
           to: { name: 'index' }
         },
         {
+          text: 'My Questions',
+          to: { name: 'account-settings' }
+        },
+        {
+          text: 'My Participation',
+          to: { name: 'account-settings' }
+        },
+        {
           text: 'Saved',
-          to: { name: 'account-settings' }
-        },
-        {
-          text: 'Notifications',
-          to: { name: 'account-settings' }
-        },
-        {
-          text: 'Settings',
           to: { name: 'account-settings' }
         }
       ]
@@ -67,6 +67,7 @@ export default {
   min-height: calc(100vh - #{$navigation-bar})
   justify-items: end
   align-items: start
+  padding: $unit*5 $unit*2
 
   &__menu-list
     display: grid

@@ -44,7 +44,7 @@ div(class='settings')
       label='Date of Birth'
       v-model='dateOfBirth'
     )
-    
+
     h3 Security
     BaseInput(
       label='Email'
@@ -58,7 +58,7 @@ div(class='settings')
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import UserAvatar from '~/components/elements/UserAvatar.vue'
+import UserAvatar from '~/components/modules/UserAvatar.vue'
 
 export default {
   name: 'AuthSettings',
@@ -134,7 +134,13 @@ export default {
   &__header
     position: sticky
     top: $navigation-bar
+    display: grid
+    grid-template-columns: $unit*8 1fr $unit*8
+    justify-items: center
+    align-items: center
+    height: $unit*7
     background: $white
+    background: rgba(255, 255, 255, 0.97)
 
   & h3
     font-weight: $fw-bold

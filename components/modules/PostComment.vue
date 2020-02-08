@@ -1,6 +1,6 @@
 <template lang="pug">
 div(class='post-comment')
-  UserAvatar(
+  AuthorHeader(
     :author='author'
     :photoURL='photoURL'
     :createdAt='createdAt'
@@ -33,6 +33,7 @@ div(class='post-comment')
         :id='reply.id'
         :commentId='reply.id'
         :questionId='reply.questionId'
+        :createdAt='reply.createdAt'
         @edit='editReply'
       )
 
@@ -57,13 +58,13 @@ div(class='post-comment')
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import UserAvatar from '~/components/elements/UserAvatar.vue'
+import AuthorHeader from '~/components/modules/AuthorHeader.vue'
 import PostMetrics from '~/components/elements/PostMetrics.vue'
 import PostCommentReply from '~/components/modules/PostCommentReply.vue'
 
 export default {
   components: {
-    UserAvatar,
+    AuthorHeader,
     PostMetrics,
     PostCommentReply
   },

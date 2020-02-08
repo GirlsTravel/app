@@ -2,6 +2,9 @@
 div(class='vue-app')
   NavigationBar(class='vue-app__navigation-bar')
   NavigationMenu(class='vue-app__navigation-menu')
+  header(class='vue-app__hero')
+    figure
+    span Experience More
   AuthUserSidebar(class='vue-app__auth-user-sidebar')
   nuxt(class='vue-app__view')
   div(class='vue-app__ad-space')
@@ -32,9 +35,11 @@ export default {
 .vue-app
   display: grid
   grid-template-rows: repeat(2, auto)
-  grid-template-columns: 1fr minmax(auto, 1080px) 1fr
+  grid-template-columns: 1fr 2fr
   grid-gap: 0 $unit
   background: $pri-cl
+  +mq-l
+    grid-template-columns: 1fr minmax(auto, 960px) 1fr
 
   &__navigation-bar
     grid-row: 1 / 2
@@ -44,6 +49,37 @@ export default {
   &__navigation-menu
     position: fixed
     background: $white
+
+  &__hero
+    grid-row: 2 / 3
+    grid-column: 1 / -1
+    display: grid
+    grid-template-rows: 1fr
+    grid-template-columns: 1fr
+    justify-items: center
+    align-items: center
+    padding: $unit*3 $unit*2
+    background: $white
+    margin-bottom: $unit
+    display: none
+
+    & figure
+      grid-row: 1 / 2
+      grid-column: 1 / 2
+      width: 100%
+      height: 560px
+      background-image: url('https://images.unsplash.com/photo-1484446991649-77f7fbd73f1f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80')
+      background-position: bottom
+      background-repeat: no-repeat
+      background-size: cover
+      // border-radius: $unit*2
+
+    & span
+      grid-row: 1 / 2
+      grid-column: 1 / 2
+      font-weight: $fw-bold
+      font-size: $fs3
+      color: $white
 
   &__auth-user-sidebar
     display: none

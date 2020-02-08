@@ -1,7 +1,7 @@
 <template lang="pug">
 div(class='post')
   h1(class='post__title') {{ title }}
-  UserAvatar(
+  AuthorHeader(
     :author='author'
     :photoURL='photoURL'
     :createdAt='createdAt'
@@ -13,7 +13,7 @@ div(class='post')
     :comments='comments'
     :isLiked='isLiked'
     @likeClicked='toggleLike'
-    @deleteClicked='deleteQuestion({ id })'
+    @deleteClicked='handleDeleteQuestion'
     @editClicked='editQuestion'
     class='post__metrics'
   )
@@ -21,12 +21,12 @@ div(class='post')
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import UserAvatar from '~/components/elements/UserAvatar.vue'
+import AuthorHeader from '~/components/modules/AuthorHeader.vue'
 import PostMetrics from '~/components/elements/PostMetrics.vue'
 
 export default {
   components: {
-    UserAvatar,
+    AuthorHeader,
     PostMetrics
   },
   props: {
@@ -94,6 +94,11 @@ export default {
 
     editQuestion() {
       this.$router.push({ name: 'posts-id-edit', params: { id: this.id } })
+    },
+
+    async handleDeleteQuestion() {
+      await this.deleteQuestion({ id: this.id })
+      this.$router.push({ name: 'index' })
     },
 
     ...mapActions({

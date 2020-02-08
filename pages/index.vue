@@ -20,16 +20,25 @@ div(class='container')
         :likes='post.likes'
         :dislikes='post.dislikes'
         :comments='post.comments'
+        :createdAt='post.createdAt'
+      )
+    li(
+      class=''
+    )
+      NoQuestionResults(
+
       )
 </template>
 
 <script>
 import { mapState } from 'vuex'
 import PostSummary from '~/components/modules/PostSummary.vue'
+import NoQuestionResults from '~/components/modules/NoQuestionResults.vue'
 
 export default {
   components: {
-    PostSummary
+    PostSummary,
+    NoQuestionResults
   },
   computed: {
     ...mapState({
@@ -57,7 +66,8 @@ export default {
     font-weight: $fw-bold
 
   & a
-    padding: $unit*2
-    background: $sec-cl
+    padding: $unit $unit*2
+    background: $blue
+    border-radius: $unit*2
     color: $white
 </style>

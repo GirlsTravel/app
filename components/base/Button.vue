@@ -35,14 +35,14 @@ export default {
   @extend %flex--row-center
   position: relative
   min-width: $unit*15
-  height: $unit*6
-  padding: 0 $unit*6
-  border-radius: $unit/2
-  background: $success
+  // height: $unit*6
+  padding: $unit $unit*2
+  border-radius: $unit*2
+  background: $blue
   cursor: pointer
 
   &__text
-    font-size: 14px
+    // font-size: 14px
     color: $white
 
   &__loader

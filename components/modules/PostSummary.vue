@@ -4,11 +4,22 @@ div(class='post')
     :to='{ name: "posts-id", params: { id } }'
     class='post__title'
   ) {{ title }}
-  UserAvatar(
+  //- div(class='post__meta')
+  UserProfilePhoto(
     :author='author'
     :photoURL='photoURL'
-    class='post__author'
+    :createdAt='createdAt'
+    class='post__profile-image'
   )
+    //- //- p {{ author }}
+    //- span &nbsp;{{ createdAtFromNow }} •&nbsp;
+    //- span {{ comments }} answers
+  button(
+    @click='$emit("commentClicked")'
+    class='metrics__button'
+  )
+    IconComment(class='metrics__icon')
+    span(class='metrics__text') {{ comments }}
   //- PostMetrics(
   //-   :likes='likes'
   //-   :dislikes='dislikes'
@@ -18,13 +29,15 @@ div(class='post')
 </template>
 
 <script>
-import UserAvatar from '~/components/elements/UserAvatar.vue'
+import UserProfilePhoto from '~/components/modules/UserAvatar.vue'
 import PostMetrics from '~/components/elements/PostMetrics.vue'
+import IconComment from '~/assets/svg/comment.svg'
 
 export default {
   components: {
-    UserAvatar,
-    PostMetrics
+    UserProfilePhoto,
+    PostMetrics,
+    IconComment
   },
   props: {
     id: {
@@ -58,19 +71,29 @@ export default {
     comments: {
       type: Number,
       required: true
+    },
+    createdAt: {
+      type: Object,
+      required: true
     }
   },
   data() {
     return {}
   },
-  computed: {},
+  computed: {
+    createdAtFromNow() {
+      if (!this.createdAt) return ''
+      const date = new Date(this.createdAt.seconds * 1000)
+      return this.$moment(date).fromNow()
+    }
+  },
   methods: {}
 }
 </script>
 <style lang="sass" scoped>
 .post
   display: grid
-  grid-template-columns: 1fr auto
+  grid-template-columns: auto 1fr
   grid-gap: $unit/2
   // background: $pri-cl
   border-top: 2px solid $pri-cl
@@ -89,9 +112,21 @@ export default {
     grid-row: 2 / 3
     grid-column: 1 / -1
 
-  &__author
+  &__meta
     grid-row: 3 / 4
     grid-column: 1 / 2
+    // display: flex
+    // align-items: center
+    //
+    // & span
+    //   color: $grey
+    //
+    // & p:first
+    //   color: $black
+
+  // &__profile-image
+  //   width: $unit*5
+  //   height: $unit*5
 
   &__metrics
     grid-row: 4 / 5
@@ -102,4 +137,29 @@ export default {
       grid-column: 2 / 3
       align-self: end
       justify-self: end
+
+.metrics
+
+  &__button
+    @extend %flex--row-center
+    background: $pri-cl
+    padding: $unit/2 $unit*1.5
+    border-radius: $unit*2
+    height: min-content
+    align-self: end
+    justify-self: start
+    margin-left: $unit*2
+
+    // border: 2px solid $pri-cl
+
+    &.active
+      background: $blue
+
+  &__icon
+    width: $unit*2
+    fill: $dark
+
+  &__text
+    margin-left: $unit
+    color: $dark
 </style>

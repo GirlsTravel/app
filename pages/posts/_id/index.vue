@@ -55,17 +55,25 @@ div(class='container')
           :comments='comment.comments'
           @edit='editComment'
         )
+      li(
+
+      )
+        NoAnswerResults(
+          @addAnswer='isAnswerFormShown = true'
+        )
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import Post from '~/components/modules/Post.vue'
 import PostComment from '~/components/modules/PostComment.vue'
+import NoAnswerResults from '~/components/modules/NoAnswerResults.vue'
 
 export default {
   components: {
     Post,
-    PostComment
+    PostComment,
+    NoAnswerResults
   },
   data() {
     return {

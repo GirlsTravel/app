@@ -1,9 +1,10 @@
 <template lang="pug">
 div(class='comment-reply')
   //- div(class='comment-reply__header')
-  UserProfilePhoto(
+  AuthorHeader(
     :author='author'
     :photoURL='photoURL'
+    :createdAt='createdAt'
     class='comment-reply__image'
   )
     //- a(
@@ -22,12 +23,12 @@ div(class='comment-reply')
 
 <script>
 import { mapActions } from 'vuex'
-import UserProfilePhoto from '~/components/elements/UserAvatar.vue'
+import AuthorHeader from '~/components/modules/AuthorHeader.vue'
 import PostMetrics from '~/components/elements/PostMetrics.vue'
 
 export default {
   components: {
-    UserProfilePhoto,
+    AuthorHeader,
     PostMetrics
   },
   props: {
@@ -53,6 +54,10 @@ export default {
     },
     commentId: {
       type: String,
+      required: true
+    },
+    createdAt: {
+      type: Object,
       required: true
     }
   },
