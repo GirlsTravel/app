@@ -1,10 +1,11 @@
 <template lang="pug">
 div(class='new-question')
-
-  header(class='new-question__header')
-    span Cancel
-    span New Question
-    a(@click='handleSubmit') Create
+  ViewHeader(
+    title='New Question'
+    primaryActionLabel='Create'
+    secondaryActionLabel='Cancel'
+    @primaryActionClick='handleSubmit'
+  )
 
   aside
     p
@@ -42,10 +43,12 @@ div(class='new-question')
 
 <script>
 import { mapActions } from 'vuex'
+import ViewHeader from '~/components/modules/ViewHeader.vue'
 import RichTextEditor from '~/components/modules/RichTextEditor.vue'
 
 export default {
   components: {
+    ViewHeader,
     RichTextEditor
   },
   props: {},

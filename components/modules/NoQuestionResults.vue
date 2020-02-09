@@ -32,7 +32,6 @@ export default {
   grid-gap: $unit*2
   justify-items: center
   padding: $unit*10 $unit*2
-  border-top: 2px solid $pri-cl
 
   &__illustration
     width: 100%

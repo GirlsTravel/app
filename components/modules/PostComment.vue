@@ -37,23 +37,14 @@ div(class='post-comment')
         @edit='editReply'
       )
 
-  form(
+  CommentForm(
     v-if='areRepliesShown'
-    @submit.stop.prevent=''
+    @primaryButtonClick='submitReply'
+    @secondaryButtonClick='cancelReply'
+    primaryButtonLabel='Post'
+    secondaryButtonLabel='Cancel'
+    textareaPlaceholder='Write your reply...'
   )
-    BaseTextarea(
-      v-model='reply'
-      ref='replyTextarea'
-      class='textarea'
-      placeholder='Write your reply'
-    )
-    BaseButton(
-      @click='submitReply'
-    )
-    BaseButton(
-      @click='cancelReply'
-      text='cancel'
-    )
 </template>
 
 <script>
@@ -61,12 +52,14 @@ import { mapGetters, mapActions } from 'vuex'
 import AuthorHeader from '~/components/modules/AuthorHeader.vue'
 import PostMetrics from '~/components/elements/PostMetrics.vue'
 import PostCommentReply from '~/components/modules/PostCommentReply.vue'
+import CommentForm from '~/components/modules/CommentForm.vue'
 
 export default {
   components: {
     AuthorHeader,
     PostMetrics,
-    PostCommentReply
+    PostCommentReply,
+    CommentForm
   },
   props: {
     body: {
@@ -201,10 +194,6 @@ export default {
 .post-comment
   display: grid
   grid-gap: $unit*2
-  // background: $pri-cl
-  // border-top: 4px solid $pri-cl
-  border-bottom: 4px solid $pri-cl
-  // margin: $unit*2
   padding: $unit*2
 
   &__author

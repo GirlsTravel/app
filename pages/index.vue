@@ -1,15 +1,16 @@
 <template lang="pug">
-div(class='container')
-  header(class='')
-    h1 All Questions
+div(class='questions')
+  header(class='questions__header')
+    h1 Questions
     nuxt-link(
       :to='{ name: "posts-new" }'
     ) Ask Question
 
-  ul
+  ul(class='questions__list')
     li(
       v-for='(post, index) in Object.values(posts)'
       :key='post + index'
+      class='questions__list-item'
     )
       PostSummary(
         :id='post.id'
@@ -23,11 +24,9 @@ div(class='container')
         :createdAt='post.createdAt'
       )
     li(
-      class=''
+      class='questions__list-item'
     )
-      NoQuestionResults(
-
-      )
+      NoQuestionResults()
 </template>
 
 <script>
@@ -53,13 +52,16 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.container
-  & header
+.questions
+  display: grid
+  grid-gap: $unit
+
+  &__header
     display: flex
     justify-content: space-between
     align-items: center
-    border-bottom: 2px solid $pri-cl
     padding: $unit*2
+    background: $white
 
   & h1
     font-size: $fs1
@@ -70,4 +72,11 @@ export default {
     background: $blue
     border-radius: $unit*2
     color: $white
+
+  &__list
+    display: grid
+    grid-gap: $unit
+
+    &-item
+      background: $white
 </style>

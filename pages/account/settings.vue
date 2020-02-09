@@ -1,21 +1,26 @@
 <template lang="pug">
 div(class='settings')
-  header(class='settings__header')
-    span Cancel
-    span Settings
-    a(@click='submitUserForm') Save
-
-  UserAvatar(
-    :author='currentUser.username'
-    :photoURL='currentUser.photoURL'
+  ViewHeader(
+    title='Settings'
+    primaryActionLabel='Save'
+    secondaryActionLabel='Cancel'
+    @primaryActionClick='submitUserForm'
   )
-  client-only
-    image-uploader(
-      @input='changeProfilePhoto'
+
+  section(
+    class='settings__section'
+  )
+    UserAvatar(
+      :photoURL='currentUser.photoURL'
+      class='settings__profile-photo'
+    )
+    ImageUploader(
+      @uploadImage='changeProfilePhoto'
     )
 
   form(
     @submit.stop.prevent=''
+    class='settings__form'
   )
     h3 Edit Profile
     BaseInput(
@@ -30,40 +35,49 @@ div(class='settings')
       label='Username'
       v-model='username'
     )
-    BaseTextarea(
-      label='Bio'
-      v-model='bio'
-    )
+    //- BaseTextarea(
+    //-   label='Bio'
+    //-   v-model='bio'
+    //- )
 
-    h3 Private Information
-    BaseInput(
-      label='Gender'
-      v-model='gender'
-    )
-    BaseInput(
-      label='Date of Birth'
-      v-model='dateOfBirth'
-    )
+    //- h3 Private Information
+    //- BaseInput(
+    //-   label='Gender'
+    //-   v-model='gender'
+    //- )
+    //- BaseInput(
+    //-   label='Date of Birth'
+    //-   v-model='dateOfBirth'
+    //- )
+    //-
+    //- h3 Security
+    //- BaseInput(
+    //-   label='Email'
+    //-   v-model='email'
+    //- )
 
-    h3 Security
-    BaseInput(
-      label='Email'
-      v-model='email'
-    )
-  h3 Logins
-  a(
-    @click='signOut'
-  ) Log Out {{ `${currentUser.firstName} ${currentUser.lastName}` }}
+  section(
+    class='settings__section'
+  )
+    h3 Logins
+    a(
+      @click='signOut'
+      class='settings__logout-link'
+    ) Log Out
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import UserAvatar from '~/components/modules/UserAvatar.vue'
+import ViewHeader from '~/components/modules/ViewHeader.vue'
+import UserAvatar from '~/components/elements/UserProfilePhoto.vue'
+import ImageUploader from '~/components/elements/ImageUploader.vue'
 
 export default {
   name: 'AuthSettings',
   components: {
-    UserAvatar
+    ViewHeader,
+    UserAvatar,
+    ImageUploader
   },
   props: {},
   data() {
@@ -99,8 +113,6 @@ export default {
     },
 
     async changeProfilePhoto(image) {
-      console.log('changeProfilePhoto')
-      console.log(image)
       await this.uploadProfileImage({ image })
     },
 
@@ -129,7 +141,11 @@ export default {
 
 <style lang="sass" scoped>
 .settings
+  display: grid
+  grid-gap: $unit*4
+  grid-auto-rows: min-content
   padding: 0 $unit*2
+  background: $white
 
   &__header
     position: sticky
@@ -142,7 +158,35 @@ export default {
     background: $white
     background: rgba(255, 255, 255, 0.97)
 
+    &-title
+      font-weight: $fw-bold
+
+    &-save
+      padding: $unit
+      background: $pri-cl
+      color: $blue
+      border-radius: $unit/2
+
   & h3
     font-weight: $fw-bold
-    margin: $unit*2 0
+    // margin: $unit*2 0
+
+  &__section
+    display: grid
+    grid-gap: $unit*2
+
+    &:first-of-type
+      justify-items: center
+
+  &__profile-photo
+    width: $unit*12
+    height: $unit*12
+
+  &__form
+    display: grid
+    grid-gap: $unit*2
+
+  &__logout-link
+    color: $blue
+    text-decoration: underline
 </style>

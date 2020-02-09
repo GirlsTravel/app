@@ -64,20 +64,25 @@ export default {
   height: $navigation-bar
   background: rgba(255, 255, 255, 0.98)
   display: grid
-  grid-template-columns: auto 1fr auto
+  grid-template-columns: auto auto 1fr
   grid-auto-flow: column
   align-items: center
   grid-gap: $unit*2
   box-shadow: 0px $unit/2 $unit rgba(34, 34, 34, 0.1)
   padding: 0 $unit
+  justify-items: end
 
   &__hamburger
 
   &__logo
     justify-self: center
+    // background: $pri-cl
+    // padding: $unit $unit*2
+    // border-radius: $unit/2
 
     & > span
       font-size: 20px
+      // color: $success
 
     & > span:last-child
       font-weight: $fw-bold

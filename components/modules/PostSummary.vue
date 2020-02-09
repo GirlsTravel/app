@@ -14,18 +14,18 @@ div(class='post')
     //- //- p {{ author }}
     //- span &nbsp;{{ createdAtFromNow }} •&nbsp;
     //- span {{ comments }} answers
-  button(
-    @click='$emit("commentClicked")'
-    class='metrics__button'
-  )
-    IconComment(class='metrics__icon')
-    span(class='metrics__text') {{ comments }}
-  //- PostMetrics(
-  //-   :likes='likes'
-  //-   :dislikes='dislikes'
-  //-   :comments='comments'
-  //-   class='post__metrics'
+  //- button(
+  //-   @click='$emit("commentClicked")'
+  //-   class='metrics__button'
   //- )
+  //-   IconComment(class='metrics__icon')
+  //-   span(class='metrics__text') {{ comments }}
+  PostMetrics(
+    :likes='likes'
+    :dislikes='dislikes'
+    :comments='comments'
+    class='post__metrics'
+  )
 </template>
 
 <script>
@@ -93,73 +93,16 @@ export default {
 <style lang="sass" scoped>
 .post
   display: grid
-  grid-template-columns: auto 1fr
-  grid-gap: $unit/2
-  // background: $pri-cl
-  border-top: 2px solid $pri-cl
-  border-bottom: 2px solid $pri-cl
-  // margin: $unit*2
+  grid-gap: $unit
   padding: $unit*2
 
   &__title
     font-weight: $fw-bold
     font-size: 18px
-    grid-row: 1 / 2
-    grid-column: 1 / -1
-    // color: $blue
+    margin-bottom: $unit
 
   &__body
-    grid-row: 2 / 3
-    grid-column: 1 / -1
-
-  &__meta
-    grid-row: 3 / 4
-    grid-column: 1 / 2
-    // display: flex
-    // align-items: center
-    //
-    // & span
-    //   color: $grey
-    //
-    // & p:first
-    //   color: $black
-
-  // &__profile-image
-  //   width: $unit*5
-  //   height: $unit*5
 
   &__metrics
-    grid-row: 4 / 5
-    grid-column: 1 / -1
     justify-self: start
-    +mq-xs
-      grid-row: 3 / 4
-      grid-column: 2 / 3
-      align-self: end
-      justify-self: end
-
-.metrics
-
-  &__button
-    @extend %flex--row-center
-    background: $pri-cl
-    padding: $unit/2 $unit*1.5
-    border-radius: $unit*2
-    height: min-content
-    align-self: end
-    justify-self: start
-    margin-left: $unit*2
-
-    // border: 2px solid $pri-cl
-
-    &.active
-      background: $blue
-
-  &__icon
-    width: $unit*2
-    fill: $dark
-
-  &__text
-    margin-left: $unit
-    color: $dark
 </style>

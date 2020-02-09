@@ -91,7 +91,7 @@ export default {
       background: $white
 
   &__view
-    background: $white
+    // background: $white
     grid-row: 2 / 3
     grid-column: 1 / -1
     +mq-s

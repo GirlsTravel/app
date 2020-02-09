@@ -113,10 +113,6 @@ export default {
 .post
   display: grid
   grid-gap: $unit*2
-  // background: $pri-cl
-  // border-top: 4px solid $pri-cl
-  border-bottom: 4px solid $pri-cl
-  // margin: $unit*2
   padding: $unit*2
 
   &__title

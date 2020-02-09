@@ -29,5 +29,5 @@ export default {
   overflow: hidden
   background-position: center
   background-size: contain
-  height: 100%
+  height: inherit
 </style>

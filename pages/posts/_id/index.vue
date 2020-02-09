@@ -1,5 +1,5 @@
 <template lang="pug">
-div(class='container')
+div(class='question')
   Post(
     v-if='currentQuestion'
     :title='currentQuestion.title'
@@ -10,57 +10,50 @@ div(class='container')
     :likes='currentQuestion.likes'
     :comments='currentQuestion.comments'
     :id='currentQuestion.id'
+    class='question__post'
   )
 
-  section
-    div(class='answer')
-      div
-        h2 {{ currentComments.length }} Answers
-        a(
-          v-if='!isAnswerFormShown'
-          @click='isAnswerFormShown = true'
-          class='answer__button'
-        ) Add Answer
-      form(
-        v-if='isAnswerFormShown'
-        @submit.stop.prevent=''
-      )
-        BaseTextarea(
-          v-model='answer'
-          ref='answerTextarea'
-          class='textarea'
-          placeholder='Write your answer'
-        )
-        BaseButton(
-          @click='submitAnswer'
-        )
-        BaseButton(
-          text='Cancel'
-          @click='cancelAnswer'
-        )
+  section(class='question__add-answer')
+    header(class='question__add-answer-header')
+      h2 {{ currentComments.length }} Answers
+      button(
+        v-if='!isAnswerFormShown'
+        @click='isAnswerFormShown = true'
+        class='question__add-answer-button'
+      ) Add Answer
+    CommentForm(
+      v-if='isAnswerFormShown'
+      @primaryButtonClick='submitAnswer'
+      @secondaryButtonClick='cancelAnswer'
+      primaryButtonLabel='Post'
+      secondaryButtonLabel='Cancel'
+      textareaPlaceholder='Write your answer'
+      class='question__add-answer-form'
+    )
 
-    ul
-      li(
-        v-for='(comment, index) in currentComments'
-        :key='comment + index'
+  ul(class='question__list')
+    li(
+      v-for='(comment, index) in currentComments'
+      :key='comment + index'
+      class='question__list-item'
+    )
+      PostComment(
+        :body='comment.body'
+        :author='comment.username'
+        :photoURL='comment.photoURL'
+        :createdAt='comment.createdAt'
+        :id='comment.id'
+        :questionId='currentQuestion.id'
+        :likes='comment.likes'
+        :comments='comment.comments'
+        @edit='editComment'
       )
-        PostComment(
-          :body='comment.body'
-          :author='comment.username'
-          :photoURL='comment.photoURL'
-          :createdAt='comment.createdAt'
-          :id='comment.id'
-          :questionId='currentQuestion.id'
-          :likes='comment.likes'
-          :comments='comment.comments'
-          @edit='editComment'
-        )
-      li(
-
+    li(
+      class='question__list-item'
+    )
+      NoAnswerResults(
+        @addAnswer='isAnswerFormShown = true'
       )
-        NoAnswerResults(
-          @addAnswer='isAnswerFormShown = true'
-        )
 </template>
 
 <script>
@@ -68,12 +61,14 @@ import { mapGetters, mapActions } from 'vuex'
 import Post from '~/components/modules/Post.vue'
 import PostComment from '~/components/modules/PostComment.vue'
 import NoAnswerResults from '~/components/modules/NoAnswerResults.vue'
+import CommentForm from '~/components/modules/CommentForm.vue'
 
 export default {
   components: {
     Post,
     PostComment,
-    NoAnswerResults
+    NoAnswerResults,
+    CommentForm
   },
   data() {
     return {
@@ -151,13 +146,13 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.container
-  & header
-    display: flex
-    justify-content: space-between
-    align-items: center
-    // border-bottom: 2px solid $pri-cl
-    padding: $unit*2
+.question
+  display: grid
+  grid-gap: $unit
+  height: min-content
+
+  &__post
+    background: $white
 
   & h1
     font-size: $fs1
@@ -172,21 +167,28 @@ export default {
     background: $sec-cl
     color: $white
 
-  & .answer
-    border-bottom: 4px solid $pri-cl
-    padding: $unit*2 $unit*2
+  &__list
+    display: grid
+    grid-gap: $unit
 
-    & div
+    &-item
+      background: $white
+
+  &__add-answer
+    padding: $unit*2 $unit*2
+    background: $white
+
+    &-header
       display: flex
       align-items: center
 
-    &__button
+    &-button
       padding: $unit $unit*2
       background: $blue
       border-radius: $unit*2
       margin-left: auto
       color: $white
 
-    & .textarea
+    &-form
       margin-top: $unit*2
 </style>

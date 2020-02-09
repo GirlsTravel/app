@@ -6,8 +6,7 @@ export default {
       const uploadImage = functions.httpsCallable(
         'https-uploadUserProfileImage'
       )
-      const { data } = await uploadImage({ image })
-      console.log('data: ', data)
+      await uploadImage({ image })
       return 'done'
     } catch (e) {
       console.log('error: ', e)
