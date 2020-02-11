@@ -52,5 +52,5 @@ export default {
     border-color: $grey
 
   &:focus
-    border-color: $success
+    border-color: $blue
 </style>

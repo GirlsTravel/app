@@ -5,8 +5,7 @@ div(class='navigation-bar')
     to='/'
     class='navigation-bar__logo'
   )
-    span Girls
-    span Travel
+    LogoWithText(class='navigation-bar__logo-svg')
   //- SearchForm(
   //-   class='navigation-bar__search-form'
   //- )
@@ -33,12 +32,14 @@ import { mapGetters } from 'vuex'
 import Hamburger from '~/components/elements/Hamburger.vue'
 import SearchForm from '~/components/modules/SearchForm.vue'
 import UserProfilePhoto from '~/components/elements/UserProfilePhoto.vue'
+import LogoWithText from '~/assets/svg/logo-with-text.svg'
 
 export default {
   components: {
     Hamburger,
     SearchForm,
-    UserProfilePhoto
+    UserProfilePhoto,
+    LogoWithText
   },
   props: {},
   data() {
@@ -76,16 +77,15 @@ export default {
 
   &__logo
     justify-self: center
-    // background: $pri-cl
-    // padding: $unit $unit*2
-    // border-radius: $unit/2
+    display: flex
+    align-items: center
+    height: 100%
+    padding: $unit $unit*2
+    background: $blue
 
-    & > span
-      font-size: 20px
-      // color: $success
-
-    & > span:last-child
-      font-weight: $fw-bold
+    &-svg
+      height: $unit*3
+      fill: $white
 
   &__search-form
     display: none
