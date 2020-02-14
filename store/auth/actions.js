@@ -58,6 +58,7 @@ export default {
         const result = await auth().signInWithEmailLink(email, url)
         console.log('result: ', result)
         window.localStorage.removeItem('emailForSignIn')
+        return result
       }
       console.log('incorrect URL')
     } catch (err) {

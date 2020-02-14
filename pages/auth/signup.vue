@@ -1,29 +1,35 @@
 <template lang="pug">
-div(class='')
-  header(class='login__header')
-    h2(class='login__title') Join the trip
+div(class='sign-up')
+  aside
+    p
+      | Join the Girls Travel community to continue.&nbsp;
 
-  BaseButton(
-    text='Continue with Google'
-  )
+  header(class='sign-up__header')
+    h2(class='sign-up__title') Sign up or login with just your email
 
-  p Or, use your email
+  //- BaseButton(
+  //-   text='Continue with Google'
+  //- )
+  //-
+  //- p Or, use your email
 
   form(
     @submit.prevent='signUp'
-    class='login__form'
+    class='sign-up__form'
   )
     BaseInput(
       v-model='email'
       label='Email'
       placeholder='Email address'
+      class='sign-up__form-input'
     )
     BaseButton(
-      text='Send secure link'
+      text='Send Secure Link'
+      class='sign-up__form-submit'
     )
 
-  footer(class='login__footer')
-    p By using Share Overflow you agree to its Terms of Service and Privacy Policy.
+  footer(class='sign-up__footer')
+    p By using Girls Travel you agree to its Terms of Service and Privacy Policy.
 </template>
 
 <script>
@@ -60,6 +66,39 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.test
-  background: white
+.sign-up
+  display: grid
+  grid-gap: $unit*4
+  grid-auto-rows: min-content
+  padding: $unit*4 $unit*2
+  background: $white
+
+  & aside
+    background: lightyellow
+    padding: $unit*2
+    border-radius: $unit/2
+
+    & a
+      color: $blue
+      text-decoration: underline
+      white-space: nowrap
+
+  &__header
+
+  &__title
+    font-size: $fs1
+    font-weight: $fw-bold
+
+  &__form
+    display: grid
+    grid-gap: $unit*2
+
+    &-submit
+      justify-self: start
+
+  &__footer
+
+    & > p
+      font-size: 12px
+      color: $dark
 </style>

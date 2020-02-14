@@ -24,10 +24,10 @@ export default {
    ** Global CSS
    */
   css: [
-    '@assets/sass/main.sass',
-    'quill/dist/quill.snow.css',
-    'quill/dist/quill.bubble.css',
-    'quill/dist/quill.core.css'
+    '@assets/sass/main.sass'//,
+    // 'quill/dist/quill.snow.css',
+    // 'quill/dist/quill.bubble.css',
+    // 'quill/dist/quill.core.css'
   ],
   /*
    ** Plugins to load before mounting the App

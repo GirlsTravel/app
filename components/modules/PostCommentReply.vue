@@ -15,14 +15,15 @@ div(class='comment-reply')
   )
     | {{ body }}
   //- p(class='comment-reply__actions') Like Reply
-  PostMetrics(
-    @deleteClicked='deleteReply({ id })'
-    @editClicked='$emit("edit", { replyId: id })'
-  )
+  //- PostMetrics(
+  //-   :likes='likes'
+  //-   @deleteClicked='deleteReply({ id })'
+  //-   @editClicked='$emit("edit", { replyId: id })'
+  //- )
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import AuthorHeader from '~/components/modules/AuthorHeader.vue'
 import PostMetrics from '~/components/elements/PostMetrics.vue'
 
@@ -59,12 +60,31 @@ export default {
     createdAt: {
       type: Object,
       required: true
+    },
+    likes: {
+      type: Number,
+      required: true
     }
   },
   data() {
     return {}
   },
-  computed: {},
+  computed: {
+    isLiked() {
+      return Boolean(this.currentLike)
+    },
+
+    currentLike() {
+      return this.currentLikes.find(
+        (like) =>
+          like.questionId === this.questionId && like.commentId === this.id
+      )
+    },
+
+    ...mapGetters({
+      currentLikes: 'posts/currentLikes'
+    })
+  },
   methods: {
     ...mapActions({
       deleteReply: 'posts/deleteReply'
