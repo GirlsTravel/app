@@ -5,6 +5,7 @@ div(class='settings')
     primaryActionLabel='Save'
     secondaryActionLabel='Cancel'
     @primaryActionClick='submitUserForm'
+    @secondaryActionClick='$router.push({ name: "index" })'
   )
 
   section(

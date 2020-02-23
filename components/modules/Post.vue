@@ -5,16 +5,15 @@ div(class='post')
     :author='author'
     :photoURL='photoURL'
     :createdAt='createdAt'
+    @deleteClicked='handleDeleteQuestion'
+    @editClicked='editQuestion'
     class='post__author'
   )
   p(class='post__body') {{ body }}
   PostMetrics(
     :likes='likes'
-    :comments='comments'
     :isLiked='isLiked'
     @likeClicked='toggleLike'
-    @deleteClicked='handleDeleteQuestion'
-    @editClicked='editQuestion'
     class='post__metrics'
   )
 </template>

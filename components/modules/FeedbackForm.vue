@@ -64,6 +64,11 @@ export default {
     }
   },
   computed: {},
+  watch: {
+    activeChoice(value) {
+      this.$emit('isExpanded', !!value)
+    }
+  },
   methods: {
     submitFeedback() {
       this.activeChoice = ''

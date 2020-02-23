@@ -54,6 +54,15 @@ export default {
     })
   },
 
+  watchPost({ state, commit }, { id }) {
+    console.log('watchPost')
+    const docRef = firestore.collection('posts').doc(id)
+    const listener = docRef.onSnapshot((docSnapshot) => {
+      commit('ADD_POST', { post: docSnapshot.data() })
+    })
+    allListeners.push(listener)
+  },
+
   watchPostComments({ commit }, { questionId }) {
     const docRef = firestore
       .collection('postComments')

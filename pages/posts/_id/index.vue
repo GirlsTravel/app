@@ -18,16 +18,18 @@ div(class='question')
       h2 {{ currentComments.length }} Answers
       button(
         v-if='!isAnswerFormShown'
-        @click='isAnswerFormShown = true'
+        @click='handleAddAnswerClick'
         class='question__add-answer-button'
       ) Add Answer
     CommentForm(
       v-if='isAnswerFormShown'
+      v-model='answer'
       @primaryButtonClick='submitAnswer'
       @secondaryButtonClick='cancelAnswer'
       primaryButtonLabel='Post'
       secondaryButtonLabel='Cancel'
       textareaPlaceholder='Write your answer'
+      ref='answerTextarea'
       class='question__add-answer-form'
     )
 
@@ -87,6 +89,7 @@ export default {
     const { id } = params
     await store.dispatch('posts/fetchPost', { id })
     await store.dispatch('posts/fetchPostComments', { questionId: id })
+    store.dispatch('posts/watchPost', { id })
   },
   methods: {
     async submitAnswer() {
@@ -116,13 +119,22 @@ export default {
       this.editAnswerData = comment
       this.answer = comment.body
       this.isAnswerFormShown = true
-      this.$nextTick(() => this.$refs.answerTextarea.$el.focus())
+      this.focusAnswerTextarea()
     },
 
     cancelAnswer() {
       this.answer = ''
       this.isAnswerFormShown = false
       this.editAnswerData = null
+    },
+
+    handleAddAnswerClick() {
+      this.isAnswerFormShown = true
+      this.focusAnswerTextarea()
+    },
+
+    focusAnswerTextarea() {
+      this.$nextTick(() => this.$refs.answerTextarea.focus())
     },
 
     ...mapActions({

@@ -4,6 +4,8 @@ div(class='post-comment')
     :author='author'
     :photoURL='photoURL'
     :createdAt='createdAt'
+    @deleteClicked='deleteComment({ id })'
+    @editClicked='$emit("edit", { commentId: id })'
     class='post-comment__author'
   )
   p(class='post-comment__body') {{ body }}
@@ -13,10 +15,8 @@ div(class='post-comment')
     :comments='comments'
     :isLiked='isLiked'
     @likeClicked='toggleLike'
-    class='post-comment__metrics'
     @commentClicked='loadReplies'
-    @deleteClicked='deleteComment({ id })'
-    @editClicked='$emit("edit", { commentId: id })'
+    class='post-comment__metrics'
   )
 
   ul(
@@ -39,11 +39,13 @@ div(class='post-comment')
 
   CommentForm(
     v-if='areRepliesShown'
+    v-model='reply'
     @primaryButtonClick='submitReply'
     @secondaryButtonClick='cancelReply'
     primaryButtonLabel='Post'
     secondaryButtonLabel='Cancel'
     textareaPlaceholder='Write your reply...'
+    ref='replyTextarea'
   )
 </template>
 
@@ -147,7 +149,7 @@ export default {
       const reply = this.currentReplies.find((reply) => reply.id === replyId)
       this.editReplyData = reply
       this.reply = reply.body
-      this.$nextTick(() => this.$refs.replyTextarea.$el.focus())
+      this.$nextTick(() => this.$refs.replyTextarea.focus())
     },
 
     loadReplies() {
@@ -205,12 +207,4 @@ export default {
     justify-self: start
 
   &__replies
-    // border-top: 4px solid $pri-cl
-
-  & a
-    // text-align: center
-    // margin: 0 auto 0 0
-    // border-radius: 8px
-    // background: $pri-cl
-    // padding: 8px 16px
 </style>

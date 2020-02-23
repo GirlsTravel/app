@@ -33,11 +33,11 @@ export default {
 .vue-app
   display: grid
   grid-template-rows: repeat(2, auto)
-  grid-template-columns: 1fr 2fr
+  grid-template-columns: 2fr 1fr
   grid-gap: 0 $unit
   background: $pri-cl
   +mq-l
-    grid-template-columns: 1fr minmax(auto, 960px) 1fr
+    grid-template-columns: minmax(auto, 960px) 1fr
 
   &__navigation-bar
     grid-row: 1 / 2
@@ -51,7 +51,7 @@ export default {
   &__auth-user-sidebar
     display: none
     +mq-s
-      display: grid
+      // display: grid
       grid-row: 2 / 3
       grid-column: 1 / 2
       align-self: start
@@ -62,9 +62,9 @@ export default {
     grid-row: 2 / 3
     grid-column: 1 / -1
     +mq-s
-      grid-column: 2 / -1
-    +mq-l
-      grid-column: 2 / 3
+      grid-column: 1 / 2
+    // +mq-l
+    //   grid-column: 2 / 3
 
   &__display-sidebar
     // display: none
@@ -72,9 +72,9 @@ export default {
     grid-column: 1 / -1
     background: $white
     +mq-s
+      grid-row: 2 / 3
       grid-column: 2 / -1
     +mq-l
-      display: grid
       grid-row: 2 / 3
-      grid-column: 3 / 4
+      // grid-column: 3 / 4
 </style>

@@ -4,9 +4,10 @@ form(
   class='comment-form'
 )
   BaseTextarea(
-    v-model='message'
+    :value='value'
+    @input='$emit("input", $event)'
     :placeholder='textareaPlaceholder'
-    ref='answerTextarea'
+    ref='textarea'
     class='comment-form__textarea'
   )
   BaseButton(
@@ -26,15 +27,18 @@ form(
 export default {
   components: {},
   props: {
-    primaryButtonLabel: {
-      type: String
-    },
-    secondaryButtonLabel: {
+    value: {
       type: String
     },
     textareaPlaceholder: {
       type: String,
       default: 'Write here...'
+    },
+    primaryButtonLabel: {
+      type: String
+    },
+    secondaryButtonLabel: {
+      type: String
     }
   },
   data() {
@@ -43,7 +47,11 @@ export default {
     }
   },
   computed: {},
-  methods: {}
+  methods: {
+    focus() {
+      this.$refs.textarea.$el.focus()
+    }
+  }
 }
 </script>
 

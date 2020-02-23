@@ -1,36 +1,23 @@
 <template lang="pug">
 div(class='comment-reply')
-  //- div(class='comment-reply__header')
   AuthorHeader(
     :author='author'
     :photoURL='photoURL'
     :createdAt='createdAt'
+    @deleteClicked='deleteReply({ id })'
+    @editClicked='$emit("edit", { replyId: id })'
     class='comment-reply__image'
   )
-    //- a(
-    //-   class='comment-reply__author'
-    //- ) {{ author }}&nbsp;
-  p(
-    class='comment-reply__body'
-  )
-    | {{ body }}
-  //- p(class='comment-reply__actions') Like Reply
-  //- PostMetrics(
-  //-   :likes='likes'
-  //-   @deleteClicked='deleteReply({ id })'
-  //-   @editClicked='$emit("edit", { replyId: id })'
-  //- )
+  p(class='comment-reply__body') {{ body }}
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 import AuthorHeader from '~/components/modules/AuthorHeader.vue'
-import PostMetrics from '~/components/elements/PostMetrics.vue'
 
 export default {
   components: {
-    AuthorHeader,
-    PostMetrics
+    AuthorHeader
   },
   props: {
     id: {
@@ -60,31 +47,12 @@ export default {
     createdAt: {
       type: Object,
       required: true
-    },
-    likes: {
-      type: Number,
-      required: true
     }
   },
   data() {
     return {}
   },
-  computed: {
-    isLiked() {
-      return Boolean(this.currentLike)
-    },
-
-    currentLike() {
-      return this.currentLikes.find(
-        (like) =>
-          like.questionId === this.questionId && like.commentId === this.id
-      )
-    },
-
-    ...mapGetters({
-      currentLikes: 'posts/currentLikes'
-    })
-  },
+  computed: {},
   methods: {
     ...mapActions({
       deleteReply: 'posts/deleteReply'
@@ -97,19 +65,8 @@ export default {
   display: grid
   grid-auto-flow: row
   grid-gap: $unit
-  // grid-template-columns: auto 1fr
-  // border-top: 4px solid $pri-cl
-  // border-bottom: 2px solid $pri-cl
-  padding: $unit*2 0
-  padding-left: $unit*2
+  padding: $unit*2 0 $unit*2 $unit*2
   border-left: 4px solid $pri-cl
-
-  // &__header
-  //   display: flex
-
-  &__image
-    // width: $unit*4
-    // height: $unit*4
 
   &__body
     color: $dark
@@ -117,8 +74,4 @@ export default {
   &__author
     font-weight: $fw-bold
     color: $black
-
-  // &__actions
-  //   grid-column: 2 / 3
-  //   color: $grey
 </style>

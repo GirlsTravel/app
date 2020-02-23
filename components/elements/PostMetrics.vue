@@ -9,39 +9,22 @@ div(class='metrics')
     span(class='metrics__text') {{ likes }}
 
   button(
+    v-if='comments !== undefined'
     @click='$emit("commentClicked")'
     class='metrics__button'
   )
     IconComment(class='metrics__icon')
     span(class='metrics__text') {{ comments }}
-  //- 
-  //- button(
-  //-   @click='$emit("editClicked")'
-  //-   class='metrics__button'
-  //- )
-  //-   IconEdit(class='metrics__icon')
-  //-   span(class='metrics__text') Edit
-  //-
-  //- button(
-  //-   @click='$emit("deleteClicked")'
-  //-   class='metrics__button'
-  //- )
-  //-   IconDelete(class='metrics__icon')
-  //-   span(class='metrics__text') Delete
 </template>
 
 <script>
-import IconComment from '~/assets/svg/comment.svg'
-import IconDelete from '~/assets/svg/trash.svg'
-import IconEdit from '~/assets/svg/edit.svg'
 import IconLike from '~/assets/svg/heart.svg'
+import IconComment from '~/assets/svg/comment.svg'
 
 export default {
   components: {
-    IconComment,
     IconLike,
-    IconEdit,
-    IconDelete
+    IconComment
   },
   props: {
     likes: {
@@ -49,8 +32,7 @@ export default {
       required: true
     },
     comments: {
-      type: Number,
-      default: 0
+      type: Number
     },
     isLiked: {
       type: Boolean,
@@ -79,7 +61,9 @@ export default {
     // border: 2px solid $pri-cl
 
     &.active
-      background: $blue
+
+      & .metrics__icon
+        fill: rgb(237, 73, 86)
 
   &__icon
     width: $unit*2

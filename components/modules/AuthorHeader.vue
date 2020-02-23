@@ -10,10 +10,16 @@ div(class='author-header')
     template(v-slot:button)
       IconMoreVertical(class='author-header__dropdown-button')
     template(v-slot:content)
-      button(class='author-header__dropdown-option')
+      button(
+        @click='$emit("editClicked")'
+        class='author-header__dropdown-option'
+      )
         IconEdit(class='author-header__dropdown-option-icon')
         span(class='author-header__dropdown-option-text') Edit
-      button(class='author-header__dropdown-option')
+      button(
+        @click='$emit("deleteClicked")'
+        class='author-header__dropdown-option'
+      )
         IconDelete(class='author-header__dropdown-option-icon')
         span(class='author-header__dropdown-option-text') Delete
 </template>
