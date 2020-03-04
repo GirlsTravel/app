@@ -1,11 +1,12 @@
 <template lang="pug">
 form(
-  @submit.stop.prevent='submitFeedback'
+  @submit.stop.prevent='subscribeToNewsletter'
   class='feedback'
 )
   h3(class='feedback__title') Join Our Newsletter 🎉
   p Get the latest travel tips to experience more on your next adventure!
   BaseInput(
+    v-model.trim='email'
     placeholder='Enter your email...'
     class='feedback__input'
   )
@@ -16,16 +17,30 @@ form(
 </template>
 
 <script>
+import { functions } from '~/plugins/firebase'
+
 export default {
   components: {},
   props: {},
   data() {
-    return {}
+    return {
+      email: ''
+    }
   },
   computed: {},
   methods: {
-    submitFeedback() {
-      this.activeChoice = ''
+    async subscribeToNewsletter() {
+      try {
+        const createFeedback = functions.httpsCallable(
+          'https-subscribeNewsletter'
+        )
+        await createFeedback({ email: this.email })
+        this.email = ''
+        this.$toast.show('Yay! You have successfully been subscribed.')
+      } catch (e) {
+        console.error(e)
+        this.$toast.show('Oops, an error occurred. Try again.')
+      }
     }
   }
 }

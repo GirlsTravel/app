@@ -11,7 +11,7 @@ form(
     div(v-for='(item, index) in feedbackChoices')
       input(
         v-model='activeChoice'
-        :value='"choice" + index'
+        :value='item.value'
         type='radio'
         :id='"feedback-choice-" + index'
         class='feedback__input'
@@ -22,11 +22,12 @@ form(
       )
         BaseDynamicIcon(
           :icon='item.icon'
-          :class='{ active: activeChoice === "choice" + index }'
+          :class='{ active: activeChoice === item.value }'
           class='feedback__svg'
         )
   BaseTextarea(
     v-if='activeChoice'
+    v-model='message'
     placeholder='Describe your experience here...'
     class='feedback__textarea'
   )
@@ -44,6 +45,8 @@ form(
 </template>
 
 <script>
+import { functions } from '~/plugins/firebase'
+
 export default {
   components: {},
   props: {},
@@ -51,16 +54,20 @@ export default {
     return {
       feedbackChoices: [
         {
-          icon: 'sad-face'
+          icon: 'sad-face',
+          value: 'bad'
         },
         {
-          icon: 'neutral-face'
+          icon: 'neutral-face',
+          value: 'neutral'
         },
         {
-          icon: 'smile-face'
+          icon: 'smile-face',
+          value: 'good'
         }
       ],
-      activeChoice: ''
+      activeChoice: '',
+      message: ''
     }
   },
   computed: {},
@@ -70,8 +77,20 @@ export default {
     }
   },
   methods: {
-    submitFeedback() {
-      this.activeChoice = ''
+    async submitFeedback() {
+      try {
+        const createFeedback = functions.httpsCallable('https-createFeedback')
+        await createFeedback({
+          value: this.activeChoice,
+          message: this.message
+        })
+        this.activeChoice = ''
+        this.message = ''
+        this.$toast.show('Thank you! Your feedback is greatly appreciated.')
+      } catch (e) {
+        console.error(e)
+        this.$toast.show('Oops, an error occurred. Try again.')
+      }
     }
   }
 }

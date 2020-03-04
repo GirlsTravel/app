@@ -54,12 +54,20 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     // Doc: https://github.com/nuxt-community/dotenv-module
+    '@nuxtjs/toast',
     '@nuxtjs/dotenv',
     '@nuxtjs/style-resources',
     'nuxt-svg-loader',
     'nuxt-client-init-module',
     'nuxt-vuex-router-sync'
   ],
+  /*
+   ** Toast settings
+   */
+  toast: {
+    position: 'top-right',
+    duration: 5000
+  },
   /*
    ** Nuxt.js modules
    */
