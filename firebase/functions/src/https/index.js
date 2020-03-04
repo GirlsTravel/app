@@ -11,10 +11,15 @@ import * as UpdateQuestion from './questions/updateQuestion'
 import * as UpdateQuestionComment from './questions/updateComment'
 import * as UpdateQuestionReply from './questions/updateReply'
 
-
 // Import users
 import * as UploadUserProfileImage from './users/uploadProfileImage'
 import * as UpdateUserInformation from './users/updateInformation'
+
+// Import newsletter
+import * as SubscribeNewsletter from './newsletter/subscribe'
+
+// Import feedback
+import * as CreateFeedback from './feedback/create'
 
 // Export questions
 export const createQuestion = CreateQuestion.listener
@@ -32,3 +37,9 @@ export const updateQuestionReply = UpdateQuestionReply.listener
 // Export users
 export const uploadUserProfileImage = UploadUserProfileImage.listener
 export const updateUserInformation = UpdateUserInformation.listener
+
+// Export newsletter
+export const subscribeNewsletter = SubscribeNewsletter.listener
+
+// Export feedback
+export const createFeedback = CreateFeedback.listener
