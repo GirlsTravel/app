@@ -42,6 +42,7 @@ div(class='post-comment')
     v-model='reply'
     @primaryButtonClick='submitReply'
     @secondaryButtonClick='cancelReply'
+    @focus='checkIfAuth'
     primaryButtonLabel='Post'
     secondaryButtonLabel='Cancel'
     textareaPlaceholder='Write your reply...'
@@ -106,7 +107,9 @@ export default {
   },
   computed: {
     commentReplies() {
-      return this.currentReplies.filter((reply) => reply.commentId === this.id)
+      return this.currentReplies
+        .filter((reply) => reply.commentId === this.id)
+        .sort((a, b) => b.createdAt.seconds - a.createdAt.seconds)
     },
 
     isLiked() {
@@ -122,10 +125,15 @@ export default {
 
     ...mapGetters({
       currentReplies: 'posts/currentReplies',
-      currentLikes: 'posts/currentLikes'
+      currentLikes: 'posts/currentLikes',
+      isAuth: 'auth/isAuthUser'
     })
   },
   methods: {
+    checkIfAuth() {
+      if (!this.isAuth) this.$router.push({ name: 'auth-signup' })
+    },
+
     async submitReply() {
       if (this.editReplyData) {
         const { replyId } = await this.updateReply({
@@ -168,6 +176,7 @@ export default {
     },
 
     toggleLike() {
+      this.checkIfAuth()
       if (this.isLiked) {
         console.log('delete like')
         this.deleteLike({ id: this.currentLike.id })

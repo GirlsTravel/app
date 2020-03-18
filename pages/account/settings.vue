@@ -3,7 +3,7 @@ div(class='settings')
   ViewHeader(
     title='Settings'
     primaryActionLabel='Save'
-    secondaryActionLabel='Cancel'
+    secondaryActionLabel='Close'
     @primaryActionClick='submitUserForm'
     @secondaryActionClick='$router.push({ name: "index" })'
   )
@@ -75,6 +75,7 @@ import ImageUploader from '~/components/elements/ImageUploader.vue'
 
 export default {
   name: 'AuthSettings',
+  middleware: 'isAuth',
   components: {
     ViewHeader,
     UserAvatar,

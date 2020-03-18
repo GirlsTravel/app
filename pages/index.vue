@@ -4,11 +4,12 @@ div(class='questions')
     h1 Questions
     nuxt-link(
       :to='{ name: "posts-new" }'
+      class='questions__header-link'
     ) Ask Question
 
   ul(class='questions__list')
     li(
-      v-for='(post, index) in Object.values(posts)'
+      v-for='(post, index) in sortedPosts'
       :key='post + index'
       class='questions__list-item'
     )
@@ -40,6 +41,12 @@ export default {
     NoQuestionResults
   },
   computed: {
+    sortedPosts() {
+      return Object.values(this.posts).sort(
+        (a, b) => b.createdAt.seconds - a.createdAt.seconds
+      )
+    },
+
     ...mapState({
       posts: (state) => state.posts.posts
     })
@@ -55,6 +62,7 @@ export default {
 .questions
   display: grid
   grid-gap: $unit
+  grid-template-rows: min-content 1fr
 
   &__header
     display: flex
@@ -63,15 +71,15 @@ export default {
     padding: $unit*2
     background: $white
 
+    &-link
+      padding: $unit $unit*2
+      background: $blue
+      border-radius: $unit*2
+      color: $white
+
   & h1
     font-size: $fs1
     font-weight: $fw-bold
-
-  & a
-    padding: $unit $unit*2
-    background: $blue
-    border-radius: $unit*2
-    color: $white
 
   &__list
     display: grid

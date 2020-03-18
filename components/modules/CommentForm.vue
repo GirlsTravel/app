@@ -6,6 +6,7 @@ form(
   BaseTextarea(
     :value='value'
     @input='$emit("input", $event)'
+    @focus='$emit("focus")'
     :placeholder='textareaPlaceholder'
     ref='textarea'
     class='comment-form__textarea'

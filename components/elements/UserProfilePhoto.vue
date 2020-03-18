@@ -1,6 +1,6 @@
 <template lang="pug">
 div(
-  :style='{ backgroundImage: `url(${photoURL})` }'
+  v-lazy:background-image='photoURL'
   class='user-profile-photo'
 )
 </template>

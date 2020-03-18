@@ -71,7 +71,8 @@ export default {
     ...mapActions({
       createQuestion: 'posts/createQuestion'
     })
-  }
+  },
+  middleware: 'isAuth'
 }
 </script>
 

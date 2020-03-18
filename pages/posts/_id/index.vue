@@ -35,7 +35,7 @@ div(class='question')
 
   ul(class='question__list')
     li(
-      v-for='(comment, index) in currentComments'
+      v-for='(comment, index) in currentComments.sort((a, b) => b.createdAt.seconds - a.createdAt.seconds)'
       :key='comment + index'
       class='question__list-item'
     )
@@ -54,7 +54,7 @@ div(class='question')
       class='question__list-item'
     )
       NoAnswerResults(
-        @addAnswer='isAnswerFormShown = true'
+        @addAnswer='handleAddAnswerClick'
       )
 </template>
 
@@ -82,7 +82,8 @@ export default {
   computed: {
     ...mapGetters({
       currentQuestion: 'posts/currentQuestion',
-      currentComments: 'posts/currentComments'
+      currentComments: 'posts/currentComments',
+      isAuth: 'auth/isAuthUser'
     })
   },
   async fetch({ store, params }) {
@@ -92,6 +93,10 @@ export default {
     store.dispatch('posts/watchPost', { id })
   },
   methods: {
+    checkIfAuth() {
+      if (!this.isAuth) this.$router.push({ name: 'auth-signup' })
+    },
+
     async submitAnswer() {
       if (this.editAnswerData) {
         // Edit an existing answer
@@ -129,6 +134,7 @@ export default {
     },
 
     handleAddAnswerClick() {
+      this.checkIfAuth()
       this.isAnswerFormShown = true
       this.focusAnswerTextarea()
     },

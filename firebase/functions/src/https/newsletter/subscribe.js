@@ -7,7 +7,7 @@ export const listener = functions.https.onCall(async ({ email }, { auth }) => {
   try {
     if (!EmailValidator.validate(email)) throw new Error('Invalid email address.')
 
-    const { uid } = auth
+    const uid = auth?.uid
     await admin.firestore()
       .collection('newsletter')
       .doc()

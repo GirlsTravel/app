@@ -34,6 +34,7 @@ export default {
    */
   plugins: [
     { src: '~/plugins/global-components.js' },
+    { src: '~/plugins/vue-lazyload', ssr: false },
     { src: '~plugins/vue-quill-editor.js', ssr: false }
   ],
   /*

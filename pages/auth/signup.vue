@@ -1,11 +1,10 @@
 <template lang="pug">
 div(class='sign-up')
   aside
-    p
-      | Join the Girls Travel community to continue.&nbsp;
+    p Join the Girls Travel community to continue.&nbsp;
 
   header(class='sign-up__header')
-    h2(class='sign-up__title') Sign up or login with just your email
+    h2(class='sign-up__title') {{ isEmailSent ? 'Email sent! Check your inbox to continue' : 'Sign up or login with just your email' }}
 
   //- BaseButton(
   //-   text='Continue with Google'
@@ -14,6 +13,7 @@ div(class='sign-up')
   //- p Or, use your email
 
   form(
+    v-if='!isEmailSent'
     @submit.prevent='signUp'
     class='sign-up__form'
   )
@@ -28,6 +28,10 @@ div(class='sign-up')
       class='sign-up__form-submit'
     )
 
+  p(
+    v-if='isEmailSent'
+  ) We have sent an email to <b>{{ email }}</b>. Please check your email and follow the provided instructions.
+
   footer(class='sign-up__footer')
     p By using Girls Travel you agree to its Terms of Service and Privacy Policy.
 </template>
@@ -41,7 +45,8 @@ export default {
   data() {
     return {
       username: '',
-      email: ''
+      email: '',
+      isEmailSent: false
     }
   },
   computed: {},
@@ -51,6 +56,7 @@ export default {
         await this.sendSignInLinkToEmail({
           email: this.email
         })
+        this.isEmailSent = true
       } catch (e) {
         // console.error(e)
         // const errorMessage = 'Sign up failed'

@@ -1,25 +1,18 @@
 <template lang="pug">
-div(class='post')
+nuxt-link(
+  :to='{ name: "posts-id", params: { id } }'
+  class='post'
+)
   nuxt-link(
     :to='{ name: "posts-id", params: { id } }'
     class='post__title'
   ) {{ title }}
-  //- div(class='post__meta')
   UserProfilePhoto(
     :author='author'
     :photoURL='photoURL'
     :createdAt='createdAt'
     class='post__profile-image'
   )
-    //- //- p {{ author }}
-    //- span &nbsp;{{ createdAtFromNow }} •&nbsp;
-    //- span {{ comments }} answers
-  //- button(
-  //-   @click='$emit("commentClicked")'
-  //-   class='metrics__button'
-  //- )
-  //-   IconComment(class='metrics__icon')
-  //-   span(class='metrics__text') {{ comments }}
   PostMetrics(
     :likes='likes'
     :dislikes='dislikes'

@@ -6,7 +6,10 @@ div(class='author-header')
     :createdAt='createdAt'
   )
 
-  DropdownSlot(class='author-header__dropdown')
+  DropdownSlot(
+    v-if='isAuth'
+    class='author-header__dropdown'
+  )
     template(v-slot:button)
       IconMoreVertical(class='author-header__dropdown-button')
     template(v-slot:content)
@@ -25,6 +28,7 @@ div(class='author-header')
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import UserAvatar from '~/components/modules/UserAvatar.vue'
 import DropdownSlot from '~/components/slots/Dropdown.vue'
 import IconSlot from '~/components/slots/Icon.vue'
@@ -58,7 +62,11 @@ export default {
   data() {
     return {}
   },
-  computed: {},
+  computed: {
+    ...mapGetters({
+      isAuth: 'auth/isAuthUser'
+    })
+  },
   methods: {}
 }
 </script>

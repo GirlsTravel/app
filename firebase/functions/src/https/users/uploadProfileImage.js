@@ -10,8 +10,13 @@ cloudinary.config({
 })
 
 // uploads the image to Cloudinary
-const uploadImage = async ({ image }) => {
-  return await cloudinary.v2.uploader.upload(image)
+const uploadImage = async ({ image, uid }) => {
+  const options = {
+    public_id: uid,
+    folder: 'user_profile_photo',
+    format: 'webp'
+  }
+  return await cloudinary.v2.uploader.upload(image, options)
 }
 
 // update the profile image URL for that user
@@ -28,7 +33,7 @@ export const listener = functions.https.onCall(async ({ image }, { auth }) => {
     const { uid } = auth
     console.log('uid: ', uid)
     console.log('image: ', image)
-    const { url } = await uploadImage({ image })
+    const { url } = await uploadImage({ image, uid })
     await updateUserProfileImage({ uid, photoURL: url })
     return
   } catch (e) {

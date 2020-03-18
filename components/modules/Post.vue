@@ -77,11 +77,14 @@ export default {
     },
 
     ...mapGetters({
-      currentLikes: 'posts/currentLikes'
+      currentLikes: 'posts/currentLikes',
+      isAuth: 'auth/isAuthUser'
     })
   },
   methods: {
     toggleLike() {
+      if (!this.isAuth) this.$router.push({ name: 'auth-signup' })
+
       if (this.isLiked) {
         console.log('delete like')
         this.deleteLike({ id: this.currentLike.id })
