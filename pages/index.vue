@@ -9,7 +9,7 @@ div(class='questions')
 
   ul(class='questions__list')
     li(
-      v-for='(post, index) in sortedPosts'
+      v-for='(post, index) in Object.values(posts)'
       :key='post + index'
       class='questions__list-item'
     )

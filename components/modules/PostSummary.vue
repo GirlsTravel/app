@@ -1,6 +1,6 @@
 <template lang="pug">
-nuxt-link(
-  :to='{ name: "posts-id", params: { id } }'
+div(
+  @click='$router.push({ name: "posts-id", params: { id } })'
   class='post'
 )
   nuxt-link(
@@ -88,6 +88,7 @@ export default {
   display: grid
   grid-gap: $unit
   padding: $unit*2
+  cursor: pointer
 
   &__title
     font-weight: $fw-bold
