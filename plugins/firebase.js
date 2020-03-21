@@ -5,16 +5,18 @@ import 'firebase/auth'
 import 'firebase/functions'
 
 const config = {
-  apiKey: 'AIzaSyCmUhXP9198N0y8vjuc0_gEO6XVdGCldws',
-  authDomain: 'share-overflow.firebaseapp.com',
-  databaseURL: 'https://share-overflow.firebaseio.com',
-  projectId: 'share-overflow',
-  storageBucket: 'share-overflow.appspot.com',
-  messagingSenderId: '150551217325',
-  appId: '1:150551217325:web:8401cdcf3f378eaa027224'
+  apiKey: "AIzaSyAa4jRHDqgEpkyWhbRR1L15BfzWuU6hYeo",
+  authDomain: "girls-travel-co.firebaseapp.com",
+  databaseURL: "https://girls-travel-co.firebaseio.com",
+  projectId: "girls-travel-co",
+  storageBucket: "girls-travel-co.appspot.com",
+  messagingSenderId: "1001380734364",
+  appId: "1:1001380734364:web:994e56a46216c58ff1d459",
+  measurementId: "G-YT8M439CHQ"
 }
 
 if (!firebase.apps.length) firebase.initializeApp(config)
+firebase.analytics()
 
 // firebase.functions().useFunctionsEmulator('http://localhost:5000')
 

@@ -1,8 +1,8 @@
 {
-  "name": "share_overflow",
+  "name": "girls_travel_app",
   "version": "1.0.0",
-  "description": "Stock market forum",
-  "author": "Juma Stevens",
+  "description": "Female travel community",
+  "author": "Girls Travel",
   "private": true,
   "scripts": {
     "dev": "nuxt",
@@ -10,7 +10,7 @@
     "start": "nuxt start",
     "generate": "nuxt generate",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
-    "heroku-postbuild": "npm run build"
+    "deploy": "npm run build && gcloud app deploy app.yaml --project share-overflow"
   },
   "lint-staged": {
     "*.{js,vue}": "eslint"

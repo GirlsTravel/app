@@ -10,7 +10,7 @@ div(class='verify')
   //- p Or, use your email
 
   form(
-    @submit.prevent='signUp'
+    @submit.prevent='handleInitVerification'
     class='verify__form'
   )
     BaseInput(

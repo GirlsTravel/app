@@ -1,7 +1,7 @@
 <template lang="pug">
 div(class='vue-app')
   NavigationBar(class='vue-app__navigation-bar')
-  NavigationMenu(class='vue-app__navigation-menu')
+  //- NavigationMenu(class='vue-app__navigation-menu')
   AuthUserSidebar(class='vue-app__auth-user-sidebar')
   nuxt(class='vue-app__view')
   DisplaySidebar(class='vue-app__display-sidebar')
@@ -9,14 +9,14 @@ div(class='vue-app')
 
 <script>
 import NavigationBar from '~/components/compositions/NavigationBar.vue'
-import NavigationMenu from '~/components/compositions/NavigationMenu.vue'
+// import NavigationMenu from '~/components/compositions/NavigationMenu.vue'
 import AuthUserSidebar from '~/components/compositions/AuthUserSidebar.vue'
 import DisplaySidebar from '~/components/compositions/DisplaySidebar.vue'
 
 export default {
   components: {
     NavigationBar,
-    NavigationMenu,
+    // NavigationMenu,
     AuthUserSidebar,
     DisplaySidebar
   },

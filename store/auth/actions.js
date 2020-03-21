@@ -27,7 +27,7 @@ export default {
   async sendSignInLinkToEmail(_, { email }) {
     try {
       const actionCodeSettings = {
-        url: 'http://localhost:3000/auth/verify',
+        url: `${window.location.origin}/auth/verify`,
         handleCodeInApp: true
       }
       await auth().sendSignInLinkToEmail(email, actionCodeSettings)
