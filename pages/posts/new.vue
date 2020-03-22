@@ -62,11 +62,17 @@ export default {
   computed: {},
   methods: {
     async handleSubmit() {
-      const { questionId } = await this.createQuestion({
+      const { questionId, titleSlug } = await this.createQuestion({
         title: this.title,
         body: this.body
       })
-      this.$router.push({ name: 'posts-id', params: { id: questionId } })
+      this.$router.push({
+        name: 'posts-id',
+        params: {
+          id: questionId,
+          title: titleSlug
+        }
+      })
     },
     ...mapActions({
       createQuestion: 'posts/createQuestion'

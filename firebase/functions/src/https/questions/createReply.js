@@ -31,7 +31,6 @@ const createReply = async ({ body, uid, username, photoURL, questionId, commentI
     questionId,
     commentId,
     likes: 0,
-    dislikes: 0,
     comments: 0,
     createdAt: admin.firestore.FieldValue.serverTimestamp()
   }

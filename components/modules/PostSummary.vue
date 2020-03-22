@@ -1,6 +1,6 @@
 <template lang="pug">
 div(
-  @click='$router.push({ name: "posts-id", params: { id } })'
+  @click='$router.push({ name: "posts-id-title", params: { id, title: titleSlug } })'
   class='post'
 )
   nuxt-link(
@@ -15,7 +15,6 @@ div(
   )
   PostMetrics(
     :likes='likes'
-    :dislikes='dislikes'
     :comments='comments'
     class='post__metrics'
   )
@@ -41,6 +40,10 @@ export default {
       type: String,
       required: true
     },
+    titleSlug: {
+      type: String,
+      required: true
+    },
     body: {
       type: String,
       required: true
@@ -54,10 +57,6 @@ export default {
       required: true
     },
     likes: {
-      type: Number,
-      required: true
-    },
-    dislikes: {
       type: Number,
       required: true
     },

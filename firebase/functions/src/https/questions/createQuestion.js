@@ -1,5 +1,10 @@
 import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
+import { generateShortId } from 'utils/generateShortId'
+import { checkIfDocumentExists } from 'utils/checkIfDocumentExists'
+import { slugifyString } from 'utils/slugifyString'
+
+const COLLECTION_ID = 'posts'
 
 // get user information
 const getUserInformation = async ({ uid }) => {
@@ -17,20 +22,20 @@ const getUserInformation = async ({ uid }) => {
 }
 
 // add comment to blog database collection
-const createQuestion = async ({ title, body, uid, username, photoURL }) => {
+const createQuestion = async ({ documentId, title, body, uid, username, photoURL }) => {
   const docRef = admin
     .firestore()
-    .collection('posts')
-    .doc()
+    .collection(COLLECTION_ID)
+    .doc(documentId)
   const data = {
     title,
+    titleSlug: slugifyString(title),
     body,
     uid,
     username,
     photoURL,
     id: docRef.id,
     likes: 0,
-    dislikes: 0,
     comments: 0,
     createdAt: admin.firestore.FieldValue.serverTimestamp()
   }
@@ -38,11 +43,27 @@ const createQuestion = async ({ title, body, uid, username, photoURL }) => {
   return data.id
 }
 
+// Generate an unique collection id
+const getUniqueDocumentId = async () => {
+  const maxAttempts = 3
+  for (let i=0;i<maxAttempts;i++) {
+    const id = generateShortId()
+    const doesDocExist = await checkIfDocumentExists({
+      collectionId: COLLECTION_ID,
+      documentId: id
+    })
+    if (!doesDocExist) return id
+  }
+}
+
 export const listener = functions.https.onCall(async ({ title, body }, { auth }) => {
   try {
     const { uid } = auth
-    const { username, photoURL, } = await getUserInformation({ uid })
-    const questionId = await createQuestion({ title, body, uid, username, photoURL })
+    const documentId = await getUniqueDocumentId()
+    if (!uid || !documentId) return
+
+    const { username, photoURL } = await getUserInformation({ uid })
+    const questionId = await createQuestion({ documentId, title, body, uid, username, photoURL })
     console.log('questionId: ', questionId)
     return { questionId }
   } catch (e) {

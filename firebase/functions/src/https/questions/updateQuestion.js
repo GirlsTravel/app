@@ -1,6 +1,7 @@
 import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
 import { checkIfAuthDocumentExists } from 'utils/checkIfAuthDocumentExists'
+import { slugifyString } from 'utils/slugifyString'
 
 const COLLECTION_ID = 'posts'
 
@@ -12,6 +13,7 @@ const updateDocument = async ({ id, title, body }) => {
     .doc(id)
   const data = {
     title,
+    titleSlug: slugifyString(title),
     body,
     updatedAt: admin.firestore.FieldValue.serverTimestamp()
   }

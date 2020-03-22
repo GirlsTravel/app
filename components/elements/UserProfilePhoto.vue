@@ -3,11 +3,19 @@ div(
   v-lazy:background-image='photoURL'
   class='user-profile-photo'
 )
+  IconUserProfile(
+    v-if='photoURL'
+    class='user-profile-photo--placeholder'
+  )
 </template>
 
 <script>
+import IconUserProfile from '~/assets/svg/user-profile.svg'
+
 export default {
-  components: {},
+  components: {
+    IconUserProfile
+  },
   props: {
     photoURL: {
       type: String,
@@ -24,10 +32,22 @@ export default {
 
 <style lang="sass" scoped>
 .user-profile-photo
-  background: $pri-cl
-  border-radius: 50%
+  position: relative
+  height: inherit
   overflow: hidden
+  border-radius: 50%
   background-position: center
   background-size: contain
-  height: inherit
+  background: $pri-cl
+
+  &--placeholder
+    position: absolute
+    left: 50%
+    bottom: 0
+    height: 80%
+    transform: translateX(-50%)
+    fill: $grey
+
+  &[lazy='loaded'] .user-profile-photo--placeholder
+    display: none
 </style>

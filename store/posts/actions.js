@@ -116,7 +116,7 @@ export default {
     try {
       const createQuestion = functions.httpsCallable('https-createQuestion')
       const { data } = await createQuestion({ title, body })
-      return { questionId: data.questionId }
+      return { questionId: data.questionId, titleSlug: data.titleSlug }
     } catch (e) {
       console.log('error: ', e)
       console.log('error message: ', e.message)

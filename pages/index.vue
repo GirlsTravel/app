@@ -16,11 +16,11 @@ div(class='questions')
       PostSummary(
         :id='post.id'
         :title='post.title'
+        :titleSlug='post.titleSlug'
         :body='post.body'
         :author='post.username'
         :photoURL='post.photoURL'
         :likes='post.likes'
-        :dislikes='post.dislikes'
         :comments='post.comments'
         :createdAt='post.createdAt'
       )
