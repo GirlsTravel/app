@@ -86,7 +86,13 @@ export default {
     },
 
     navigateToQuestion() {
-      this.$router.replace({ name: 'posts-id', params: { id: this.id } })
+      this.$router.replace({
+        name: 'posts-id-title',
+        params: {
+          id: this.id,
+          title: this.question.titleSlug
+        }
+      })
     },
 
     ...mapMutations({

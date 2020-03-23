@@ -37,6 +37,10 @@ export default {
       type: String,
       required: true
     },
+    titleSlug: {
+      type: String,
+      required: true
+    },
     body: {
       type: String,
       required: true
@@ -95,7 +99,13 @@ export default {
     },
 
     editQuestion() {
-      this.$router.push({ name: 'posts-id-edit', params: { id: this.id } })
+      this.$router.push({
+        name: 'posts-id-title-edit',
+        params: {
+          id: this.id,
+          title: this.titleSlug
+        }
+      })
     },
 
     async handleDeleteQuestion() {

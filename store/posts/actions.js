@@ -94,7 +94,7 @@ export default {
 
   watchPostMeta({ commit, rootState }) {
     const uid = auth().currentUser?.uid
-    const isQuestionRoute = rootState.route.name === 'posts-id'
+    const isQuestionRoute = rootState.route.name === 'posts-id-title'
     if (!uid || !isQuestionRoute) return
     const questionId = rootState.route.params.id
     console.log('rootState.route: ', rootState.route)
@@ -116,6 +116,7 @@ export default {
     try {
       const createQuestion = functions.httpsCallable('https-createQuestion')
       const { data } = await createQuestion({ title, body })
+      console.log('data: ', data)
       return { questionId: data.questionId, titleSlug: data.titleSlug }
     } catch (e) {
       console.log('error: ', e)

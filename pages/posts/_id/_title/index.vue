@@ -3,6 +3,7 @@ div(class='question')
   Post(
     v-if='currentQuestion'
     :title='currentQuestion.title'
+    :titleSlug='currentQuestion.titleSlug'
     :body='currentQuestion.body'
     :author='currentQuestion.username'
     :photoURL='currentQuestion.photoURL'

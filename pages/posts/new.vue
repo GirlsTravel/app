@@ -67,7 +67,7 @@ export default {
         body: this.body
       })
       this.$router.push({
-        name: 'posts-id',
+        name: 'posts-id-title',
         params: {
           id: questionId,
           title: titleSlug

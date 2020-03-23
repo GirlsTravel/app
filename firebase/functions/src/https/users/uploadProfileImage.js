@@ -14,7 +14,7 @@ const uploadImage = async ({ image, uid }) => {
   const options = {
     public_id: uid,
     folder: 'user_profile_photo',
-    format: 'webp'
+    format: 'jpg'
   }
   return await cloudinary.v2.uploader.upload(image, options)
 }
@@ -33,8 +33,8 @@ export const listener = functions.https.onCall(async ({ image }, { auth }) => {
     const { uid } = auth
     console.log('uid: ', uid)
     console.log('image: ', image)
-    const { url } = await uploadImage({ image, uid })
-    await updateUserProfileImage({ uid, photoURL: url })
+    const { secure_url } = await uploadImage({ image, uid })
+    await updateUserProfileImage({ uid, photoURL: secure_url })
     return
   } catch (e) {
     console.error('catch error: ', e)

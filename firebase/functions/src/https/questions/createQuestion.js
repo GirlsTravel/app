@@ -40,7 +40,7 @@ const createQuestion = async ({ documentId, title, body, uid, username, photoURL
     createdAt: admin.firestore.FieldValue.serverTimestamp()
   }
   await docRef.set(data)
-  return data.id
+  return { questionId: data.id, titleSlug: data.titleSlug }
 }
 
 // Generate an unique collection id
@@ -63,9 +63,9 @@ export const listener = functions.https.onCall(async ({ title, body }, { auth })
     if (!uid || !documentId) return
 
     const { username, photoURL } = await getUserInformation({ uid })
-    const questionId = await createQuestion({ documentId, title, body, uid, username, photoURL })
+    const { questionId, titleSlug } = await createQuestion({ documentId, title, body, uid, username, photoURL })
     console.log('questionId: ', questionId)
-    return { questionId }
+    return { questionId, titleSlug }
   } catch (e) {
     console.error('catch error: ', e)
     throw new functions.https.HttpsError(

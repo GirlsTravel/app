@@ -4,7 +4,7 @@ div(
   class='post'
 )
   nuxt-link(
-    :to='{ name: "posts-id", params: { id } }'
+    :to='{ name: "posts-id-title", params: { id, title: titleSlug } }'
     class='post__title'
   ) {{ title }}
   UserProfilePhoto(
