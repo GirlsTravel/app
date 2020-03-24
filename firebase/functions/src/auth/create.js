@@ -6,6 +6,7 @@ import { uniqueNamesGenerator, adjectives, colors, names } from 'unique-names-ge
 const generateUsername = () =>
   uniqueNamesGenerator({
     dictionaries: [adjectives, names],
+    length: 2,
     separator: ''
   })
 
