@@ -5,7 +5,7 @@ import { uniqueNamesGenerator, adjectives, colors, names } from 'unique-names-ge
 // Creates a random, unique name
 const generateUsername = () =>
   uniqueNamesGenerator({
-    dictionaries: [adjectives, colors, names],
+    dictionaries: [adjectives, names],
     separator: ''
   })
 
