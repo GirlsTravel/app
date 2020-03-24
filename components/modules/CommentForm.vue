@@ -29,17 +29,20 @@ export default {
   components: {},
   props: {
     value: {
-      type: String
+      type: String,
+      required: true
     },
     textareaPlaceholder: {
       type: String,
       default: 'Write here...'
     },
     primaryButtonLabel: {
-      type: String
+      type: String,
+      default: ''
     },
     secondaryButtonLabel: {
-      type: String
+      type: String,
+      default: ''
     }
   },
   data() {

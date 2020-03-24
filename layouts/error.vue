@@ -1,13 +1,24 @@
 <template lang="pug">
-div(class='')
-  h1 Error
-  pre {{ error }}
+div(class='vue-error')
+  div(class='vue-error__wrapper')
+    h1(class='vue-error__title') {{ statusCode }} Error
+    p(class='vue-error__body')
+      | {{ message }}.&nbsp;
+      nuxt-link(
+        :to='{ name: "index" }'
+        class='vue-error__body-link'
+      ) Back to homepage
+    IllustrationErrorWarning(class='vue-error__illustration')
 </template>
 
 <script>
+import IllustrationErrorWarning from '~/assets/svg/error-warning.svg'
+
 export default {
   name: 'NuxtError',
-  components: {},
+  components: {
+    IllustrationErrorWarning
+  },
   props: {
     error: {
       type: Object,
@@ -19,7 +30,7 @@ export default {
   },
   computed: {
     statusCode() {
-      return this.error?.statusCode || 500
+      return (this.error && this.error.statusCode) || 500
     },
     message() {
       return this.error.message || ''
@@ -30,6 +41,30 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.test
-  background: white
+.vue-error
+  @extend %flex--row-center
+  background: $white
+
+  &__wrapper
+    height: min-content
+    display: grid
+    grid-gap: $unit*2
+    justify-items: center
+    padding: $unit*10 $unit*2
+
+  &__illustration
+    width: 100%
+    max-height: $unit*40
+
+  &__title
+    font-size: $fs1
+    font-weight: $fw-bold
+
+  &__body
+    text-align: center
+
+    &-link
+      color: $blue
+      text-decoration: underline
+      white-space: nowrap
 </style>

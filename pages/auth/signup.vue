@@ -53,11 +53,13 @@ export default {
   methods: {
     async signUp() {
       try {
+        this.$toast.show('One moment, sending you an email now.')
         await this.sendSignInLinkToEmail({
           email: this.email
         })
         this.isEmailSent = true
       } catch (e) {
+        this.$toast.show('Oops! Something went wrong. Try again.')
         // console.error(e)
         // const errorMessage = 'Sign up failed'
         // this.handleError({ errorMessage })

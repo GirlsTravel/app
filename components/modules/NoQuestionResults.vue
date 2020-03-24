@@ -5,7 +5,7 @@ div(class='no-results')
   p(class='no-results__body')
     | Can't find what you're looking for?&nbsp;
     nuxt-link(
-      :to='{ name: "posts-new" }'
+      :to='{ name: "questions-new" }'
       class='no-results__body-link'
     ) Ask a question
 </template>

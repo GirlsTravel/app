@@ -94,7 +94,7 @@ export default {
 
   watchPostMeta({ commit, rootState }) {
     const uid = auth().currentUser?.uid
-    const isQuestionRoute = rootState.route.name === 'posts-id-title'
+    const isQuestionRoute = rootState.route.name === 'questions-id-title'
     if (!uid || !isQuestionRoute) return
     const questionId = rootState.route.params.id
     console.log('rootState.route: ', rootState.route)

@@ -93,29 +93,43 @@ export default {
     await store.dispatch('posts/fetchPostComments', { questionId: id })
     store.dispatch('posts/watchPost', { id })
   },
+  beforeMount() {
+    const { id } = this.$route.params
+    this.watchPostComments({ questionId: id })
+    this.watchPostMeta()
+  },
+  beforeDestroy() {
+    console.log('beforeDestroy')
+    this.unsubscribeAllListeners()
+  },
   methods: {
     checkIfAuth() {
       if (!this.isAuth) this.$router.push({ name: 'auth-signup' })
     },
 
     async submitAnswer() {
-      if (this.editAnswerData) {
-        // Edit an existing answer
-        const { commentId } = await this.updateComment({
-          id: this.editAnswerData.id,
-          body: this.answer
-        })
-        console.log('commentId: ', commentId)
-      } else {
-        // Create a new answer
-        const { id } = this.$route.params
-        const commentId = await this.createComment({
-          questionId: id,
-          body: this.answer
-        })
-        console.log('commentId: ', commentId)
+      try {
+        this.$toast.show('One moment, submitting your answer.')
+        if (this.editAnswerData) {
+          // Edit an existing answer
+          const { commentId } = await this.updateComment({
+            id: this.editAnswerData.id,
+            body: this.answer
+          })
+          console.log('commentId: ', commentId)
+        } else {
+          // Create a new answer
+          const { id } = this.$route.params
+          const commentId = await this.createComment({
+            questionId: id,
+            body: this.answer
+          })
+          console.log('commentId: ', commentId)
+        }
+        this.cancelAnswer()
+      } catch (e) {
+        this.$toast.show('Oops! Something went wrong. Try again.')
       }
-      this.cancelAnswer()
     },
 
     editComment({ commentId }) {
@@ -151,15 +165,6 @@ export default {
       watchPostMeta: 'posts/watchPostMeta',
       unsubscribeAllListeners: 'posts/unsubscribeAllListeners'
     })
-  },
-  beforeMount() {
-    const { id } = this.$route.params
-    this.watchPostComments({ questionId: id })
-    this.watchPostMeta()
-  },
-  beforeDestroy() {
-    console.log('beforeDestroy')
-    this.unsubscribeAllListeners()
   }
 }
 </script>

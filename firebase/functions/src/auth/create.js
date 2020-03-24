@@ -1,5 +1,13 @@
 import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
+import { uniqueNamesGenerator, adjectives, colors, names } from 'unique-names-generator'
+
+// Creates a random, unique name
+const generateUsername = () =>
+  uniqueNamesGenerator({
+    dictionaries: [adjectives, colors, names],
+    separator: ''
+  })
 
 // add user to database collection
 const createUser = async ({ uid, email, emailVerified }) => {
@@ -14,10 +22,10 @@ const createUser = async ({ uid, email, emailVerified }) => {
     emailVerified,
     firstName: '',
     lastName: '',
-    displayName: '',
+    username: generateUsername(),
     photoURL: ''
   }
-  
+
   await docRef.set(data)
   return data.id
 }

@@ -1,11 +1,11 @@
 <template lang="pug">
-div(class='new-question')
+div(class='edit-question')
   ViewHeader(
-    title='New Question'
-    primaryActionLabel='Create'
+    title='Edit Question'
+    primaryActionLabel='Update'
     secondaryActionLabel='Cancel'
     @primaryActionClick='handleSubmit'
-    @secondaryActionClick='$router.push({ name: "index" })'
+    @secondaryActionClick='navigateToQuestion'
   )
 
   aside
@@ -15,35 +15,38 @@ div(class='new-question')
 
   form(
     @submit.stop.prevent=''
-    class='new-question__form'
+    class='edit-question__form'
   )
     BaseInput(
       v-model='title'
       label='Title'
       placeholder='When is the best time of the year to visit northern Italy?'
-      class='new-question__form-title'
+      class='edit-question__form-title'
     )
     BaseTextarea(
       v-model='body'
       label='Message'
       placeholder='Provide more detail here...'
-      class='new-question__form-body'
+      class='edit-question__form-body'
     )
-  //- label Message
-  //- div(
+
+  //- BaseInput(
+  //-   v-model='title'
+  //-   label='Title'
+  //- )
+  //- BaseTextarea(
   //-   v-model='body'
-  //-   contenteditable='true'
-  //-   class='new-question__form-body'
+  //-   label='Message'
   //- )
-  //- BaseButton(
-  //-   @click='handleSubmit'
-  //-   class='new-question__form-submit'
-  //- )
+  //- BaseButton(@click='handleSubmit')
+  //- nuxt-link(
+  //-   :to='{ name: "questions-id", params: { id } }'
+  //- ) Cancel
   //- RichTextEditor
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapMutations, mapActions } from 'vuex'
 import ViewHeader from '~/components/modules/ViewHeader.vue'
 import RichTextEditor from '~/components/modules/RichTextEditor.vue'
 
@@ -60,30 +63,56 @@ export default {
     }
   },
   computed: {},
+  async asyncData({ store, params }) {
+    const { id } = params
+    const question = await store.dispatch('posts/fetchPost', { id })
+    return { id, question }
+  },
+  beforeMount() {
+    if (!this.question) return
+    const { title, body } = this.question
+    this.title = title
+    this.body = body
+  },
   methods: {
     async handleSubmit() {
-      const { questionId, titleSlug } = await this.createQuestion({
-        title: this.title,
-        body: this.body
-      })
-      this.$router.push({
-        name: 'posts-id-title',
+      try {
+        this.$toast.show('One moment, submitting your updated question.')
+        await this.updateQuestion({
+          id: this.id,
+          title: this.title,
+          body: this.body
+        })
+        await this.DELETE_QUESTION({ id: this.id })
+        this.navigateToQuestion()
+      } catch (e) {
+        this.$toast.show('Oops! Something went wrong. Try again.')
+      }
+    },
+
+    navigateToQuestion() {
+      this.$router.replace({
+        name: 'questions-id-title',
         params: {
-          id: questionId,
-          title: titleSlug
+          id: this.id,
+          title: this.question.titleSlug
         }
       })
     },
+
+    ...mapMutations({
+      DELETE_QUESTION: 'posts/DELETE_QUESTION'
+    }),
+
     ...mapActions({
-      createQuestion: 'posts/createQuestion'
+      updateQuestion: 'posts/updateQuestion'
     })
-  },
-  middleware: 'isAuth'
+  }
 }
 </script>
 
 <style lang="sass" scoped>
-.new-question
+.edit-question
   background: white
   padding: 0 $unit*2
 

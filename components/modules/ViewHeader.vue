@@ -20,10 +20,12 @@ export default {
       required: true
     },
     primaryActionLabel: {
-      type: String
+      type: String,
+      required: true
     },
     secondaryActionLabel: {
-      type: String
+      type: String,
+      required: true
     }
   },
   data() {

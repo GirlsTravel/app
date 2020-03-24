@@ -1,10 +1,10 @@
 <template lang="pug">
 div(
-  @click='$router.push({ name: "posts-id-title", params: { id, title: titleSlug } })'
+  @click='$router.push({ name: "questions-id-title", params: { id, title: titleSlug } })'
   class='post'
 )
   nuxt-link(
-    :to='{ name: "posts-id-title", params: { id, title: titleSlug } }'
+    :to='{ name: "questions-id-title", params: { id, title: titleSlug } }'
     class='post__title'
   ) {{ title }}
   UserProfilePhoto(

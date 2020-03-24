@@ -32,7 +32,8 @@ export default {
       required: true
     },
     comments: {
-      type: Number
+      type: Number,
+      default: undefined
     },
     isLiked: {
       type: Boolean,

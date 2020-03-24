@@ -31,6 +31,7 @@ export default {
   methods: {
     async subscribeToNewsletter() {
       try {
+        this.$toast.show('One moment, talking to our secure server now.')
         const createFeedback = functions.httpsCallable(
           'https-subscribeNewsletter'
         )

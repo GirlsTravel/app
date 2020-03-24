@@ -135,22 +135,26 @@ export default {
     },
 
     async submitReply() {
-      if (this.editReplyData) {
-        const { replyId } = await this.updateReply({
-          id: this.editReplyData.id,
-          body: this.reply
-        })
-        console.log('edit replyId: ', replyId)
-      } else {
-        const { replyId } = await this.createReply({
-          questionId: this.questionId,
-          commentId: this.id,
-          body: this.reply
-        })
-        console.log('create replyId: ', replyId)
+      try {
+        this.$toast.show('One moment, submitting your reply.')
+        if (this.editReplyData) {
+          const { replyId } = await this.updateReply({
+            id: this.editReplyData.id,
+            body: this.reply
+          })
+          console.log('edit replyId: ', replyId)
+        } else {
+          const { replyId } = await this.createReply({
+            questionId: this.questionId,
+            commentId: this.id,
+            body: this.reply
+          })
+          console.log('create replyId: ', replyId)
+        }
+        this.cancelReply()
+      } catch (e) {
+        this.$toast.show('Oops! Something went wrong. Try again.')
       }
-
-      this.cancelReply()
     },
 
     editReply({ replyId }) {

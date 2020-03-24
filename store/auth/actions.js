@@ -38,31 +38,33 @@ export default {
     }
   },
 
-  async confirmSignIn() {
+  async confirmSignIn(_, { email }) {
     try {
       const url = window.location.href
       console.log('confirmSignIn: ', url)
+      console.log('email prop: ', email)
       if (auth().isSignInWithEmailLink(url)) {
         console.log('correct URL')
-        const email = window.localStorage.getItem('emailForSignIn')
-        console.log('email: ', email)
-        console.log('email falsy: ', !email)
-
+        const emailForSignIn =
+          email || window.localStorage.getItem('emailForSignIn')
+        console.log('emailForSignIn: ', emailForSignIn)
         // If missing email, prompt user for it
-        if (!email) {
-          console.log('email is missing!!')
+        if (!emailForSignIn) {
+          throw new Error('Email is missing')
           // email = window.prompt('Please provide your email for confirmation')
         }
 
         // Signin user and remove the email localStorage
-        const result = await auth().signInWithEmailLink(email, url)
+        const result = await auth().signInWithEmailLink(emailForSignIn, url)
         console.log('result: ', result)
         window.localStorage.removeItem('emailForSignIn')
         return result
+      } else {
+        console.error('incorrect URL')
+        throw new Error('Incorrect URL')
       }
-      console.log('incorrect URL')
     } catch (err) {
-      this.errorMessage = err.message
+      console.error(err)
     }
   },
 

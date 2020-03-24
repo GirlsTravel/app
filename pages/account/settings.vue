@@ -103,6 +103,9 @@ export default {
       this.initUserData()
     }
   },
+  beforeMount() {
+    this.initUserData()
+  },
   methods: {
     initUserData() {
       if (this.currentUser) {
@@ -119,14 +122,20 @@ export default {
     },
 
     async submitUserForm() {
-      console.log('submitUserForm')
-      await this.updateUserInformation({
-        username: this.username,
-        email: this.email,
-        firstName: this.firstName,
-        lastName: this.lastName,
-        bio: this.bio
-      })
+      try {
+        this.$toast.show('Saving your information, please wait...')
+        console.log('submitUserForm')
+        await this.updateUserInformation({
+          username: this.username,
+          email: this.email,
+          firstName: this.firstName,
+          lastName: this.lastName,
+          bio: this.bio
+        })
+        this.$toast.show('Your information is now saved.')
+      } catch (e) {
+        this.$toast.show('Oops! Something went wrong. Try again.')
+      }
     },
 
     ...mapActions({
@@ -134,9 +143,6 @@ export default {
       updateUserInformation: 'account/updateUserInformation',
       signOut: 'auth/signOut'
     })
-  },
-  beforeMount() {
-    this.initUserData()
   }
 }
 </script>

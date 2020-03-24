@@ -41,17 +41,22 @@ export default {
     }
   },
   computed: {},
-  created() {
+  mounted() {
     // this.$store.dispatch('auth/confirmSignIn')
     this.handleInitVerification()
   },
   methods: {
     async handleInitVerification() {
-      const { user } = await this.confirmSignIn()
-      if (user) {
-        this.$router.push({
-          name: 'index'
-        })
+      try {
+        this.$toast.show('One moment, verifying your email address.')
+        const { user } = await this.confirmSignIn({ email: this.email })
+        if (user) {
+          this.$router.push({
+            name: 'index'
+          })
+        }
+      } catch (e) {
+        this.$toast.show('Oops! Something went wrong. Try again.')
       }
     },
     ...mapActions({

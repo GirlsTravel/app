@@ -79,6 +79,7 @@ export default {
   methods: {
     async submitFeedback() {
       try {
+        this.$toast.show('One sec, submitting your feedback.')
         const createFeedback = functions.httpsCallable('https-createFeedback')
         await createFeedback({
           value: this.activeChoice,

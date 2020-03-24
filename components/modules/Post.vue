@@ -100,7 +100,7 @@ export default {
 
     editQuestion() {
       this.$router.push({
-        name: 'posts-id-title-edit',
+        name: 'questions-id-title-edit',
         params: {
           id: this.id,
           title: this.titleSlug
