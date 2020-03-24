@@ -37,7 +37,7 @@ export default {
   overflow: hidden
   border-radius: 50%
   background-position: center
-  background-size: contain
+  background-size: contain !important
   background: $pri-cl
 
   &--placeholder

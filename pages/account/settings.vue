@@ -118,7 +118,12 @@ export default {
     },
 
     async changeProfilePhoto(image) {
-      await this.uploadProfileImage({ image })
+      try {
+        this.$toast.show('Uploading your profile image, please wait...')
+        await this.uploadProfileImage({ image })
+      } catch (e) {
+        this.$toast.show('Oops! Something went wrong. Try again.')
+      }
     },
 
     async submitUserForm() {
