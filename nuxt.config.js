@@ -24,7 +24,7 @@ export default {
    ** Global CSS
    */
   css: [
-    '@assets/sass/main.sass'//,
+    '@assets/sass/main.sass'
     // 'quill/dist/quill.snow.css',
     // 'quill/dist/quill.bubble.css',
     // 'quill/dist/quill.core.css'
@@ -80,6 +80,11 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {},
+  /*
+   ** Define the development or production mode of Nuxt.js
+   ** See https://nuxtjs.org/api/configuration-dev
+   */
+  dev: process.env.NODE_ENV !== 'production',
   /*
    ** Build configuration
    */

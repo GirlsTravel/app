@@ -3,8 +3,9 @@ import 'firebase/storage'
 import 'firebase/firestore'
 import 'firebase/auth'
 import 'firebase/functions'
+import nuxtConfig from '../nuxt.config.js'
 
-const config = {
+const prodConfig = {
   apiKey: 'AIzaSyAa4jRHDqgEpkyWhbRR1L15BfzWuU6hYeo',
   authDomain: 'girls-travel-co.firebaseapp.com',
   databaseURL: 'https://girls-travel-co.firebaseio.com',
@@ -14,7 +15,20 @@ const config = {
   appId: '1:1001380734364:web:994e56a46216c58ff1d459'
 }
 
-if (!firebase.apps.length) firebase.initializeApp(config)
+const devConfig = {
+  apiKey: 'AIzaSyDZ0EkjpJeEN8Ho7PK-DCd4qZgxfDwN_JY',
+  authDomain: 'girls-travel-co-dev.firebaseapp.com',
+  databaseURL: 'https://girls-travel-co-dev.firebaseio.com',
+  projectId: 'girls-travel-co-dev',
+  storageBucket: 'girls-travel-co-dev.appspot.com',
+  messagingSenderId: '759661404696',
+  appId: '1:759661404696:web:71e834895529129be7996d'
+}
+
+console.log('isDev: ', nuxtConfig.dev)
+
+if (!firebase.apps.length)
+  firebase.initializeApp(nuxtConfig.dev ? devConfig : prodConfig)
 
 // firebase.functions().useFunctionsEmulator('http://localhost:5000')
 
