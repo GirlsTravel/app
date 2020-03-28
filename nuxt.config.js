@@ -1,3 +1,5 @@
+const isProd = process.env.NODE_ENV === 'production'
+
 export default {
   mode: 'universal',
   /*
@@ -60,7 +62,15 @@ export default {
     '@nuxtjs/style-resources',
     'nuxt-svg-loader',
     'nuxt-client-init-module',
-    'nuxt-vuex-router-sync'
+    'nuxt-vuex-router-sync',
+    // Doc: https://matteogabriele.gitbooks.io/vue-analytics/
+    ['@nuxtjs/google-analytics', {
+      id: 'UA-126987500-3',
+      debug: {
+        // enabled: !isProd,
+        sendHitTask: isProd
+      }
+    }]
   ],
   /*
    ** Toast settings

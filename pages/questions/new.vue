@@ -11,7 +11,7 @@ div(class='new-question')
   aside
     p
       | Please follow the Community Guidelines.&nbsp;
-      a Learn more
+      //- a Learn more
 
   form(
     @submit.stop.prevent=''

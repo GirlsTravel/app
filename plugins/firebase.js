@@ -3,7 +3,6 @@ import 'firebase/storage'
 import 'firebase/firestore'
 import 'firebase/auth'
 import 'firebase/functions'
-import nuxtConfig from '../nuxt.config.js'
 
 const prodConfig = {
   apiKey: 'AIzaSyAa4jRHDqgEpkyWhbRR1L15BfzWuU6hYeo',
@@ -25,10 +24,11 @@ const devConfig = {
   appId: '1:759661404696:web:71e834895529129be7996d'
 }
 
-console.log('isDev: ', nuxtConfig.dev)
+const isProd = process.env.NODE_ENV === 'production'
+console.log('isProd: ', isProd)
 
 if (!firebase.apps.length)
-  firebase.initializeApp(nuxtConfig.dev ? devConfig : prodConfig)
+  firebase.initializeApp(isProd ? prodConfig : devConfig)
 
 // firebase.functions().useFunctionsEmulator('http://localhost:5000')
 

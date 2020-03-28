@@ -4,7 +4,6 @@ div(
   class='user-profile-photo'
 )
   IconUserProfile(
-    v-if='photoURL'
     class='user-profile-photo--placeholder'
   )
 </template>
