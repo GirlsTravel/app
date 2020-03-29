@@ -44,9 +44,17 @@ export default {
    */
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
-    '@nuxtjs/eslint-module'
+    '@nuxtjs/eslint-module',
     // Doc: https://github.com/nuxt-community/stylelint-module
     // '@nuxtjs/stylelint-module'
+    // Doc: https://matteogabriele.gitbooks.io/vue-analytics/
+    ['@nuxtjs/google-analytics', {
+      id: 'UA-126987500-3',
+      debug: {
+        // enabled: !isProd,
+        sendHitTask: isProd
+      }
+    }]
   ],
   /*
    ** Nuxt.js modules
@@ -62,15 +70,7 @@ export default {
     '@nuxtjs/style-resources',
     'nuxt-svg-loader',
     'nuxt-client-init-module',
-    'nuxt-vuex-router-sync',
-    // Doc: https://matteogabriele.gitbooks.io/vue-analytics/
-    ['@nuxtjs/google-analytics', {
-      id: 'UA-126987500-3',
-      debug: {
-        // enabled: !isProd,
-        sendHitTask: isProd
-      }
-    }]
+    'nuxt-vuex-router-sync'
   ],
   /*
    ** Toast settings
