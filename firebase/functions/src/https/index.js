@@ -43,3 +43,9 @@ export const subscribeNewsletter = SubscribeNewsletter.listener
 
 // Export feedback
 export const createFeedback = CreateFeedback.listener
+
+// Export blogs
+export { createBlogPost } from './blogs/createPost'
+
+// Export image finder
+export { imageFinder } from './imageFinder'

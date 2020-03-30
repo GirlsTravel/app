@@ -1,15 +1,15 @@
 <template lang="pug">
 div(class='questions')
   header(class='questions__header')
-    h1 Questions
+    h1 Articles
     nuxt-link(
-      :to='{ name: "blogs" }'
+      :to='{ name: "index" }'
       class='questions__header-link'
-    ) To Blogs
+    ) To Questions
     nuxt-link(
-      :to='{ name: "questions-new" }'
+      :to='{ name: "blogs-new" }'
       class='questions__header-link'
-    ) Ask Question
+    ) New Post
 
   ul(class='questions__list')
     li(
@@ -17,10 +17,10 @@ div(class='questions')
       :key='post + index'
       class='questions__list-item'
     )
-      PostSummary(
+      BlogPostSummary(
         :id='post.id'
         :title='post.title'
-        :titleSlug='post.titleSlug'
+        :handle='post.handle'
         :body='post.body'
         :author='post.username'
         :photoURL='post.photoURL'
@@ -36,12 +36,12 @@ div(class='questions')
 
 <script>
 import { mapState } from 'vuex'
-import PostSummary from '~/components/modules/PostSummary.vue'
+import BlogPostSummary from '~/components/modules/BlogPostSummary.vue'
 import NoQuestionResults from '~/components/modules/NoQuestionResults.vue'
 
 export default {
   components: {
-    PostSummary,
+    BlogPostSummary,
     NoQuestionResults
   },
   computed: {
@@ -52,11 +52,11 @@ export default {
     },
 
     ...mapState({
-      posts: (state) => state.posts.posts
+      posts: (state) => state.blogs.blogPosts
     })
   },
   async fetch({ store }) {
-    await store.dispatch('posts/init')
+    await store.dispatch('blogs/init')
   },
   methods: {}
 }
