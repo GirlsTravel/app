@@ -95,12 +95,12 @@ export default {
    ** Define the development or production mode of Nuxt.js
    ** See https://nuxtjs.org/api/configuration-dev
    */
-  dev: process.env.NODE_ENV !== 'production',
+  dev: !isProd,
   /*
    ** Build configuration
    */
   build: {
-    extractCSS: true,
+    extractCSS: isProd,
     /*
      ** You can extend webpack config here
      */
