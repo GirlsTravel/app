@@ -1,6 +1,6 @@
 <template lang="pug">
 div(class='')
-  h1 Index
+  h1 Questions
 </template>
 
 <script>

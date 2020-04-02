@@ -19,8 +19,9 @@ div(class='user-profile')
       p(class='user-profile__bio-description') A resume profile is typically several sentences or a short paragraph that summarizes an applicant's goals and ambitions for his or her next job. It also highlights the candidate's most relevant qualifications and skills for the job.
 
   div(class='user-profile__sections')
-    a() Articles
-    a Questions
+    nuxt-link(:to='{ name: "users-id", params: { id: "001" } }') Index
+    nuxt-link(:to='{ name: "users-id-articles", params: { id: "001" } }') Articles
+    nuxt-link(:to='{ name: "users-id-questions", params: { id: "001" } }') Questions
 
   div()
     nuxt-child
@@ -38,6 +39,9 @@ export default {
     IconTwitter,
     IconInstagram,
     IconFacebook
+  },
+  validate({ params }) {
+    return params.id
   },
   props: {},
   data() {

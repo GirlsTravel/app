@@ -1,6 +1,6 @@
 <template lang="pug">
 div(class='')
-  h1 hello world
+  h1 Articles
 </template>
 
 <script>
