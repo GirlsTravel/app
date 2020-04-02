@@ -23,7 +23,7 @@ div(class='user-profile')
     a Questions
 
   div()
-    nuxt-child(name='users-id-articles')
+    nuxt-child
 </template>
 
 <script>
