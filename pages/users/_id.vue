@@ -2,12 +2,16 @@
 div(class='user-profile')
   header(class='user-profile__header')
     UserProfilePhoto(
-      photoURL='https://res.cloudinary.com/raina-images/image/upload/w_160,h_160,c_fill,g_face,r_max/v1585420542/user_profile_photo/D72JDbbOeETCOt34j9zRTaeERn02.jpg'
+      :photoURL='user.photoURL'
       class='user-profile__avatar'
     )
     h2(
       class='user-profile__username'
-    ) crazyBridges91
+    ) {{ user.username }}
+    BaseButton(
+      text='Follow'
+      class='user-profile__subscribe'
+    )
     div(
       class='user-profile__social'
     )
@@ -15,16 +19,18 @@ div(class='user-profile')
       IconTwitter(class='user-profile__social-svg')
       IconFacebook(class='user-profile__social-svg')
     div(class='user-profile__bio')
-      h1(class='user-profile__bio-name') Pheobi Bridges
-      p(class='user-profile__bio-description') A resume profile is typically several sentences or a short paragraph that summarizes an applicant's goals and ambitions for his or her next job. It also highlights the candidate's most relevant qualifications and skills for the job.
+      h1(class='user-profile__bio-name') {{ user.firstName }} {{ user.lastName }}
+      p(class='user-profile__bio-description') {{ user.bio }}
 
   div(class='user-profile__sections')
-    nuxt-link(:to='{ name: "users-id", params: { id: "001" } }') Index
-    nuxt-link(:to='{ name: "users-id-articles", params: { id: "001" } }') Articles
-    nuxt-link(:to='{ name: "users-id-questions", params: { id: "001" } }') Questions
+    nuxt-link(
+      :to='{ name: "users-id", params: { id: user.username } }'
+    ) Questions
+    nuxt-link(
+      :to='{ name: "users-id-articles", params: { id: user.username } }'
+    ) Articles
 
-  div()
-    nuxt-child
+  nuxt-child
 </template>
 
 <script>
@@ -48,6 +54,11 @@ export default {
     return {}
   },
   computed: {},
+  async asyncData({ store, params }) {
+    const { id } = params
+    const user = await store.dispatch('users/fetchUser', { username: id })
+    return { user }
+  },
   methods: {}
 }
 </script>
@@ -55,13 +66,13 @@ export default {
 <style lang="sass" scoped>
 .user-profile
   display: grid
-  grid-gap: $unit
+  // grid-gap: $unit
   grid-auto-rows: min-content
 
   &__header
     display: grid
     grid-template-rows: repeat(4, auto)
-    grid-template-columns: auto 1fr
+    grid-template-columns: auto 1fr auto
     grid-gap: $unit*2 $unit*5
     height: min-content
     padding: $unit*5 $unit*2
@@ -81,6 +92,11 @@ export default {
     grid-row: 1 / 2
     grid-column: 2 / 3
     font-size: $fs1
+
+  &__subscribe
+    grid-row: 1 / 3
+    grid-column: 3 / 4
+    align-self: start
 
   &__social
     grid-row: 2 / 3
@@ -114,5 +130,16 @@ export default {
     grid-auto-columns: min-content
     justify-content: center
     padding: $unit*2
+    margin-bottom: $unit
+    border-top: 2px solid $pri-cl
     background: $white
+
+    & > a
+      padding: $unit
+      border-radius: $unit/2
+      color: $grey
+
+      &.nuxt-link-exact-active
+        color: $blue
+        background: $pri-cl
 </style>

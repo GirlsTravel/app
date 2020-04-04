@@ -3,26 +3,12 @@ import * as admin from 'firebase-admin'
 import { generateShortId } from 'utils/generateShortId'
 import { checkIfDocumentExists } from 'utils/checkIfDocumentExists'
 import { slugifyString } from 'utils/slugifyString'
+import { getUserInformation } from 'utils/getUserInformation'
 
-const COLLECTION_ID = 'blogPosts'
+const COLLECTION_ID = 'article'
 
-// get user information
-const getUserInformation = async ({ uid }) => {
-  const doc = await admin
-    .firestore()
-    .collection('users')
-    .doc(uid)
-    .get()
-
-  if (!doc.exists) {
-    throw new Error('User document does not exist in the Users collection')
-  }
-
-  return doc.data()
-}
-
-// add comment to blog database collection
-const createQuestion = async ({ documentId, title, body, uid, username, photoURL }) => {
+// add article to database collection
+const addArticle = async ({ documentId, title, body, heroImageURL, uid, username, photoURL }) => {
   const docRef = admin
     .firestore()
     .collection(COLLECTION_ID)
@@ -31,6 +17,7 @@ const createQuestion = async ({ documentId, title, body, uid, username, photoURL
     title,
     handle: slugifyString(title),
     body,
+    heroImageURL,
     uid,
     username,
     photoURL,
@@ -40,7 +27,7 @@ const createQuestion = async ({ documentId, title, body, uid, username, photoURL
     createdAt: admin.firestore.FieldValue.serverTimestamp()
   }
   await docRef.set(data)
-  return { blogPostId: data.id, handle: data.titleSlug }
+  return { articleId: data.id, handle: data.titleSlug }
 }
 
 // Generate an unique collection id
@@ -56,16 +43,16 @@ const getUniqueDocumentId = async () => {
   }
 }
 
-export const createBlogPost = functions.https.onCall(async ({ title, body }, { auth }) => {
+export const listener = functions.https.onCall(async ({ title, body, heroImageURL }, { auth }) => {
   try {
     const { uid } = auth
     const documentId = await getUniqueDocumentId()
     if (!uid || !documentId) return
 
     const { username, photoURL } = await getUserInformation({ uid })
-    const { blogPostId, handle } = await createQuestion({ documentId, title, body, uid, username, photoURL })
-    console.log('blogPostId: ', blogPostId)
-    return { blogPostId, handle }
+    const { articleId, handle } = await addArticle({ documentId, title, body, heroImageURL, uid, username, photoURL })
+    console.log('articleId: ', articleId)
+    return { articleId, handle }
   } catch (e) {
     console.error('catch error: ', e)
     throw new functions.https.HttpsError(

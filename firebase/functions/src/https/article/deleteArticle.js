@@ -2,9 +2,9 @@ import * as functions from 'firebase-functions'
 import { deleteDocument } from 'utils/deleteDocument'
 import { checkIfAuthDocumentExists } from 'utils/checkIfAuthDocumentExists'
 
-const COLLECTION_ID = 'postComments'
+const COLLECTION_ID = 'article'
 
-// Allows the auth to delete their question
+// Allows the auth to delete their article
 export const listener = functions.https.onCall(async ({ id }, { auth }) => {
   try {
     const { uid } = auth

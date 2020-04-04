@@ -1,7 +1,7 @@
 <template lang="pug">
 div(class='new-question')
   ViewHeader(
-    title='New Blog Post'
+    title='New Article'
     primaryActionLabel='Create'
     secondaryActionLabel='Cancel'
     @primaryActionClick='handleSubmit'
@@ -69,10 +69,11 @@ export default {
         this.$toast.show('One moment, submitting your question.')
         const { blogPostId, handle } = await this.createBlogPost({
           title: this.title,
-          body: this.body
+          body: this.body,
+          heroImageURL: this.imageFinderResult.image
         })
         this.$router.push({
-          name: 'blogs-id-handle',
+          name: 'articles-id-handle',
           params: {
             id: blogPostId,
             handle
@@ -92,7 +93,7 @@ export default {
     }),
 
     ...mapActions({
-      createBlogPost: 'blogs/createBlogPost'
+      createBlogPost: 'articles/createPost'
     })
   },
   middleware: 'isAuth'

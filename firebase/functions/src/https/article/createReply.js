@@ -1,26 +1,14 @@
 import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
+import { getUserInformation } from 'utils/getUserInformation'
 
-// get user information
-const getUserInformation = async ({ uid }) => {
-  const doc = await admin
-    .firestore()
-    .collection('users')
-    .doc(uid)
-    .get()
-
-  if (!doc.exists) {
-    throw new Error('User document does not exist in the Users collection')
-  }
-
-  return doc.data()
-}
+const COLLECTION_ID = 'articleCommentReply'
 
 // add reply to a question answer in the replies collection database
-const createReply = async ({ body, uid, username, photoURL, questionId, commentId }) => {
+const addReply = async ({ body, uid, username, photoURL, articleId, commentId }) => {
   const docRef = admin
     .firestore()
-    .collection('postCommentReplies')
+    .collection(COLLECTION_ID)
     .doc()
   const data = {
     body,
@@ -28,7 +16,7 @@ const createReply = async ({ body, uid, username, photoURL, questionId, commentI
     username,
     photoURL,
     id: docRef.id,
-    questionId,
+    articleId,
     commentId,
     likes: 0,
     comments: 0,
@@ -38,11 +26,11 @@ const createReply = async ({ body, uid, username, photoURL, questionId, commentI
   return data.id
 }
 
-export const listener = functions.https.onCall(async ({ body, questionId, commentId }, { auth }) => {
+export const listener = functions.https.onCall(async ({ body, articleId, commentId }, { auth }) => {
   try {
     const { uid } = auth
     const { username, photoURL, } = await getUserInformation({ uid })
-    const replyId = await createReply({ body, uid, questionId, commentId, username, photoURL })
+    const replyId = await addReply({ body, uid, articleId, commentId, username, photoURL })
     console.log('replyId: ', replyId)
     return { replyId }
   } catch (e) {

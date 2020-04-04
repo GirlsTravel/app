@@ -1,14 +1,16 @@
 import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
 
+const COLLECTION_ID = 'articleLike'
+
 // check if like already exists
-const checkIfLikeExists = async ({ uid, questionId, commentId }) => {
+const checkIfLikeExists = async ({ uid, articleId, commentId }) => {
   // build query
   let queryRef = admin
     .firestore()
-    .collection('postMeta')
+    .collection(COLLECTION_ID)
     .where('uid', '==', uid)
-    .where('questionId', '==', questionId)
+    .where('articleId', '==', articleId)
   // add a commentId query if it exists
   queryRef = commentId ? queryRef.where('commentId', '==', commentId) : queryRef.where('commentId', '==', null)
   // execute query
@@ -18,14 +20,14 @@ const checkIfLikeExists = async ({ uid, questionId, commentId }) => {
 }
 
 // add like to postMeta database collection
-const createLike = async ({ uid, questionId, commentId }) => {
+const addLike = async ({ uid, articleId, commentId }) => {
   const docRef = admin
     .firestore()
-    .collection('postMeta')
+    .collection(COLLECTION_ID)
     .doc()
   const data = {
     uid,
-    questionId,
+    articleId,
     commentId: commentId || null,
     id: docRef.id,
     createdAt: admin.firestore.FieldValue.serverTimestamp()
@@ -34,12 +36,12 @@ const createLike = async ({ uid, questionId, commentId }) => {
   return data.id
 }
 
-export const listener = functions.https.onCall(async ({ questionId, commentId }, { auth }) => {
+export const listener = functions.https.onCall(async ({ articleId, commentId }, { auth }) => {
   try {
     const { uid } = auth
-    const doesLikeExist = await checkIfLikeExists({ uid, questionId, commentId })
+    const doesLikeExist = await checkIfLikeExists({ uid, articleId, commentId })
     if (doesLikeExist) throw new Error('User has already liked the targeted document')
-    const likeId = await createLike({ uid, questionId, commentId })
+    const likeId = await addLike({ uid, articleId, commentId })
     console.log('likeId: ', likeId)
     return { likeId }
   } catch (e) {

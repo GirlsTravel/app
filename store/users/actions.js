@@ -7,5 +7,19 @@ export default {
     docRef.onSnapshot((docSnapshot) => {
       commit('ADD_USER', { user: docSnapshot.data() })
     })
+  },
+
+  async fetchUser({ commit }, { username }) {
+    const querySnapshot = await firestore
+      .collection('users')
+      .where('username', '==', username)
+      .get()
+
+    let user = null
+    querySnapshot.forEach((doc) => {
+      user = doc.data()
+      commit('ADD_USER', { user })
+    })
+    return user
   }
 }

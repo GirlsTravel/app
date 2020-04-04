@@ -31,7 +31,14 @@ const firestoreDocument = functions.firestore.document('users/{userId}')
 export const listener = firestoreDocument.onUpdate(async (change, context) => {
   try {
     // Relevant collections that contain documents that should updated
-    const collectionIds = ['posts', 'postComments', 'postCommentReplies']
+    const collectionIds = [
+      'posts',
+      'postComments',
+      'postCommentReplies',
+      'article',
+      'articleComment',
+      'articleCommentReply'
+    ]
 
     const {
       photoURL: beforePhotoURL,

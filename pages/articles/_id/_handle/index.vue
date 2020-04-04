@@ -1,18 +1,17 @@
 <template lang="pug">
 div(class='question')
-  div(class='question__image')
-
-  Post(
-    v-if='currentQuestion'
-    :title='currentQuestion.title'
-    :titleSlug='currentQuestion.titleSlug'
-    :body='currentQuestion.body'
-    :author='currentQuestion.username'
-    :photoURL='currentQuestion.photoURL'
-    :createdAt='currentQuestion.createdAt'
-    :likes='currentQuestion.likes'
-    :comments='currentQuestion.comments'
-    :id='currentQuestion.id'
+  Article(
+    v-if='currentArticle'
+    :title='currentArticle.title'
+    :titleSlug='currentArticle.handle'
+    :body='currentArticle.body'
+    :heroImageURL='currentArticle.heroImageURL'
+    :author='currentArticle.username'
+    :photoURL='currentArticle.photoURL'
+    :createdAt='currentArticle.createdAt'
+    :likes='currentArticle.likes'
+    :comments='currentArticle.comments'
+    :id='currentArticle.id'
     class='question__post'
   )
 
@@ -42,13 +41,13 @@ div(class='question')
       :key='comment + index'
       class='question__list-item'
     )
-      PostComment(
+      ArticleComment(
         :body='comment.body'
         :author='comment.username'
         :photoURL='comment.photoURL'
         :createdAt='comment.createdAt'
         :id='comment.id'
-        :questionId='currentQuestion.id'
+        :articleId='currentArticle.id'
         :likes='comment.likes'
         :comments='comment.comments'
         @edit='editComment'
@@ -63,15 +62,15 @@ div(class='question')
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import Post from '~/components/modules/Post.vue'
-import PostComment from '~/components/modules/PostComment.vue'
+import Article from '~/components/modules/Article.vue'
+import ArticleComment from '~/components/modules/ArticleComment.vue'
 import NoAnswerResults from '~/components/modules/NoAnswerResults.vue'
 import CommentForm from '~/components/modules/CommentForm.vue'
 
 export default {
   components: {
-    Post,
-    PostComment,
+    Article,
+    ArticleComment,
     NoAnswerResults,
     CommentForm
   },
@@ -84,21 +83,21 @@ export default {
   },
   computed: {
     ...mapGetters({
-      currentQuestion: 'blogs/currentBlogPost',
-      currentComments: 'posts/currentComments',
+      currentArticle: 'articles/currentPost',
+      currentComments: 'articles/currentComments',
       isAuth: 'auth/isAuthUser'
     })
   },
   async fetch({ store, params }) {
     const { id } = params
-    await store.dispatch('blogs/fetchBlogPost', { id })
-    // await store.dispatch('posts/fetchPostComments', { questionId: id })
-    // store.dispatch('posts/watchPost', { id })
+    await store.dispatch('articles/fetchPost', { id })
+    await store.dispatch('articles/fetchPostComments', { articleId: id })
+    store.dispatch('articles/watchPost', { id })
   },
   beforeMount() {
-    // const { id } = this.$route.params
-    // this.watchPostComments({ questionId: id })
-    // this.watchPostMeta()
+    const { id } = this.$route.params
+    this.watchPostComments({ articleId: id })
+    this.watchPostMeta()
   },
   beforeDestroy() {
     console.log('beforeDestroy')
@@ -123,7 +122,7 @@ export default {
           // Create a new answer
           const { id } = this.$route.params
           const commentId = await this.createComment({
-            questionId: id,
+            articleId: id,
             body: this.answer
           })
           console.log('commentId: ', commentId)
@@ -161,11 +160,11 @@ export default {
     },
 
     ...mapActions({
-      createComment: 'posts/createComment',
-      updateComment: 'posts/updateComment',
-      watchPostComments: 'posts/watchPostComments',
-      watchPostMeta: 'posts/watchPostMeta',
-      unsubscribeAllListeners: 'posts/unsubscribeAllListeners'
+      createComment: 'articles/createComment',
+      updateComment: 'articles/updateComment',
+      watchPostComments: 'articles/watchPostComments',
+      watchPostMeta: 'articles/watchPostMeta',
+      unsubscribeAllListeners: 'articles/unsubscribeAllListeners'
     })
   }
 }
@@ -217,12 +216,4 @@ export default {
 
     &-form
       margin-top: $unit*2
-
-  &__image
-    width: 100%
-    height: $unit*40
-    background-image: url('https://images.unsplash.com/photo-1584391789468-048a5ae45358?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1951&q=80')
-    background-position: center
-    background-repeat: no-repeat
-    background-size: cover
 </style>

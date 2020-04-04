@@ -1,10 +1,14 @@
 <template lang="pug">
 div(class='author-header')
-  UserAvatar(
-    :author='author'
-    :photoURL='photoURL'
-    :createdAt='createdAt'
-  )
+  //- nuxt-link(
+  //-   :to='{ name: "users-id", params: { id: author } }'
+  //- )
+  div
+    UserAvatar(
+      :author='author'
+      :photoURL='photoURL'
+      :createdAt='createdAt'
+    )
 
   DropdownSlot(
     v-if='isAuth'

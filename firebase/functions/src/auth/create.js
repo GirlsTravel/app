@@ -5,13 +5,13 @@ import { uniqueNamesGenerator, adjectives, colors, names } from 'unique-names-ge
 // Creates a random, unique name
 const generateUsername = () =>
   uniqueNamesGenerator({
-    dictionaries: [adjectives, names],
+    dictionaries: [colors, names],
     length: 2,
     separator: ''
   })
 
 // add user to database collection
-const createUser = async ({ uid, email, emailVerified }) => {
+const createUser = async ({ uid }) => {
   const docRef = admin
     .firestore()
     .collection('users')
@@ -19,8 +19,6 @@ const createUser = async ({ uid, email, emailVerified }) => {
 
   const data = {
     uid,
-    email,
-    emailVerified,
     firstName: '',
     lastName: '',
     username: generateUsername(),
@@ -34,8 +32,8 @@ const createUser = async ({ uid, email, emailVerified }) => {
 export const onAuthCreate = functions.auth.user().onCreate(async (user) => {
   try {
     console.log('user: ', user)
-    const { uid, email, emailVerified } = user
-    await createUser({ uid, email, emailVerified })
+    const { uid } = user
+    await createUser({ uid })
   } catch (e) {
     console.error('catch error: ', e)
   }

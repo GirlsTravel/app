@@ -48,3 +48,8 @@ TODO
     "pre-commit": "lint-staged"
   }
 },
+
+<!-- database structure -->
+users
+
+usersSettings

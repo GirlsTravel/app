@@ -3,7 +3,7 @@ div(class='questions')
   header(class='questions__header')
     h1 Questions
     nuxt-link(
-      :to='{ name: "blogs" }'
+      :to='{ name: "articles" }'
       class='questions__header-link'
     ) To Blogs
     nuxt-link(
@@ -88,6 +88,7 @@ export default {
   &__list
     display: grid
     grid-gap: $unit
+    height: min-content
 
     &-item
       background: $white

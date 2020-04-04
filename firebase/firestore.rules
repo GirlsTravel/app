@@ -7,7 +7,7 @@ service cloud.firestore {
     }
 
     match /users/{userId} {
-      allow read: if request.auth.uid == userId;
+      allow read;
     }
 
     match /posts/{postId} {
@@ -30,7 +30,23 @@ service cloud.firestore {
       allow read: if false;
     }
 
-    match /blogPosts/{postId} {
+    match /newsletter/{newsletterId} {
+      allow read: if false;
+    }
+
+    match /article/{articleId} {
+      allow read;
+    }
+
+    match /articleComment/{articleCommentId} {
+      allow read;
+    }
+
+    match /articleCommentReply/{articleCommentReplyId} {
+      allow read;
+    }
+
+    match /articleLike/{articleLikeId} {
       allow read;
     }
 

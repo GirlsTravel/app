@@ -7,9 +7,9 @@ div(class='questions')
       class='questions__header-link'
     ) To Questions
     nuxt-link(
-      :to='{ name: "blogs-new" }'
+      :to='{ name: "articles-new" }'
       class='questions__header-link'
-    ) New Post
+    ) Write Article
 
   ul(class='questions__list')
     li(
@@ -17,11 +17,12 @@ div(class='questions')
       :key='post + index'
       class='questions__list-item'
     )
-      BlogPostSummary(
+      ArticleSummary(
         :id='post.id'
         :title='post.title'
         :handle='post.handle'
         :body='post.body'
+        :heroImageURL='post.heroImageURL'
         :author='post.username'
         :photoURL='post.photoURL'
         :likes='post.likes'
@@ -36,12 +37,12 @@ div(class='questions')
 
 <script>
 import { mapState } from 'vuex'
-import BlogPostSummary from '~/components/modules/BlogPostSummary.vue'
+import ArticleSummary from '~/components/modules/ArticleSummary.vue'
 import NoQuestionResults from '~/components/modules/NoQuestionResults.vue'
 
 export default {
   components: {
-    BlogPostSummary,
+    ArticleSummary,
     NoQuestionResults
   },
   computed: {
@@ -52,11 +53,11 @@ export default {
     },
 
     ...mapState({
-      posts: (state) => state.blogs.blogPosts
+      posts: (state) => state.articles.posts
     })
   },
   async fetch({ store }) {
-    await store.dispatch('blogs/init')
+    await store.dispatch('articles/init')
   },
   methods: {}
 }
@@ -88,6 +89,7 @@ export default {
   &__list
     display: grid
     grid-gap: $unit
+    height: min-content
 
     &-item
       background: $white

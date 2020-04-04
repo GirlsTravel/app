@@ -36,10 +36,10 @@ div(class='settings')
       label='Username'
       v-model='username'
     )
-    //- BaseTextarea(
-    //-   label='Bio'
-    //-   v-model='bio'
-    //- )
+    BaseTextarea(
+      label='Bio'
+      v-model='bio'
+    )
 
     //- h3 Private Information
     //- BaseInput(

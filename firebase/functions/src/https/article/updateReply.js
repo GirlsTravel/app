@@ -2,7 +2,7 @@ import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
 import { checkIfAuthDocumentExists } from 'utils/checkIfAuthDocumentExists'
 
-const COLLECTION_ID = 'postCommentReplies'
+const COLLECTION_ID = 'articleCommentReply'
 
 // update document to posts database collection
 const updateDocument = async ({ id, body }) => {

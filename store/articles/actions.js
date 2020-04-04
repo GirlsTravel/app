@@ -10,42 +10,42 @@ export default {
   },
 
   async init({ commit }) {
-    const querySnapshot = await firestore.collection('blogPosts').get()
+    const querySnapshot = await firestore.collection('article').get()
     querySnapshot.forEach((doc) => {
-      commit('ADD_BLOG_POST', { post: doc.data() })
+      commit('ADD_POST', { post: doc.data() })
     })
   },
 
-  async fetchBlogPost({ state, commit }, { id }) {
-    console.log('fetchBlogPost')
+  async fetchPost({ state, commit }, { id }) {
+    console.log('fetchArticlePost')
     const { posts } = state
     if (posts[id]) return posts[id]
 
     const res = await firestore
-      .collection('blogPosts')
+      .collection('article')
       .doc(id)
       .get()
 
     const data = res.data()
-    if (data) commit('ADD_BLOG_POST', { post: data })
+    if (data) commit('ADD_POST', { post: data })
     return data
   },
 
-  async fetchBlogPostComments({ commit }, { blogPostId }) {
+  async fetchPostComments({ commit }, { articleId }) {
     const querySnapshot = await firestore
-      .collection('blogPostComments')
-      .where('blogPostId', '==', blogPostId)
+      .collection('articleComment')
+      .where('articleId', '==', articleId)
       .get()
 
     querySnapshot.forEach((doc) => {
-      commit('ADD_BLOG_POST_COMMENT', { comment: doc.data() })
+      commit('ADD_COMMENT', { comment: doc.data() })
     })
   },
 
-  async fetchPostCommentReplies({ commit }, { questionId, commentId }) {
+  async fetchPostCommentReplies({ commit }, { articleId, commentId }) {
     const querySnapshot = await firestore
-      .collection('postCommentReplies')
-      .where('questionId', '==', questionId)
+      .collection('articleCommentReply')
+      .where('articleId', '==', articleId)
       .where('commentId', '==', commentId)
       .get()
 
@@ -56,17 +56,18 @@ export default {
 
   watchPost({ state, commit }, { id }) {
     console.log('watchPost')
-    const docRef = firestore.collection('posts').doc(id)
+    const docRef = firestore.collection('article').doc(id)
     const listener = docRef.onSnapshot((docSnapshot) => {
       commit('ADD_POST', { post: docSnapshot.data() })
     })
     allListeners.push(listener)
   },
 
-  watchPostComments({ commit }, { questionId }) {
+  watchPostComments({ commit }, { articleId }) {
     const docRef = firestore
-      .collection('postComments')
-      .where('questionId', '==', questionId)
+      .collection('articleComment')
+      .where('articleId', '==', articleId)
+    console.log('watchPostComments: ', articleId)
 
     const listener = docRef.onSnapshot((querySnapshot) => {
       querySnapshot.forEach((docSnapshot) => {
@@ -77,10 +78,10 @@ export default {
     allListeners.push(listener)
   },
 
-  watchPostCommentReplies({ commit }, { questionId, commentId }) {
+  watchPostCommentReplies({ commit }, { articleId, commentId }) {
     const docRef = firestore
-      .collection('postCommentReplies')
-      .where('questionId', '==', questionId)
+      .collection('articleCommentReply')
+      .where('articleId', '==', articleId)
       .where('commentId', '==', commentId)
 
     const listener = docRef.onSnapshot((querySnapshot) => {
@@ -94,13 +95,13 @@ export default {
 
   watchPostMeta({ commit, rootState }) {
     const uid = auth().currentUser?.uid
-    const isQuestionRoute = rootState.route.name === 'questions-id-title'
-    if (!uid || !isQuestionRoute) return
-    const questionId = rootState.route.params.id
+    const isArticlesRoute = rootState.route.name === 'articles-id-handle'
+    if (!uid || !isArticlesRoute) return
+    const articleId = rootState.route.params.id
     console.log('rootState.route: ', rootState.route)
     const docRef = firestore
-      .collection('postMeta')
-      .where('questionId', '==', questionId)
+      .collection('articleMeta')
+      .where('articleId', '==', articleId)
       .where('uid', '==', uid)
 
     const listener = docRef.onSnapshot((querySnapshot) => {
@@ -112,12 +113,12 @@ export default {
     allListeners.push(listener)
   },
 
-  async createBlogPost(_, { title, body }) {
+  async createPost(_, { title, body, heroImageURL }) {
     try {
-      const createBlogPost = functions.httpsCallable('https-createBlogPost')
-      const { data } = await createBlogPost({ title, body })
+      const createArticle = functions.httpsCallable('https-createArticle')
+      const { data } = await createArticle({ title, body, heroImageURL })
       console.log('data: ', data)
-      return { blogPostId: data.blogPostId, handle: data.handle }
+      return { articleId: data.articleId, handle: data.handle }
     } catch (e) {
       console.log('error: ', e)
       console.log('error message: ', e.message)
@@ -125,13 +126,13 @@ export default {
     }
   },
 
-  async createComment(_, { questionId, body }) {
+  async createComment(_, { articleId, body }) {
     try {
       const createComment = functions.httpsCallable(
-        'https-createQuestionComment'
+        'https-createArticleComment'
       )
-      console.log('q: ', questionId)
-      const { data } = await createComment({ questionId, body })
+      console.log('q: ', articleId)
+      const { data } = await createComment({ articleId, body })
       return { commentId: data.commentId }
     } catch (e) {
       console.log('error: ', e)
@@ -140,12 +141,12 @@ export default {
     }
   },
 
-  async createReply(_, { questionId, commentId, body }) {
+  async createReply(_, { articleId, commentId, body }) {
     try {
-      const createReply = functions.httpsCallable('https-createQuestionReply')
-      console.log('questionId: ', questionId)
+      const createReply = functions.httpsCallable('https-createArticleReply')
+      console.log('articleId: ', articleId)
       console.log('commentId: ', commentId)
-      const { data } = await createReply({ questionId, commentId, body })
+      const { data } = await createReply({ articleId, commentId, body })
       return { replyId: data.replyId }
     } catch (e) {
       console.log('error: ', e)
@@ -154,12 +155,12 @@ export default {
     }
   },
 
-  async createLike(_, { questionId, commentId }) {
+  async createLike(_, { articleId, commentId }) {
     try {
-      const createLike = functions.httpsCallable('https-createQuestionLike')
-      console.log('questionId: ', questionId)
+      const createLike = functions.httpsCallable('https-createArticleLike')
+      console.log('articleId: ', articleId)
       console.log('commentId: ', commentId)
-      const { data } = await createLike({ questionId, commentId })
+      const { data } = await createLike({ articleId, commentId })
       return { likeId: data.likeId }
     } catch (e) {
       console.log('error: ', e)
@@ -168,12 +169,12 @@ export default {
     }
   },
 
-  async deleteQuestion({ commit }, { id }) {
+  async deletePost({ commit }, { id }) {
     try {
-      console.log('deleteQuestion: ', id)
-      const deleteQuestion = functions.httpsCallable('https-deleteQuestion')
-      const { data } = await deleteQuestion({ id })
-      commit('DELETE_QUESTION', { id: data.id })
+      console.log('deleteArticle: ', id)
+      const deleteArticle = functions.httpsCallable('https-deleteArticle')
+      const { data } = await deleteArticle({ id })
+      commit('DELETE_POST', { id: data.id })
       return { id }
     } catch (e) {
       console.log('error: ', e)
@@ -184,7 +185,7 @@ export default {
     try {
       console.log('deleteComment: ', id)
       const deleteComment = functions.httpsCallable(
-        'https-deleteQuestionComment'
+        'https-deleteArticleComment'
       )
       const { data } = await deleteComment({ id })
       commit('DELETE_COMMENT', { id: data.id })
@@ -197,7 +198,7 @@ export default {
   async deleteReply({ commit }, { id }) {
     try {
       console.log('deleteReply: ', id)
-      const deleteReply = functions.httpsCallable('https-deleteQuestionReply')
+      const deleteReply = functions.httpsCallable('https-deleteArticleReply')
       const { data } = await deleteReply({ id })
       commit('DELETE_REPLY', { id: data.id })
       return { id }
@@ -208,7 +209,7 @@ export default {
 
   async deleteLike({ commit }, { id }) {
     try {
-      const deleteLike = functions.httpsCallable('https-deleteQuestionLike')
+      const deleteLike = functions.httpsCallable('https-deleteArticleLike')
       console.log('like id: ', id)
       const { data } = await deleteLike({ id })
       commit('DELETE_LIKE', { id: data.id })
@@ -220,12 +221,12 @@ export default {
     }
   },
 
-  async updateQuestion(_, { id, title, body }) {
+  async updatePost(_, { id, title, body }) {
     try {
-      const updateQuestion = functions.httpsCallable('https-updateQuestion')
-      console.log('updateQuestion id: ', id)
-      const { data } = await updateQuestion({ id, title, body })
-      return { questionId: data.questionId }
+      const updateArticle = functions.httpsCallable('https-updateArticle')
+      console.log('updateArticle id: ', id)
+      const { data } = await updateArticle({ id, title, body })
+      return { articleId: data.articleId }
     } catch (e) {
       console.log('error: ', e)
       console.log('error message: ', e.message)
@@ -236,7 +237,7 @@ export default {
   async updateComment(_, { id, body }) {
     try {
       const updateComment = functions.httpsCallable(
-        'https-updateQuestionComment'
+        'https-updateArticleComment'
       )
       console.log('commentId: ', id)
       const { data } = await updateComment({ id, body })
@@ -250,7 +251,7 @@ export default {
 
   async updateReply(_, { id, body }) {
     try {
-      const updateReply = functions.httpsCallable('https-updateQuestionReply')
+      const updateReply = functions.httpsCallable('https-updateArticleReply')
       console.log('replyId: ', id)
       const { data } = await updateReply({ id, body })
       return { replyId: data.replyId }

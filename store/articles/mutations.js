@@ -1,8 +1,8 @@
 import Vue from 'vue'
 
 export default {
-  ADD_BLOG_POST(state, { post }) {
-    state.blogPosts[post.id] = post
+  ADD_POST(state, { post }) {
+    state.posts[post.id] = post
   },
 
   ADD_COMMENT(state, { comment }) {
@@ -17,7 +17,7 @@ export default {
     Vue.set(state.likes, like.id, like)
   },
 
-  DELETE_QUESTION(state, { id }) {
+  DELETE_POST(state, { id }) {
     console.log('delete post id: ', id)
     Vue.delete(state.posts, id)
     console.log('delete post after: ', state.posts)

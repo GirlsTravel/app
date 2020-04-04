@@ -1,10 +1,10 @@
 <template lang="pug">
 div(
-  @click='$router.push({ name: "blogs-id-handle", params: { id, handle } })'
+  @click='$router.push({ name: "articles-id-handle", params: { id, handle } })'
   class='post'
 )
   nuxt-link(
-    :to='{ name: "blogs-id-handle", params: { id, handle } }'
+    :to='{ name: "articles-id-handle", params: { id, handle } }'
     class='post__title'
   ) {{ title }}
   p(
@@ -16,7 +16,10 @@ div(
     :createdAt='createdAt'
     class='post__profile-image'
   )
-  div(class='post__image')
+  div(
+    v-lazy:background-image='heroImageURL'
+    class='post__image'
+  )
 </template>
 
 <script>
@@ -45,6 +48,10 @@ export default {
       required: true
     },
     body: {
+      type: String,
+      required: true
+    },
+    heroImageURL: {
       type: String,
       required: true
     },
@@ -114,7 +121,7 @@ export default {
     grid-column: 2 / 3
     width: $unit*10
     height: $unit*10
-    background-image: url('https://images.unsplash.com/photo-1584391789468-048a5ae45358?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1951&q=80')
+    background-color: $pri-cl
     background-position: center
     background-repeat: no-repeat
     background-size: cover
