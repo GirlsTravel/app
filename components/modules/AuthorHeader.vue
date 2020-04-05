@@ -1,9 +1,8 @@
 <template lang="pug">
 div(class='author-header')
-  //- nuxt-link(
-  //-   :to='{ name: "users-id", params: { id: author } }'
-  //- )
-  div
+  nuxt-link(
+    :to='{ name: "users-id", params: { id: author } }'
+  )
     UserAvatar(
       :author='author'
       :photoURL='photoURL'

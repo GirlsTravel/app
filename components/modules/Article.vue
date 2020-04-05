@@ -7,7 +7,7 @@ div(class='post')
     :createdAt='createdAt'
     @deleteClicked='handleDeleteArticle'
     @editClicked='editQuestion'
-    class='post__author'
+    class='post__author 2'
   )
   div(
     v-lazy:background-image='heroImageURL'

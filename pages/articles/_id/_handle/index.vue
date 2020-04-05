@@ -1,17 +1,17 @@
 <template lang="pug">
 div(class='question')
   Article(
-    v-if='currentArticle'
-    :title='currentArticle.title'
-    :handle='currentArticle.handle'
-    :body='currentArticle.body'
-    :heroImageURL='currentArticle.heroImageURL'
-    :author='currentArticle.username'
-    :photoURL='currentArticle.photoURL'
-    :createdAt='currentArticle.createdAt'
-    :likes='currentArticle.likes'
-    :comments='currentArticle.comments'
-    :id='currentArticle.id'
+    v-if='article'
+    :title='article.title'
+    :handle='article.handle'
+    :body='article.body'
+    :heroImageURL='article.heroImageURL'
+    :author='article.username'
+    :photoURL='article.photoURL'
+    :createdAt='article.createdAt'
+    :likes='article.likes'
+    :comments='article.comments'
+    :id='article.id'
     class='question__post'
   )
 
@@ -35,29 +35,29 @@ div(class='question')
       class='question__add-answer-form'
     )
 
-  ul(class='question__list')
-    li(
-      v-for='(comment, index) in currentComments.sort((a, b) => b.createdAt.seconds - a.createdAt.seconds)'
-      :key='comment + index'
-      class='question__list-item'
-    )
-      ArticleComment(
-        :body='comment.body'
-        :author='comment.username'
-        :photoURL='comment.photoURL'
-        :createdAt='comment.createdAt'
-        :id='comment.id'
-        :articleId='currentArticle.id'
-        :likes='comment.likes'
-        :comments='comment.comments'
-        @edit='editComment'
-      )
-    li(
-      class='question__list-item'
-    )
-      NoAnswerResults(
-        @addAnswer='handleAddAnswerClick'
-      )
+  //- ul(class='question__list')
+  //-   li(
+  //-     v-for='(comment, index) in currentComments.sort((a, b) => b.createdAt.seconds - a.createdAt.seconds)'
+  //-     :key='comment + index'
+  //-     class='question__list-item'
+  //-   )
+  //-     ArticleComment(
+  //-       :body='comment.body'
+  //-       :author='comment.username'
+  //-       :photoURL='comment.photoURL'
+  //-       :createdAt='comment.createdAt'
+  //-       :id='comment.id'
+  //-       :articleId='article.id'
+  //-       :likes='comment.likes'
+  //-       :comments='comment.comments'
+  //-       @edit='editComment'
+  //-     )
+  //-   li(
+  //-     class='question__list-item'
+  //-   )
+  //-     NoAnswerResults(
+  //-       @addAnswer='handleAddAnswerClick'
+  //-     )
 </template>
 
 <script>
@@ -83,10 +83,14 @@ export default {
   },
   computed: {
     ...mapGetters({
-      currentArticle: 'articles/currentPost',
       currentComments: 'articles/currentComments',
       isAuth: 'auth/isAuthUser'
     })
+  },
+  async asyncData({ store, params }) {
+    const { id } = params
+    const article = await store.dispatch('articles/fetchPost', { id })
+    return { article }
   },
   async fetch({ store, params }) {
     const { id } = params
