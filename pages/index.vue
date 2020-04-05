@@ -1,5 +1,6 @@
 <template lang="pug">
 div(class='index')
+  //- Hero
   ContentTile(
     :headline='tiles.hero.headline'
     :text='tiles.hero.text'
@@ -9,20 +10,73 @@ div(class='index')
     :primaryLink='tiles.hero.primaryLink'
     class='index__hero'
   )
-  //- div(class='index__hero')
-  //-   h1 Experience more on your next adventure
-  //-   p We're here to help. Connect with a female community of world travels. Explore together. Never be alone again.
-  //-   form
-  //-     BaseInput
-  //-     BaseButton
-  nuxt-link(
-    :to='{ name: "articles" }'
-    class='index__articles'
-  )
-  nuxt-link(
-    :to='{ name: "questions" }'
-    class='index__questions'
-  )
+
+  //- Articles
+  aside(class='index__collection')
+    header(class='index__collection-header')
+      h2(class='index__collection-title') Trending Articles
+      p(class='index__collection-text') Learn from the best. Explore what fellow travels have to say.
+      nuxt-link(
+        :to='{ name: "articles" }'
+        class='index__collection-link'
+      ) See more
+    ul(class='index__list')
+      li(
+        v-for='(post, index) in Object.values(sortedArticles).filter((p, i) => i < 4)'
+        :key='post + index'
+        class='index__list-item'
+      )
+        ArticleSummary(
+          :id='post.id'
+          :title='post.title'
+          :handle='post.handle'
+          :body='post.body'
+          :heroImageURL='post.heroImageURL'
+          :author='post.username'
+          :photoURL='post.photoURL'
+          :likes='post.likes'
+          :comments='post.comments'
+          :createdAt='post.createdAt'
+          class='index__list-card'
+        )
+    nuxt-link(
+      :to='{ name: "articles" }'
+      class='index__collection-main-link'
+    ) Browse All Articles
+
+  //- Forum
+  aside(class='index__collection')
+    header(class='index__collection-header')
+      h2(class='index__collection-title') Popular Questions
+      p(class='index__collection-text') Have a question? Ask a community of female travels who know best.
+      nuxt-link(
+        :to='{ name: "questions" }'
+        class='index__collection-link'
+      ) See more
+    ul(class='index__list')
+      li(
+        v-for='(post, index) in Object.values(sortedQuestions).filter((p, i) => i < 4)'
+        :key='post + index'
+        class='index__list-item'
+      )
+        QuestionSummary(
+          :id='post.id'
+          :title='post.title'
+          :titleSlug='post.titleSlug'
+          :body='post.body'
+          :author='post.username'
+          :photoURL='post.photoURL'
+          :likes='post.likes'
+          :comments='post.comments'
+          :createdAt='post.createdAt'
+          class='index__list-card'
+        )
+    nuxt-link(
+      :to='{ name: "questions" }'
+      class='index__collection-main-link'
+    ) Browse All Questions
+
+  //-
   ContentTile(
     :headline='tiles.social.headline'
     :text='tiles.social.text'
@@ -32,6 +86,8 @@ div(class='index')
     :primaryLink='tiles.social.primaryLink'
     class='index__social'
   )
+
+  //-
   ContentTile(
     :headline='tiles.contentCreator.headline'
     :text='tiles.contentCreator.text'
@@ -41,6 +97,8 @@ div(class='index')
     :primaryLink='tiles.contentCreator.primaryLink'
     class='index__content-creator'
   )
+
+  //-
   ContentTile(
     :headline='tiles.feature.headline'
     :text='tiles.feature.text'
@@ -50,6 +108,8 @@ div(class='index')
     :primaryLink='tiles.feature.primaryLink'
     class='index__feature'
   )
+
+  //-
   ContentTile(
     :headline='tiles.about.headline'
     :text='tiles.about.text'
@@ -62,73 +122,47 @@ div(class='index')
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import contentData from '~/data/index/index.json'
 import ContentTile from '~/components/modules/ContentTile.vue'
+import ArticleSummary from '~/components/modules/ArticleSummary.vue'
+import QuestionSummary from '~/components/modules/PostSummary.vue'
 
 export default {
   layout: 'custom',
   components: {
-    ContentTile
+    ContentTile,
+    ArticleSummary,
+    QuestionSummary
   },
   data() {
-    return {}
+    return {
+      tiles: contentData
+    }
   },
   computed: {
-    tiles() {
-      return {
-        hero: {
-          headline: 'Experience more on your next adventure',
-          text: `
-            We're here to help. Connect with a female community of world travels. Explore together. Never be alone again.
-          `,
-          backgroundImageURL: `https://images.unsplash.com/photo-1446160657592-4782fb76fb99?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1949&q=80`,
-          primaryLinkLabel: 'Get Started',
-          secondaryLinkLabel: 'Learn more',
-          primaryLink: { name: 'articles' }
-        },
+    sortedArticles() {
+      return Object.values(this.articles).sort(
+        (a, b) => b.createdAt.seconds - a.createdAt.seconds
+      )
+    },
 
-        feature: {
-          headline: 'Featured Profile',
-          text: `
-            We're here to help. Connect with a female community of world travels. Explore together. Never be alone again.
-          `,
-          backgroundImageURL: `https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80`,
-          primaryLinkLabel: 'Visit profile',
-          primaryLink: { name: 'articles' }
-        },
+    sortedQuestions() {
+      return Object.values(this.questions).sort(
+        (a, b) => b.createdAt.seconds - a.createdAt.seconds
+      )
+    },
 
-        contentCreator: {
-          headline: 'Write Here',
-          text: `
-            We're here to help. Connect with a female community of world travels. Explore together. Never be alone again.
-          `,
-          backgroundImageURL: `https://images.unsplash.com/photo-1504542227056-9178533a9175?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1567&q=80`,
-          primaryLinkLabel: 'Get started',
-          secondaryLinkLabel: 'Learn more',
-          primaryLink: { name: 'articles' }
-        },
-
-        social: {
-          headline: 'Ask Away',
-          text: `
-            We're here to help. Connect with a female community of world travels. Explore together. Never be alone again.
-          `,
-          backgroundImageURL: `https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80`,
-          primaryLinkLabel: 'Ask question',
-          secondaryLinkLabel: 'See all questions',
-          primaryLink: { name: 'articles' }
-        },
-
-        about: {
-          headline: 'Our Mission',
-          text: `
-            We're here to help. Connect with a female community of world travels. Explore together. Never be alone again.
-          `,
-          backgroundImageURL: `https://images.unsplash.com/photo-1527058054345-f870ffe763eb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1951&q=80`,
-          primaryLinkLabel: 'Learn more',
-          primaryLink: { name: 'articles' }
-        }
-      }
-    }
+    ...mapState({
+      articles: (state) => state.articles.posts,
+      questions: (state) => state.posts.posts
+    })
+  },
+  async fetch({ store }) {
+    await Promise.all([
+      store.dispatch('articles/init'),
+      store.dispatch('posts/init')
+    ])
   },
   methods: {}
 }
@@ -138,21 +172,82 @@ export default {
 .index
   display: grid
   grid-gap: $unit
-  grid-auto-rows: 496px
+  grid-auto-rows: minmax(496px, auto)
   grid-template-columns: 1fr
+  background: $white
   +mq-s
     grid-auto-rows: initial
-    grid-template-rows: repeat(3, 592px) repeat(2, 496px)
+    grid-template-rows: repeat(3, minmax(592px, auto)) repeat(2, 496px)
     grid-template-columns: 1fr 1fr
   +mq-m
-    grid-template-rows: repeat(3, 680px) repeat(2, 592px)
+    grid-template-rows: repeat(3, minmax(680px, auto)) repeat(2, 592px)
 
   &__hero,
-  &__articles,
+  &__collection,
   &__questions
     grid-column: 1 / -1
 
-  &__articles,
-  &__questions
-    background-color: $pri-cl
+  &__collection
+    justify-self: center
+    display: grid
+    grid-gap: $unit*4
+    padding: $unit*10 $unit*2
+    max-width: 1400px
+    +mq-s
+      // width: 90%
+      width: 75%
+    +mq-m
+      width: 80%
+
+    &-header
+      display: grid
+      grid-template-columns: 1fr auto
+      grid-gap: $unit/2
+
+    &-title
+      grid-row: 1 / 2
+      grid-column: 1 / 2
+      font-size: $fs2
+      font-weight: $fw-bold
+
+    &-text
+      grid-row: 2 / 3
+      grid-column: 1 / 2
+
+    &-link
+      height: min-content
+      grid-row: 1 / 2
+      grid-column: 2 / 3
+      // background: $pri-cl
+      // padding: $unit $unit*2
+      // border-radius: $unit/2
+      color: $blue
+
+      &:hover
+        text-decoration: underline
+
+    &-main-link
+      // justify-self: center
+      padding: $unit*2 $unit*4
+      border-radius: $unit/2
+      text-align: center
+      // background: $pri-cl
+      // color: $blue
+      background: $blue
+      color: $white
+
+  &__list
+    display: grid
+    grid-gap: $unit*4
+    grid-template-columns: 1fr
+    height: min-content
+    +mq-m
+      grid-template-columns: 1fr 1fr
+
+    &-item
+      box-shadow: 0 $unit $unit*2 rgba(34, 34, 34, 0.1)
+
+    &-card
+      height: 100%
+      border-radius: $unit
 </style>

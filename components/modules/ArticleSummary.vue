@@ -100,7 +100,7 @@ export default {
 .post
   display: grid
   grid-gap: $unit
-  grid-template-rows: 1fr auto auto
+  grid-template-rows: auto auto 1fr
   grid-template-columns: 1fr auto
   padding: $unit*2
   cursor: pointer
@@ -110,11 +110,13 @@ export default {
     grid-column: 1 / 2
     font-weight: $fw-bold
     font-size: 18px
-    margin-bottom: $unit
 
   &__body
     grid-row: 2 / 3
     grid-column: 1 / 2
+
+  &__profile-image
+    align-self: end
 
   &__image
     grid-row: 1 / -1

@@ -67,7 +67,7 @@ export default {
     async handleSubmit() {
       try {
         this.$toast.show('One moment, submitting your question.')
-        const { blogPostId, handle } = await this.createBlogPost({
+        const { articleId, handle } = await this.createBlogPost({
           title: this.title,
           body: this.body,
           heroImageURL: this.imageFinderResult.image
@@ -75,7 +75,7 @@ export default {
         this.$router.push({
           name: 'articles-id-handle',
           params: {
-            id: blogPostId,
+            id: articleId,
             handle
           }
         })

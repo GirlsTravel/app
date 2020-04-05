@@ -3,10 +3,6 @@ div(class='questions')
   header(class='questions__header')
     h1 Articles
     nuxt-link(
-      :to='{ name: "index" }'
-      class='questions__header-link'
-    ) To Questions
-    nuxt-link(
       :to='{ name: "articles-new" }'
       class='questions__header-link'
     ) Write Article

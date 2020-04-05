@@ -40,11 +40,11 @@ export default {
     },
 
     ...mapState({
-      posts: (state) => state.blogs.blogPosts
+      posts: (state) => state.articles.posts
     })
   },
   async fetch({ store }) {
-    await store.dispatch('blogs/init')
+    await store.dispatch('articles/init')
   },
   methods: {}
 }

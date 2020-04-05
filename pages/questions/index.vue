@@ -3,10 +3,6 @@ div(class='questions')
   header(class='questions__header')
     h1 Questions
     nuxt-link(
-      :to='{ name: "articles" }'
-      class='questions__header-link'
-    ) To Blogs
-    nuxt-link(
       :to='{ name: "questions-new" }'
       class='questions__header-link'
     ) Ask Question

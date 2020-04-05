@@ -68,7 +68,7 @@ export default {
   display: flex
   flex-direction: column
   align-items: center
-  padding: $unit*10 $unit*2
+  padding: $unit*7 $unit*2
   background-position: bottom
   background-repeat: no-repeat
   background-size: cover
@@ -101,6 +101,13 @@ export default {
 
   &__link
     color: $blue
+
+    &:empty
+      display: none
+
+    &::after
+      content: '›'
+      padding-left: $unit/2
 
     &:hover
       text-decoration: underline
