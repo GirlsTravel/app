@@ -35,29 +35,29 @@ div(class='question')
       class='question__add-answer-form'
     )
 
-  //- ul(class='question__list')
-  //-   li(
-  //-     v-for='(comment, index) in currentComments.sort((a, b) => b.createdAt.seconds - a.createdAt.seconds)'
-  //-     :key='comment + index'
-  //-     class='question__list-item'
-  //-   )
-  //-     ArticleComment(
-  //-       :body='comment.body'
-  //-       :author='comment.username'
-  //-       :photoURL='comment.photoURL'
-  //-       :createdAt='comment.createdAt'
-  //-       :id='comment.id'
-  //-       :articleId='article.id'
-  //-       :likes='comment.likes'
-  //-       :comments='comment.comments'
-  //-       @edit='editComment'
-  //-     )
-  //-   li(
-  //-     class='question__list-item'
-  //-   )
-  //-     NoAnswerResults(
-  //-       @addAnswer='handleAddAnswerClick'
-  //-     )
+  ul(class='question__list')
+    li(
+      v-for='(comment, index) in currentComments.sort((a, b) => b.createdAt.seconds - a.createdAt.seconds)'
+      :key='comment + index'
+      class='question__list-item'
+    )
+      ArticleComment(
+        :body='comment.body'
+        :author='comment.username'
+        :photoURL='comment.photoURL'
+        :createdAt='comment.createdAt'
+        :id='comment.id'
+        :articleId='article.id'
+        :likes='comment.likes'
+        :comments='comment.comments'
+        @edit='editComment'
+      )
+    li(
+      class='question__list-item'
+    )
+      NoAnswerResults(
+        @addAnswer='handleAddAnswerClick'
+      )
 </template>
 
 <script>
