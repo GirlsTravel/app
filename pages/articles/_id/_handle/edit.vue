@@ -2,10 +2,10 @@
 div(class='new-question')
   ViewHeader(
     title='New Article'
-    primaryActionLabel='Create'
+    primaryActionLabel='Update'
     secondaryActionLabel='Cancel'
     @primaryActionClick='handleSubmit'
-    @secondaryActionClick='$router.push({ name: "index" })'
+    @secondaryActionClick='$router.push({ name: "articles", params: { id, handle } })'
   )
 
   aside
@@ -18,7 +18,7 @@ div(class='new-question')
     class='new-question__form'
   )
     ImageDropzone(
-      :photoURL='imageFinderResult ? imageFinderResult.image : ""'
+      :photoURL='photoURL'
       @primaryActionClick='openDrawer("imageFinder")'
     )
     BaseInput(
@@ -64,35 +64,41 @@ export default {
   },
   computed: {},
   async asyncData({ store, params }) {
-    const { id } = params
+    const { id, handle } = params
+    console.log('handle: ', handle)
     const article = await store.dispatch('articles/fetchPost', { id })
-    return { id, article }
+    return { id, handle, article }
   },
   beforeMount() {
     if (!this.article) return
-    const { title, body } = this.article
+    const { title, body, heroImageURL } = this.article
     this.title = title
     this.body = body
+    this.photoURL = heroImageURL
   },
   methods: {
     async handleSubmit() {
       try {
         this.$toast.show('One moment, submitting your question.')
-        await this.updateArticle({
+        const { handle } = await this.updateArticle({
           id: this.id,
           title: this.title,
           body: this.body,
-          heroImageURL: this.imageFinderResult.image
+          heroImageURL: this.photoURL
         })
+        this.handle = handle
         await this.deleteArticle({ id: this.id })
-        this.navigateToQuestion()
+        this.navigateToArticle()
       } catch (e) {
+        console.log('e: ', e)
         this.$toast.show('Oops! Something went wrong. Try again.')
       }
     },
 
     setImageFinderResult(result) {
+      console.log('result: ', result)
       this.imageFinderResult = result
+      this.photoURL = result.image
     },
 
     navigateToArticle() {
@@ -100,9 +106,10 @@ export default {
         name: 'articles-id-handle',
         params: {
           id: this.id,
-          handle: this.article.handle
+          handle: this.handle
         }
       })
+      console.log('lol')
     },
 
     ...mapMutations({

@@ -13,3 +13,15 @@ export const postCommentRepliesDelete = PostCommentRepliesDelete.listener
 export const postMetaCreate = PostMetaCreate.listener
 export const postMetaDelete = PostMetaDelete.listener
 export const usersUpdate = UsersUpdate.listener
+
+// export articleComment
+export { listener as articleCommentCreate } from './articleComment/create'
+export { listener as articleCommentDelete } from './articleComment/delete'
+
+// export articleComment
+export { listener as articleCommentReplyCreate } from './articleCommentReply/create'
+export { listener as articleCommentReplyDelete } from './articleCommentReply/delete'
+
+// export articleLike
+export { listener as articleLikeCreate } from './articleLike/create'
+export { listener as articleLikeDelete } from './articleLike/delete'

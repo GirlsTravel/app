@@ -13,13 +13,13 @@ const updateDocument = async ({ id, title, body, heroImageURL }) => {
     .doc(id)
   const data = {
     title,
-    titleSlug: slugifyString(title),
+    handle: slugifyString(title),
     body,
     heroImageURL,
     updatedAt: admin.firestore.FieldValue.serverTimestamp()
   }
   await docRef.update(data)
-  return id
+  return { articleId: id, handle: data.handle }
 }
 
 export const listener = functions.https.onCall(async ({ id, title, body, heroImageURL }, { auth }) => {
@@ -31,9 +31,9 @@ export const listener = functions.https.onCall(async ({ id, title, body, heroIma
       documentId: id
     })
     if (!doesDocExist) throw new Error('The targeted document does not exist')
-    const articleId = await updateDocument({ id, title, body, heroImageURL })
+    const { articleId, handle } = await updateDocument({ id, title, body, heroImageURL })
     console.log('articleId: ', articleId)
-    return { articleId }
+    return { articleId, handle }
   } catch (e) {
     console.error('catch error: ', e)
     throw new functions.https.HttpsError(

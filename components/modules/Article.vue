@@ -41,7 +41,7 @@ export default {
       type: String,
       required: true
     },
-    titleSlug: {
+    handle: {
       type: String,
       required: true
     },
@@ -111,7 +111,7 @@ export default {
         name: 'articles-id-handle-edit',
         params: {
           id: this.id,
-          title: this.titleSlug
+          handle: this.handle
         }
       })
     },

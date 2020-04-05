@@ -8,6 +8,7 @@ export default {
         console.log('authUser: ', authUser)
         dispatch('users/fetchSelf', null, { root: true })
         dispatch('posts/watchPostMeta', null, { root: true })
+        dispatch('articles/watchPostMeta', null, { root: true })
       } else {
         commit('DELETE_AUTH_USER')
         // dispatch('signInAnonymously')

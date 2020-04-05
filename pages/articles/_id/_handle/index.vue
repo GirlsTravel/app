@@ -3,7 +3,7 @@ div(class='question')
   Article(
     v-if='currentArticle'
     :title='currentArticle.title'
-    :titleSlug='currentArticle.handle'
+    :handle='currentArticle.handle'
     :body='currentArticle.body'
     :heroImageURL='currentArticle.heroImageURL'
     :author='currentArticle.username'

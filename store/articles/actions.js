@@ -94,13 +94,15 @@ export default {
   },
 
   watchPostMeta({ commit, rootState }) {
+    console.log('watchPostMeta')
     const uid = auth().currentUser?.uid
     const isArticlesRoute = rootState.route.name === 'articles-id-handle'
+    console.log('isArticlesRoute: ', isArticlesRoute)
     if (!uid || !isArticlesRoute) return
     const articleId = rootState.route.params.id
     console.log('rootState.route: ', rootState.route)
     const docRef = firestore
-      .collection('articleMeta')
+      .collection('articleLike')
       .where('articleId', '==', articleId)
       .where('uid', '==', uid)
 
@@ -221,12 +223,12 @@ export default {
     }
   },
 
-  async updatePost(_, { id, title, body }) {
+  async updatePost(_, { id, title, body, heroImageURL }) {
     try {
       const updateArticle = functions.httpsCallable('https-updateArticle')
       console.log('updateArticle id: ', id)
-      const { data } = await updateArticle({ id, title, body })
-      return { articleId: data.articleId }
+      const { data } = await updateArticle({ id, title, body, heroImageURL })
+      return { articleId: data.articleId, handle: data.handle }
     } catch (e) {
       console.log('error: ', e)
       console.log('error message: ', e.message)
