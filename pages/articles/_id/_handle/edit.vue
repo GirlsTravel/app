@@ -5,7 +5,7 @@ div(class='new-question')
     primaryActionLabel='Update'
     secondaryActionLabel='Cancel'
     @primaryActionClick='handleSubmit'
-    @secondaryActionClick='$router.push({ name: "articles", params: { id, handle } })'
+    @secondaryActionClick='$router.push({ name: "articles-id-handle", params: { id, handle } })'
   )
 
   aside

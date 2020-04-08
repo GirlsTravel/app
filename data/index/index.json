@@ -1,30 +1,36 @@
 {
   "hero": {
-    "headline": "Experience more on your next adventure",
+    "headline": "Experience the world",
     "text": "We're here to help. Connect with a female community of world travels. Explore together. Never be alone again.",
     "backgroundImageURL": "https://images.unsplash.com/photo-1446160657592-4782fb76fb99?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1949&q=80",
     "primaryLinkLabel": "Get started",
     "secondaryLinkLabel": "Learn more",
     "primaryLink": {
-      "name": "articles"
+      "name": "auth-signup"
+    },
+    "secondaryLink": {
+      "name": "pages-about-us"
     }
   },
   "feature": {
     "headline": "Featured Profile",
     "text": "We're here to help. Connect with a female community of world travels. Explore together. Never be alone again.",
-    "backgroundImageURL": "https://images.unsplash.com/photo-1583149577728-9ab503747013?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80",
+    "backgroundImageURL": "https://images.unsplash.com/photo-1544785260-76a1f4bcf442?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2767&q=80",
     "primaryLinkLabel": "Visit profile",
     "primaryLink": {
       "name": "articles"
     }
   },
   "contentCreator": {
-    "headline": "Write Here",
+    "headline": "Storytelling",
     "text": "We're here to help. Connect with a female community of world travels. Explore together. Never be alone again.",
     "backgroundImageURL": "https://images.unsplash.com/photo-1504542227056-9178533a9175?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1567&q=80",
-    "primaryLinkLabel": "Get started",
-    "secondaryLinkLabel": "Learn more",
+    "primaryLinkLabel": "Write article",
+    "secondaryLinkLabel": "See all articles",
     "primaryLink": {
+      "name": "articles-new"
+    },
+    "secondaryLink": {
       "name": "articles"
     }
   },
@@ -35,7 +41,10 @@
     "primaryLinkLabel": "Ask question",
     "secondaryLinkLabel": "See all questions",
     "primaryLink": {
-      "name": "articles"
+      "name": "questions-new"
+    },
+    "secondaryLink": {
+      "name": "questions"
     }
   },
   "about": {
@@ -44,7 +53,7 @@
     "backgroundImageURL": "https://images.unsplash.com/photo-1474610715337-344726d48cb7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80",
     "primaryLinkLabel": "Learn more",
     "primaryLink": {
-      "name": "articles"
+      "name": "pages-about-us"
     }
   }
 }

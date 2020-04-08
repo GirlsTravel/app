@@ -1,5 +1,13 @@
 <template lang="pug">
 div(class='user-profile')
+  ViewHeader(
+    title='Profile'
+    primaryActionLabel=''
+    secondaryActionLabel='‹ Back'
+    @primaryActionClick=''
+    @secondaryActionClick='routerGoBack'
+    class='user-profile__view-header'
+  )
   header(class='user-profile__header')
     UserProfilePhoto(
       :photoURL='user.photoURL'
@@ -8,39 +16,63 @@ div(class='user-profile')
     h2(
       class='user-profile__username'
     ) {{ user.username }}
-    BaseButton(
-      text='Follow'
-      class='user-profile__subscribe'
-    )
     div(
       class='user-profile__social'
     )
-      IconInstagram(class='user-profile__social-svg')
-      IconTwitter(class='user-profile__social-svg')
-      IconFacebook(class='user-profile__social-svg')
+      //- IconInstagram(class='user-profile__social-svg')
+      //- IconTwitter(class='user-profile__social-svg')
+      //- IconFacebook(class='user-profile__social-svg')
+      BaseButton(
+        text='Follow'
+        class='user-profile__subscribe'
+      )
     div(class='user-profile__bio')
       h1(class='user-profile__bio-name') {{ user.firstName }} {{ user.lastName }}
       p(class='user-profile__bio-description') {{ user.bio }}
 
   div(class='user-profile__sections')
-    nuxt-link(
-      :to='{ name: "users-id", params: { id: user.username } }'
-    ) Questions
-    nuxt-link(
-      :to='{ name: "users-id-articles", params: { id: user.username } }'
-    ) Articles
+    a(
+      v-for='(section, index) in sections'
+      :key='section + index'
+      @click='handleSectionsRouterPush(section.route)'
+      :class='{ "link-exact-active": $route.name === section.route.name }'
+    ) {{ section.label }}
 
   nuxt-child
 </template>
 
 <script>
+import routerBack from '~/mixins/routerBack'
+import ViewHeader from '~/components/modules/ViewHeader.vue'
 import UserProfilePhoto from '~/components/elements/UserProfilePhoto.vue'
 import IconTwitter from '~/assets/svg/twitter.svg'
 import IconInstagram from '~/assets/svg/instagram.svg'
 import IconFacebook from '~/assets/svg/facebook.svg'
 
+const initSections = (user) => [
+  {
+    label: 'Questions',
+    route: {
+      name: 'users-id',
+      params: {
+        id: user.username
+      }
+    }
+  },
+  {
+    label: 'Articles',
+    route: {
+      name: 'users-id-articles',
+      params: {
+        id: user.username
+      }
+    }
+  }
+]
+
 export default {
   components: {
+    ViewHeader,
     UserProfilePhoto,
     IconTwitter,
     IconInstagram,
@@ -49,6 +81,7 @@ export default {
   validate({ params }) {
     return params.id
   },
+  mixins: [routerBack],
   props: {},
   data() {
     return {}
@@ -57,9 +90,15 @@ export default {
   async asyncData({ store, params }) {
     const { id } = params
     const user = await store.dispatch('users/fetchUser', { username: id })
-    return { user }
+    const sections = initSections(user)
+    return { user, sections }
   },
-  methods: {}
+  methods: {
+    handleSectionsRouterPush(route) {
+      if (route.name === this.$route.name) return
+      this.$router.replace(route)
+    }
+  }
 }
 </script>
 
@@ -68,6 +107,9 @@ export default {
   display: grid
   // grid-gap: $unit
   grid-auto-rows: min-content
+
+  &__view-header
+    padding: 0 $unit*2
 
   &__header
     display: grid
@@ -94,9 +136,9 @@ export default {
     font-size: $fs1
 
   &__subscribe
-    grid-row: 1 / 3
-    grid-column: 3 / 4
-    align-self: start
+    // grid-row: 1 / 3
+    // grid-column: 3 / 4
+    // align-self: start
 
   &__social
     grid-row: 2 / 3
@@ -139,7 +181,7 @@ export default {
       border-radius: $unit/2
       color: $grey
 
-      &.nuxt-link-exact-active
+      &.link-exact-active
         color: $blue
         background: $pri-cl
 </style>

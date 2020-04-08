@@ -99,7 +99,7 @@ export default {
 <style lang="sass" scoped>
 .post
   display: grid
-  grid-gap: $unit
+  grid-gap: $unit $unit*2
   grid-template-rows: auto auto 1fr
   grid-template-columns: 1fr auto
   padding: $unit*2

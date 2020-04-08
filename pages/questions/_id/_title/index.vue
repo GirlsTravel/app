@@ -1,5 +1,13 @@
 <template lang="pug">
 div(class='question')
+  ViewHeader(
+    title=''
+    primaryActionLabel='Share'
+    secondaryActionLabel='‹ Back'
+    @primaryActionClick=''
+    @secondaryActionClick='$router.push({ name: "questions" })'
+    class='question__view-header'
+  )
   Post(
     v-if='currentQuestion'
     :title='currentQuestion.title'
@@ -61,6 +69,7 @@ div(class='question')
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import ViewHeader from '~/components/modules/ViewHeader.vue'
 import Post from '~/components/modules/Post.vue'
 import PostComment from '~/components/modules/PostComment.vue'
 import NoAnswerResults from '~/components/modules/NoAnswerResults.vue'
@@ -68,6 +77,7 @@ import CommentForm from '~/components/modules/CommentForm.vue'
 
 export default {
   components: {
+    ViewHeader,
     Post,
     PostComment,
     NoAnswerResults,
@@ -174,6 +184,9 @@ export default {
   display: grid
   grid-gap: $unit
   height: min-content
+
+  &__view-header
+    padding: 0 $unit*2
 
   &__post
     background: $white

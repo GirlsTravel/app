@@ -1,11 +1,16 @@
 <template lang="pug">
 header(class='view-header')
   button(
+    v-if='secondaryActionLabel'
     @click='$emit("secondaryActionClick")'
     class='view-header__action view-header__action--secondary'
   ) {{ secondaryActionLabel }}
-  h1(class='view-header__title') {{ title }}
+  h1(
+    v-if='title'
+    class='view-header__title'
+  ) {{ title }}
   button(
+    v-if='primaryActionLabel'
     @click='$emit("primaryActionClick")'
     class='view-header__action view-header__action--primary'
   ) {{ primaryActionLabel }}
@@ -17,15 +22,15 @@ export default {
   props: {
     title: {
       type: String,
-      required: true
+      default: ''
     },
     primaryActionLabel: {
       type: String,
-      required: true
+      default: ''
     },
     secondaryActionLabel: {
       type: String,
-      required: true
+      default: ''
     }
   },
   data() {
@@ -39,6 +44,7 @@ export default {
 <style lang="sass" scoped>
 .view-header
   position: sticky
+  z-index: 5
   top: $navigation-bar
   display: grid
   grid-template-columns: $unit*9 1fr $unit*9
@@ -49,6 +55,7 @@ export default {
   background: rgba(255, 255, 255, 0.97)
 
   &__title
+    grid-column: 2 / 3
     font-weight: $fw-bold
 
   &__action
@@ -56,10 +63,12 @@ export default {
     border-radius: $unit/2
 
     &--primary
+      grid-column: 3 / 4
+      justify-self: end
       background: $pri-cl
       color: $blue
-      justify-self: end
 
     &--secondary
+      grid-column: 1 / 2
       justify-self: start
 </style>

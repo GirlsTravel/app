@@ -5,7 +5,7 @@ div(class='settings')
     primaryActionLabel='Save'
     secondaryActionLabel='Close'
     @primaryActionClick='submitUserForm'
-    @secondaryActionClick='$router.push({ name: "index" })'
+    @secondaryActionClick='routerGoBack'
   )
 
   section(
@@ -69,6 +69,7 @@ div(class='settings')
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import routerBack from '~/mixins/routerBack'
 import ViewHeader from '~/components/modules/ViewHeader.vue'
 import UserAvatar from '~/components/elements/UserProfilePhoto.vue'
 import ImageUploader from '~/components/elements/ImageUploader.vue'
@@ -81,6 +82,7 @@ export default {
     UserAvatar,
     ImageUploader
   },
+  mixins: [routerBack],
   props: {},
   data() {
     return {
@@ -157,7 +159,7 @@ export default {
   display: grid
   grid-gap: $unit*4
   grid-auto-rows: min-content
-  padding: 0 $unit*2
+  padding: 0 $unit*2 $unit*4 $unit*2
   background: $white
 
   &__header

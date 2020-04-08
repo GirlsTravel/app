@@ -8,11 +8,12 @@ aside(
     p(class='content-tile__text') {{ text }}
   div(class='content-tile__links')
     nuxt-link(
-      to='/'
+      :to='primaryLink'
       class='content-tile__link'
     ) {{ primaryLinkLabel }}
     nuxt-link(
-      to='/'
+      v-if='secondaryLink && secondaryLinkLabel'
+      :to='secondaryLink'
       class='content-tile__link'
     ) {{ secondaryLinkLabel }}
   nuxt-link(
@@ -42,8 +43,8 @@ export default {
       default: ''
     },
     secondaryLink: {
-      type: String,
-      default: ''
+      type: Object,
+      default: () => {}
     },
     secondaryLinkLabel: {
       type: String,

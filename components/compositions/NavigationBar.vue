@@ -5,10 +5,26 @@ div(class='navigation-bar')
     to='/'
     class='navigation-bar__logo'
   )
-    LogoWithText(class='navigation-bar__logo-svg')
+    Logo(
+      :class='{ active: componentMounted }'
+      class='navigation-bar__logo-svg'
+    )
+    LogoWithText(
+      :class='{ hide: componentMounted }'
+      class='navigation-bar__logo-svg navigation-bar__logo-svg--with-text'
+    )
   //- SearchForm(
   //-   class='navigation-bar__search-form'
   //- )
+  div(class='navigation-bar__links')
+    nuxt-link(
+      :to='{ name: "articles" }'
+      class='navigation-bar__link'
+    ) Articles
+    nuxt-link(
+      :to='{ name: "questions" }'
+      class='navigation-bar__link'
+    ) Questions
   nuxt-link(
     v-if='!isAuthUser'
     :to='{ name: "auth-signup" }'
@@ -38,23 +54,30 @@ import { mapGetters } from 'vuex'
 import SearchForm from '~/components/modules/SearchForm.vue'
 import UserProfilePhoto from '~/components/elements/UserProfilePhoto.vue'
 import LogoWithText from '~/assets/svg/logo-with-text.svg'
+import Logo from '~/assets/svg/logo.svg'
 
 export default {
   components: {
     // Hamburger,
     SearchForm,
     UserProfilePhoto,
-    LogoWithText
+    LogoWithText,
+    Logo
   },
   props: {},
   data() {
-    return {}
+    return {
+      componentMounted: false
+    }
   },
   computed: {
     ...mapGetters({
       isAuthUser: 'auth/isAuthUser',
       currentUser: 'users/currentUser'
     })
+  },
+  mounted() {
+    this.componentMounted = true
   },
   methods: {}
 }
@@ -70,13 +93,12 @@ export default {
   height: $navigation-bar
   background: rgba(255, 255, 255, 0.98)
   display: grid
-  grid-template-columns: auto 1fr
+  grid-template-columns: auto 1fr auto
   grid-auto-flow: column
   align-items: center
   grid-gap: $unit*2
   box-shadow: 0px $unit/2 $unit rgba(34, 34, 34, 0.1)
   // padding: 0 $unit
-  justify-items: end
 
   &__hamburger
 
@@ -89,11 +111,31 @@ export default {
     background: $blue
 
     &-svg
-      height: $unit*3
+      height: $unit*4
       fill: $white
+      +mq-xs
+        display: none
+
+      &--with-text
+        height: $unit*3
+        display: none
+        +mq-xs
+          display: flex
 
   &__search-form
     display: none
+
+  &__links
+    width: min-content
+    display: grid
+    grid-auto-flow: column
+    grid-gap: $unit*2
+
+  &__link
+
+    &.nuxt-link-active,
+    &:hover
+      color: $blue
 
   &__sign-up
     padding: $unit $unit*2

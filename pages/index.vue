@@ -8,6 +8,7 @@ div(class='index')
     :primaryLinkLabel='tiles.hero.primaryLinkLabel'
     :secondaryLinkLabel='tiles.hero.secondaryLinkLabel'
     :primaryLink='tiles.hero.primaryLink'
+    :secondaryLink='tiles.hero.secondaryLink'
     class='index__hero'
   )
 
@@ -42,7 +43,7 @@ div(class='index')
     nuxt-link(
       :to='{ name: "articles" }'
       class='index__collection-main-link'
-    ) Browse All Articles
+    ) Browse Articles
 
   //- Forum
   aside(class='index__collection')
@@ -74,9 +75,9 @@ div(class='index')
     nuxt-link(
       :to='{ name: "questions" }'
       class='index__collection-main-link'
-    ) Browse All Questions
+    ) Browse Questions
 
-  //-
+  //- Questions
   ContentTile(
     :headline='tiles.social.headline'
     :text='tiles.social.text'
@@ -84,10 +85,11 @@ div(class='index')
     :primaryLinkLabel='tiles.social.primaryLinkLabel'
     :secondaryLinkLabel='tiles.social.secondaryLinkLabel'
     :primaryLink='tiles.social.primaryLink'
+    :secondaryLink='tiles.social.secondaryLink'
     class='index__social'
   )
 
-  //-
+  //- Articles
   ContentTile(
     :headline='tiles.contentCreator.headline'
     :text='tiles.contentCreator.text'
@@ -95,10 +97,11 @@ div(class='index')
     :primaryLinkLabel='tiles.contentCreator.primaryLinkLabel'
     :secondaryLinkLabel='tiles.contentCreator.secondaryLinkLabel'
     :primaryLink='tiles.contentCreator.primaryLink'
+    :secondaryLink='tiles.contentCreator.secondaryLink'
     class='index__content-creator'
   )
 
-  //-
+  //- Profiles
   ContentTile(
     :headline='tiles.feature.headline'
     :text='tiles.feature.text'
@@ -109,7 +112,7 @@ div(class='index')
     class='index__feature'
   )
 
-  //-
+  //- About us
   ContentTile(
     :headline='tiles.about.headline'
     :text='tiles.about.text'
@@ -227,14 +230,14 @@ export default {
         text-decoration: underline
 
     &-main-link
-      // justify-self: center
+      justify-self: center
       padding: $unit*2 $unit*4
       border-radius: $unit/2
       text-align: center
-      // background: $pri-cl
-      // color: $blue
       background: $blue
       color: $white
+      max-width: $unit*50
+      width: 100%
 
   &__list
     display: grid
