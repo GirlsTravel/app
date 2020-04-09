@@ -37,6 +37,8 @@ export const updateQuestionReply = UpdateQuestionReply.listener
 // Export users
 export const uploadUserProfileImage = UploadUserProfileImage.listener
 export const updateUserInformation = UpdateUserInformation.listener
+export { listener as createFollow } from './users/createFollow'
+export { listener as deleteFollow } from './users/deleteFollow'
 
 // Export newsletter
 export const subscribeNewsletter = SubscribeNewsletter.listener

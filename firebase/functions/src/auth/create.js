@@ -18,6 +18,7 @@ const createUser = async ({ uid }) => {
     .doc(uid)
 
   const data = {
+    id: uid,
     uid,
     firstName: '',
     lastName: '',

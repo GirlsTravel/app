@@ -23,7 +23,9 @@ div(class='user-profile')
       //- IconTwitter(class='user-profile__social-svg')
       //- IconFacebook(class='user-profile__social-svg')
       BaseButton(
-        text='Follow'
+        @click='handleFollowClick'
+        :text='activeFollow ? "Unfollow" : "Follow"'
+        :class='{ inactive: activeFollow }'
         class='user-profile__subscribe'
       )
     div(class='user-profile__bio')
@@ -42,6 +44,7 @@ div(class='user-profile')
 </template>
 
 <script>
+import { mapState, mapGetters, mapActions } from 'vuex'
 import routerBack from '~/mixins/routerBack'
 import ViewHeader from '~/components/modules/ViewHeader.vue'
 import UserProfilePhoto from '~/components/elements/UserProfilePhoto.vue'
@@ -84,20 +87,65 @@ export default {
   mixins: [routerBack],
   props: {},
   data() {
-    return {}
+    return {
+      watchFollowInitialized: false
+    }
   },
-  computed: {},
+  computed: {
+    activeFollow() {
+      return Object.values(this.follows).find(
+        (follow) => follow.uid === this.user.uid
+      )
+    },
+
+    ...mapGetters({
+      authUser: 'users/authUser'
+    }),
+
+    ...mapState({
+      follows: (state) => state.users.follows
+    })
+  },
+  watch: {
+    authUser(authUser) {
+      if (authUser && authUser.uid && !this.watchFollowInitialized) {
+        this.watchFollowInitialized = true
+        this.watchFollow({
+          uidFollow: this.user.uid,
+          uid: authUser.uid
+        })
+      }
+    }
+  },
   async asyncData({ store, params }) {
     const { id } = params
     const user = await store.dispatch('users/fetchUser', { username: id })
     const sections = initSections(user)
     return { user, sections }
   },
+  beforeDestroy() {
+    this.unsubscribeAllListeners()
+  },
   methods: {
+    handleFollowClick() {
+      if (this.activeFollow) {
+        this.deleteFollow({ id: this.activeFollow.id })
+      } else {
+        this.createFollow({ user: this.user })
+      }
+    },
+
     handleSectionsRouterPush(route) {
       if (route.name === this.$route.name) return
       this.$router.replace(route)
-    }
+    },
+
+    ...mapActions({
+      watchFollow: 'users/watchFollow',
+      createFollow: 'users/createFollow',
+      deleteFollow: 'users/deleteFollow',
+      unsubscribeAllListeners: 'users/unsubscribeAllListeners'
+    })
   }
 }
 </script>
@@ -139,6 +187,10 @@ export default {
     // grid-row: 1 / 3
     // grid-column: 3 / 4
     // align-self: start
+
+    &.inactive
+      background: $pri-cl
+      color: $grey
 
   &__social
     grid-row: 2 / 3

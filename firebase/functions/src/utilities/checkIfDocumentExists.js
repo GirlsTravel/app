@@ -1,6 +1,6 @@
 import * as admin from 'firebase-admin'
 
-// Checks if a document exists, and that the user is the auth
+// Checks if a document exists
 export const checkIfDocumentExists = async ({ collectionId, documentId }) => {
   // build query
   const queryRef = admin

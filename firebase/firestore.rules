@@ -10,6 +10,18 @@ service cloud.firestore {
       allow read;
     }
 
+    match /follow/{followId} {
+      allow read;
+    }
+
+    match /feedback/{feedbackId} {
+      allow read: if false;
+    }
+
+    match /newsletter/{newsletterId} {
+      allow read: if false;
+    }
+
     match /posts/{postId} {
       allow read;
     }
@@ -26,12 +38,8 @@ service cloud.firestore {
       allow read;
     }
 
-    match /feedback/{feedbackId} {
-      allow read: if false;
-    }
-
-    match /newsletter/{newsletterId} {
-      allow read: if false;
+    match /articleLike/{articleLikeId} {
+      allow read;
     }
 
     match /article/{articleId} {
