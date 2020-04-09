@@ -41,6 +41,7 @@ export default {
   display: grid
   grid-gap: $unit*4 0
   grid-template-columns: minmax($unit*2, 1fr) minmax(auto, 1080px) minmax($unit*2, 1fr)
+  padding-bottom: $unit*10
   background: $white
 
   &__hero-image

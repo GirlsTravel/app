@@ -1,7 +1,7 @@
 {
   "hero": {
-    "headline": "Experience the world",
-    "text": "We're here to help. Connect with a female community of world travels. Explore together. Never be alone again.",
+    "headline": "Travel With Confidence",
+    "text": "Join a fearless collective of women with the mission of building an universal community of world travelers.",
     "backgroundImageURL": "https://images.unsplash.com/photo-1446160657592-4782fb76fb99?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1949&q=80",
     "primaryLinkLabel": "Get started",
     "secondaryLinkLabel": "Learn more",
@@ -14,7 +14,7 @@
   },
   "feature": {
     "headline": "Featured Profile",
-    "text": "We're here to help. Connect with a female community of world travels. Explore together. Never be alone again.",
+    "text": "A travel buddy is never out of reach. Connect with this months featured travel superstar.",
     "backgroundImageURL": "https://images.unsplash.com/photo-1544785260-76a1f4bcf442?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2767&q=80",
     "primaryLinkLabel": "Visit profile",
     "primaryLink": {
@@ -23,7 +23,7 @@
   },
   "contentCreator": {
     "headline": "Storytelling",
-    "text": "We're here to help. Connect with a female community of world travels. Explore together. Never be alone again.",
+    "text": "Discover the best places to go, things to do, and travel tips to experience more on your next adventure.",
     "backgroundImageURL": "https://images.unsplash.com/photo-1504542227056-9178533a9175?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1567&q=80",
     "primaryLinkLabel": "Write article",
     "secondaryLinkLabel": "See all articles",
@@ -36,7 +36,7 @@
   },
   "social": {
     "headline": "Ask Away",
-    "text": "We're here to help. Connect with a female community of world travels. Explore together. Never be alone again.",
+    "text": "Ask an experienced community of women travelers eager to help and support your next adventure.",
     "backgroundImageURL": "https://images.unsplash.com/photo-1526934709557-35f3777499c4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1949&q=80",
     "primaryLinkLabel": "Ask question",
     "secondaryLinkLabel": "See all questions",
@@ -49,11 +49,15 @@
   },
   "about": {
     "headline": "Our Mission",
-    "text": "We're here to help. Connect with a female community of world travels. Explore together. Never be alone again.",
+    "text": "Connect with a female community of world travelers. Explore together and never be alone again. Read our story.",
     "backgroundImageURL": "https://images.unsplash.com/photo-1474610715337-344726d48cb7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80",
     "primaryLinkLabel": "Learn more",
+    "secondaryLinkLabel": "Sign up",
     "primaryLink": {
       "name": "pages-about-us"
+    },
+    "secondaryLink": {
+      "name": "auth-signup"
     }
   }
 }

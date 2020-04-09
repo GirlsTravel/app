@@ -16,7 +16,7 @@ div(class='index')
   aside(class='index__collection')
     header(class='index__collection-header')
       h2(class='index__collection-title') Trending Articles
-      p(class='index__collection-text') Learn from the best. Explore what fellow travels have to say.
+      p(class='index__collection-text') Learn from your peers. Explore activity recommendations, travel tips and tricks.
       nuxt-link(
         :to='{ name: "articles" }'
         class='index__collection-link'
@@ -49,7 +49,7 @@ div(class='index')
   aside(class='index__collection')
     header(class='index__collection-header')
       h2(class='index__collection-title') Popular Questions
-      p(class='index__collection-text') Have a question? Ask a community of female travels who know best.
+      p(class='index__collection-text') Have a question? Ask a community of female travelers who've been there.
       nuxt-link(
         :to='{ name: "questions" }'
         class='index__collection-link'
@@ -109,6 +109,7 @@ div(class='index')
     :primaryLinkLabel='tiles.feature.primaryLinkLabel'
     :secondaryLinkLabel='tiles.feature.secondaryLinkLabel'
     :primaryLink='tiles.feature.primaryLink'
+    :secondaryLink='tiles.feature.secondaryLink'
     class='index__feature'
   )
 
@@ -120,6 +121,7 @@ div(class='index')
     :primaryLinkLabel='tiles.about.primaryLinkLabel'
     :secondaryLinkLabel='tiles.about.secondaryLinkLabel'
     :primaryLink='tiles.about.primaryLink'
+    :secondaryLink='tiles.about.secondaryLink'
     class='index__about'
   )
 </template>
@@ -248,9 +250,10 @@ export default {
       grid-template-columns: 1fr 1fr
 
     &-item
-      box-shadow: 0 $unit $unit*2 rgba(34, 34, 34, 0.1)
+      box-shadow: 0 $unit $unit*2 rgba(34, 34, 34, 0.05)
+      border-radius: $unit
+      // background-color: $pri-cl
 
     &-card
       height: 100%
-      border-radius: $unit
 </style>
