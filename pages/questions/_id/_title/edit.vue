@@ -56,6 +56,11 @@ export default {
     RichTextEditor
   },
   props: {},
+  async asyncData({ store, params }) {
+    const { id } = params
+    const question = await store.dispatch('posts/fetchPost', { id })
+    return { id, question }
+  },
   data() {
     return {
       title: '',
@@ -63,11 +68,6 @@ export default {
     }
   },
   computed: {},
-  async asyncData({ store, params }) {
-    const { id } = params
-    const question = await store.dispatch('posts/fetchPost', { id })
-    return { id, question }
-  },
   beforeMount() {
     if (!this.question) return
     const { title, body } = this.question

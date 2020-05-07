@@ -7,13 +7,13 @@ div(class='index')
 export default {
   layout: 'custom',
   components: {},
+  async fetch({ store }) {
+    // await Promise.all()
+  },
   data() {
     return {}
   },
   computed: {},
-  async fetch({ store }) {
-    // await Promise.all()
-  },
   methods: {}
 }
 </script>

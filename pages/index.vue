@@ -140,6 +140,12 @@ export default {
     ArticleSummary,
     QuestionSummary
   },
+  async fetch({ store }) {
+    await Promise.all([
+      store.dispatch('articles/init'),
+      store.dispatch('posts/init')
+    ])
+  },
   data() {
     return {
       tiles: contentData
@@ -162,12 +168,6 @@ export default {
       articles: (state) => state.articles.posts,
       questions: (state) => state.posts.posts
     })
-  },
-  async fetch({ store }) {
-    await Promise.all([
-      store.dispatch('articles/init'),
-      store.dispatch('posts/init')
-    ])
   },
   methods: {}
 }

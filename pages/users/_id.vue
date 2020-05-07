@@ -86,6 +86,12 @@ export default {
   },
   mixins: [routerBack],
   props: {},
+  async asyncData({ store, params }) {
+    const { id } = params
+    const user = await store.dispatch('users/fetchUser', { username: id })
+    const sections = initSections(user)
+    return { user, sections }
+  },
   data() {
     return {
       watchFollowInitialized: false
@@ -116,12 +122,6 @@ export default {
         })
       }
     }
-  },
-  async asyncData({ store, params }) {
-    const { id } = params
-    const user = await store.dispatch('users/fetchUser', { username: id })
-    const sections = initSections(user)
-    return { user, sections }
   },
   beforeDestroy() {
     this.unsubscribeAllListeners()

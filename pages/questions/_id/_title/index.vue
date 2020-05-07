@@ -83,6 +83,12 @@ export default {
     NoAnswerResults,
     CommentForm
   },
+  async fetch({ store, params }) {
+    const { id } = params
+    await store.dispatch('posts/fetchPost', { id })
+    await store.dispatch('posts/fetchPostComments', { questionId: id })
+    store.dispatch('posts/watchPost', { id })
+  },
   data() {
     return {
       answer: '',
@@ -96,12 +102,6 @@ export default {
       currentComments: 'posts/currentComments',
       isAuth: 'auth/isAuthUser'
     })
-  },
-  async fetch({ store, params }) {
-    const { id } = params
-    await store.dispatch('posts/fetchPost', { id })
-    await store.dispatch('posts/fetchPostComments', { questionId: id })
-    store.dispatch('posts/watchPost', { id })
   },
   beforeMount() {
     const { id } = this.$route.params

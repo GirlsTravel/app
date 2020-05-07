@@ -28,6 +28,9 @@ export default {
     PostSummary
   },
   props: {},
+  async fetch({ store }) {
+    await store.dispatch('posts/init')
+  },
   data() {
     return {}
   },
@@ -41,9 +44,6 @@ export default {
     ...mapState({
       posts: (state) => state.posts.posts
     })
-  },
-  async fetch({ store }) {
-    await store.dispatch('posts/init')
   },
   methods: {}
 }

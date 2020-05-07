@@ -54,6 +54,12 @@ export default {
     ImageDropzone
   },
   props: {},
+  async asyncData({ store, params }) {
+    const { id, handle } = params
+    console.log('handle: ', handle)
+    const article = await store.dispatch('articles/fetchPost', { id })
+    return { id, handle, article }
+  },
   data() {
     return {
       title: '',
@@ -63,12 +69,6 @@ export default {
     }
   },
   computed: {},
-  async asyncData({ store, params }) {
-    const { id, handle } = params
-    console.log('handle: ', handle)
-    const article = await store.dispatch('articles/fetchPost', { id })
-    return { id, handle, article }
-  },
   beforeMount() {
     if (!this.article) return
     const { title, body, heroImageURL } = this.article

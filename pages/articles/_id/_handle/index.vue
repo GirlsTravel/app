@@ -84,6 +84,17 @@ export default {
     NoAnswerResults,
     CommentForm
   },
+  async fetch({ store, params }) {
+    const { id } = params
+    await store.dispatch('articles/fetchPost', { id })
+    await store.dispatch('articles/fetchPostComments', { articleId: id })
+    store.dispatch('articles/watchPost', { id })
+  },
+  async asyncData({ store, params }) {
+    const { id } = params
+    const article = await store.dispatch('articles/fetchPost', { id })
+    return { article }
+  },
   data() {
     return {
       answer: '',
@@ -96,17 +107,6 @@ export default {
       currentComments: 'articles/currentComments',
       isAuth: 'auth/isAuthUser'
     })
-  },
-  async asyncData({ store, params }) {
-    const { id } = params
-    const article = await store.dispatch('articles/fetchPost', { id })
-    return { article }
-  },
-  async fetch({ store, params }) {
-    const { id } = params
-    await store.dispatch('articles/fetchPost', { id })
-    await store.dispatch('articles/fetchPostComments', { articleId: id })
-    store.dispatch('articles/watchPost', { id })
   },
   beforeMount() {
     const { id } = this.$route.params

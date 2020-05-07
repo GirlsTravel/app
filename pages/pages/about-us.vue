@@ -17,13 +17,13 @@ export default {
   components: {
     PageContent
   },
+  async fetch({ store }) {},
   data() {
     return {
       aboutUsData
     }
   },
   computed: {},
-  async fetch({ store }) {},
   methods: {}
 }
 </script>

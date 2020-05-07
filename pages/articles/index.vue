@@ -41,6 +41,9 @@ export default {
     ArticleSummary,
     NoQuestionResults
   },
+  async fetch({ store }) {
+    await store.dispatch('articles/init')
+  },
   computed: {
     sortedPosts() {
       return Object.values(this.posts).sort(
@@ -51,9 +54,6 @@ export default {
     ...mapState({
       posts: (state) => state.articles.posts
     })
-  },
-  async fetch({ store }) {
-    await store.dispatch('articles/init')
   },
   methods: {}
 }

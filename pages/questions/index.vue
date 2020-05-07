@@ -40,6 +40,9 @@ export default {
     PostSummary,
     NoQuestionResults
   },
+  async fetch({ store }) {
+    await store.dispatch('posts/init')
+  },
   computed: {
     sortedPosts() {
       return Object.values(this.posts).sort(
@@ -50,9 +53,6 @@ export default {
     ...mapState({
       posts: (state) => state.posts.posts
     })
-  },
-  async fetch({ store }) {
-    await store.dispatch('posts/init')
   },
   methods: {}
 }
