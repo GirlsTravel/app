@@ -21,10 +21,7 @@ export default {
     const { posts } = state
     if (posts[id]) return posts[id]
 
-    const res = await firestore
-      .collection('posts')
-      .doc(id)
-      .get()
+    const res = await firestore.collection('posts').doc(id).get()
 
     const data = res.data()
     if (data) commit('ADD_POST', { post: data })
