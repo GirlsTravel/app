@@ -1,4 +1,4 @@
-import { functions } from '~/plugins/firebase'
+import { functions } from '~/services/firebase'
 
 export default {
   async uploadProfileImage(_, { image }) {

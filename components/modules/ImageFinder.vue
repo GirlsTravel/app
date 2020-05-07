@@ -29,7 +29,7 @@ OverlayDrawer(
 
 <script>
 import { mapMutations } from 'vuex'
-import { functions } from '~/plugins/firebase'
+import { functions } from '~/services/firebase'
 import OverlayDrawer from '~/components/slots/OverlayDrawer.vue'
 import SearchForm from '~/components/modules/SearchForm.vue'
 

@@ -1,4 +1,4 @@
-import { auth, functions, firestore } from '~/plugins/firebase'
+import { auth, functions, firestore } from '~/services/firebase'
 
 // stores a reference to firestore listeners
 const allListeners = []

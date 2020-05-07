@@ -18,13 +18,11 @@ div(class='navigation-bar')
   //- )
   div(class='navigation-bar__links')
     nuxt-link(
-      :to='{ name: "articles" }'
+      v-for='(link, index) in links'
+      :key='link + index'
+      :to='link.to'
       class='navigation-bar__link'
-    ) Articles
-    nuxt-link(
-      :to='{ name: "questions" }'
-      class='navigation-bar__link'
-    ) Questions
+    ) {{ link.text }}
   nuxt-link(
     v-if='!isAuthUser'
     :to='{ name: "auth-signup" }'
@@ -67,6 +65,11 @@ export default {
   props: {},
   data() {
     return {
+      links: [
+        { to: { name: 'shop' }, text: 'Shop' },
+        { to: { name: 'articles' }, text: 'Articles' },
+        { to: { name: 'questions' }, text: 'Questions' }
+      ],
       componentMounted: false
     }
   },

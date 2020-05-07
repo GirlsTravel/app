@@ -1,15 +1,18 @@
 <template lang="pug">
 div(class='vue-app')
-  NavigationBar(class='vue-app__navigation-bar')
+  AppNavigationBarTop(class='vue-app__navigation-bar')
   nuxt(class='vue-app__view')
+  AppFooter(class='vue-app__footer')
 </template>
 
 <script>
-import NavigationBar from '~/components/compositions/NavigationBar.vue'
+import AppNavigationBarTop from '~/components/app/NavigationBarTop.vue'
+import AppFooter from '~/components/app/Footer.vue'
 
 export default {
   components: {
-    NavigationBar
+    AppNavigationBarTop,
+    AppFooter
   },
   props: {},
   data() {
@@ -23,7 +26,7 @@ export default {
 <style lang="sass" scoped>
 .vue-app
   display: grid
-  grid-template-rows: repeat(2, auto)
+  grid-template-rows: $navigation-bar minmax(calc(100vh - #{$navigation-bar}), auto)
   grid-gap: 0 $unit
   background: $pri-cl
 
@@ -32,4 +35,7 @@ export default {
 
   &__view
     background: $white
+
+  &__footer
+    background: $black
 </style>

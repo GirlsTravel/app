@@ -1,4 +1,4 @@
-import { auth } from '~/plugins/firebase'
+import { auth } from '~/services/firebase'
 
 export default {
   watchAuthState({ commit, dispatch }) {
