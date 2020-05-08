@@ -36,6 +36,7 @@ export default {
    */
   plugins: [
     { src: '~/plugins/global-components.js' },
+    { src: '~/plugins/vee-validate', ssr: false },
     { src: '~/plugins/vue-lazyload', ssr: false },
     { src: '~/plugins/vue-scroll-lock', ssr: false },
     { src: '~plugins/vue-quill-editor.js', ssr: false }
@@ -100,6 +101,13 @@ export default {
    ** Build configuration
    */
   build: {
+    /*
+     ** Add exception
+     ** See https://logaretm.github.io/vee-validate/guide/rules.html#importing-rules-in-nuxt-js
+     */
+    transpile: [
+      'vee-validate/dist/rules'
+    ],
     extractCSS: isProd,
     /*
      ** You can extend webpack config here
