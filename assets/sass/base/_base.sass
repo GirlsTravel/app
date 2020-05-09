@@ -23,6 +23,9 @@ div[contenteditable='true']
 button, a
   cursor: pointer
 
+  &:disabled
+    cursor: not-allowed
+
 h1, h2, h3, h4 ,h5 ,h6, p, a, span, ul, ol, input, label, li, button, abbr, aside, header, figure
   font-family: $pri-font
   font-size: $fs
@@ -40,3 +43,19 @@ input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus
   -webkit-box-shadow: 0 0 0px 1000px $white inset
+
+/**
+ * Remove arrows/spinners from input type number.
+ * Target browser(s): Chrome, Safari, Edge, Opera.
+ */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button
+  -webkit-appearance: none
+  margin: 0
+
+/**
+ * Remove arrows/spinners from input type number.
+ * Target browser(s): Firefox.
+ */
+input[type=number]
+  -moz-appearance: textfield

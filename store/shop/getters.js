@@ -1,6 +1,28 @@
 import { formatCurrency } from '~/utilities/format-currency'
 
 export default {
+  checkoutFinancials(state, getters, rootState) {
+    const { checkout } = state
+    console.log('checkout: ', checkout)
+    const subtotalPrice = formatCurrency({
+      amount: checkout.subtotalPriceV2.amount,
+      currencyCode: checkout.subtotalPriceV2.currencyCode
+    })
+    const totalPrice = formatCurrency({
+      amount: checkout.totalPriceV2.amount,
+      currencyCode: checkout.totalPriceV2.currencyCode
+    })
+    const totalTax = formatCurrency({
+      amount: checkout.totalTaxV2.amount,
+      currencyCode: checkout.totalTaxV2.currencyCode
+    })
+    return {
+      subtotalPrice: subtotalPrice || '',
+      totalPrice: totalPrice || '',
+      totalTax: totalTax || ''
+    }
+  },
+
   product(state, getters, rootState) {
     const { handle } = rootState.route.params
     const { products } = state
@@ -14,6 +36,18 @@ export default {
         values: option.values.map((value) => value.value)
       })),
       variants: product.variants.map((variant) => ({
+        available: variant.available,
+        compareAtPrice:
+          variant.compareAtPriceV2 &&
+          formatCurrency({
+            amount: variant.compareAtPriceV2.amount,
+            currencyCode: variant.compareAtPriceV2.currencyCode
+          }),
+        id: variant.id,
+        price: formatCurrency({
+          amount: variant.priceV2.amount,
+          currencyCode: variant.priceV2.currencyCode
+        }),
         selectedOptions: variant.selectedOptions.map((selectedOption) => ({
           name: selectedOption.name,
           value: selectedOption.value

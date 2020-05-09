@@ -33,6 +33,10 @@ div(class='navigation-bar')
     //-   class='navigation-bar__sign-up-button'
     //- )
   nuxt-link(
+    :to='{ name: "shop-cart" }'
+  )
+    span(class='material-icons-outlined') shopping_basket
+  nuxt-link(
     v-if='isAuthUser'
     :to='{ name: "account-settings" }'
     class='navigation-bar__avatar'

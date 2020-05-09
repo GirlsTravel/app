@@ -23,6 +23,7 @@ div(class='buy-box-options')
         button(
           @click='$emit("optionSelection", { name: option.name, value })'
           :class='{ active: selectedOptionValue({ name: option.name }) === value }'
+          type='button'
           class='buy-box-options__option'
         ) {{ value }}
 </template>
@@ -45,9 +46,10 @@ export default {
   },
   methods: {
     selectedOptionValue({ name }) {
-      return this.selectedOptions.find(
+      const selectedOption = this.selectedOptions.find(
         (selectedOption) => selectedOption.name === name
-      ).value
+      )
+      return selectedOption ? selectedOption.value : ''
     }
   }
 }
@@ -68,14 +70,10 @@ export default {
   &__title
     font-weight: $fw-bold
 
-  &__selection
-
   &__list
     display: grid
     grid-gap: $unit
     grid-template-columns: repeat(auto-fill, minmax(80px, auto))
-
-  &__item
 
   &__option
     width: 100%
@@ -83,6 +81,10 @@ export default {
     padding: $unit
     border: 2px solid $pri-cl
 
+    &:hover,
     &.active
-      border: 2px solid $blue
+      border-color: $blue
+
+    &.active
+      color: $blue
 </style>

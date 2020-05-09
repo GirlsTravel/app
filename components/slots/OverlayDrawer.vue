@@ -1,18 +1,23 @@
 <template lang="pug">
 div(
   :class='{ "is-open": isOpen }'
-  class='container-overlay-drawer'
+  class='overlay-drawer'
 )
-  slot(name='header')
+  header(class='overlay-drawer__header')
+    button(
+      @click='closeDrawer'
+      class='overlay-drawer__button'
+    ) Close
+    slot(name='header')
   div(
     v-scroll-lock='isOpen'
-    class='overlay__content'
+    class='overlay-drawer__content'
   )
     slot
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 
 export default {
   components: {},
@@ -34,12 +39,16 @@ export default {
       drawer: (state) => state.app.drawer
     })
   },
-  methods: {}
+  methods: {
+    ...mapMutations({
+      closeDrawer: 'app/CLOSE_DRAWER'
+    })
+  }
 }
 </script>
 
 <style lang="sass" scoped>
-.container-overlay-drawer
+.overlay-drawer
   position: fixed
   z-index: 200
   top: 100%
@@ -55,7 +64,17 @@ export default {
   &.is-open
     transform: translateY(-100%)
 
-.overlay
+  &__header
+    display: grid
+    grid-template-columns: 1fr auto
+    grid-auto-flow: column
+    width: 100%
+    padding: $unit 0
+
+  &__button
+    grid-row: 1 / 2
+    grid-column: 2 / 3
+    padding: 0 $unit*2
 
   &__content
     overflow-y: auto

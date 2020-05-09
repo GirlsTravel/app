@@ -9,10 +9,6 @@ OverlayDrawer(
         placeholder='Search image library'
         class='imageFinder__search-form'
       )
-      button(
-        @click='closeDrawer'
-        class='imageFinder__close'
-      ) Close
   template(v-slot:default)
     ul(class='imageFinder__list')
       li(

@@ -1,5 +1,6 @@
 <template lang="pug">
 button(
+  type='button'
   class='button'
 )
   span(class='button__text') {{ text }}
