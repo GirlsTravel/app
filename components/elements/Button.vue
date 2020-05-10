@@ -35,7 +35,7 @@ export default {
   min-width: $unit*15
   min-height: $unit*6
   padding: $unit $unit*2
-  border-radius: $unit/2
+  border-radius: $border-radius
   cursor: pointer
   color: $white
   background: $blue

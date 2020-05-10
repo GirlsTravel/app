@@ -92,7 +92,6 @@ export default {
         checkoutId,
         lineItems
       )
-      // console.log('updateLineItems: ', checkout)
       commit('SET_CHECKOUT', { checkout })
     } catch (e) {
       console.error(e)

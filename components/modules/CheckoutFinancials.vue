@@ -32,8 +32,11 @@ export default {
     }
   },
   data() {
-    return {
-      financials: [
+    return {}
+  },
+  computed: {
+    financials() {
+      return [
         { label: 'Subtotal', value: this.subtotalPrice },
         { label: 'Shipping', value: this.totalShippingPrice },
         { label: 'Tax', value: this.totalTax },
@@ -41,7 +44,6 @@ export default {
       ]
     }
   },
-  computed: {},
   methods: {}
 }
 </script>
@@ -55,11 +57,11 @@ export default {
     grid-auto-columns: 1fr auto
     grid-gap: $unit*2
     padding: $unit*2
-    border-radius: $unit
+    border-radius: $border-radius
 
     &:last-child
-      padding: $unit*2 $unit
-      margin: 0 $unit
+      // padding: $unit*2 $unit
+      // margin: 0 $unit
       font-weight: $fw-bold
       background: $pri-cl
 

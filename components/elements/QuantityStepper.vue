@@ -3,7 +3,7 @@ div(class='quantity-stepper')
   button(
     type='button'
     class='quantity-stepper__button'
-    :disabled='quantity <= min'
+    :disabled='disableButtons || quantity <= min'
     @click='$emit("decreaseQuantity")'
   ) -
   input(
@@ -16,6 +16,7 @@ div(class='quantity-stepper')
   button(
     type='button'
     class='quantity-stepper__button'
+    :disabled='disableButtons || quantity >= max'
     @click='$emit("increaseQuantity")'
   ) +
 </template>
@@ -34,6 +35,10 @@ export default {
     max: {
       type: Number,
       default: 9999
+    },
+    disableButtons: {
+      type: Boolean,
+      default: false
     }
   }
 }

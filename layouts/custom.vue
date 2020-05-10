@@ -3,6 +3,7 @@ div(class='vue-app')
   AppNavigationBarTop(class='vue-app__navigation-bar')
   nuxt(class='vue-app__view')
   AppFooter(class='vue-app__footer')
+  nav
 </template>
 
 <script>
@@ -38,4 +39,13 @@ export default {
 
   &__footer
     background: $black
+
+  & > nav
+    position: sticky
+    background: yellow
+    height: $navigation-bar
+    width: 100%
+    bottom: 0
+    +mq-m
+      display: none
 </style>

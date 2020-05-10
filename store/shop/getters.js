@@ -1,9 +1,18 @@
+import { isEmpty } from 'lodash'
 import { formatCurrency } from '~/utilities/format-currency'
 
 export default {
-  checkoutFinancials(state, getters, rootState) {
+  checkout(state) {
     const { checkout } = state
-    console.log('checkout: ', checkout)
+    const defaultCheckout = {
+      id: '',
+      lineItems: [],
+      subtotalPrice: '',
+      totalPrice: '',
+      totalTax: '',
+      webUrl: ''
+    }
+    if (isEmpty(checkout)) return defaultCheckout
     const subtotalPrice = formatCurrency({
       amount: checkout.subtotalPriceV2.amount,
       currencyCode: checkout.subtotalPriceV2.currencyCode
@@ -16,10 +25,24 @@ export default {
       amount: checkout.totalTaxV2.amount,
       currencyCode: checkout.totalTaxV2.currencyCode
     })
+    const lineItems = checkout.lineItems.map((lineItem) => ({
+      id: lineItem.id,
+      quantity: lineItem.quantity,
+      productTitle: lineItem.title,
+      variantTitle: lineItem.variant.title,
+      price: formatCurrency({
+        amount: lineItem.variant.priceV2.amount,
+        currencyCode: lineItem.variant.priceV2.currencyCode
+      }),
+      imageSrc: lineItem.variant.image.src,
+      imageAltText: lineItem.variant.image.altText
+    }))
     return {
+      lineItems: lineItems || [],
       subtotalPrice: subtotalPrice || '',
       totalPrice: totalPrice || '',
-      totalTax: totalTax || ''
+      totalTax: totalTax || '',
+      webUrl: checkout.webUrl || ''
     }
   },
 
