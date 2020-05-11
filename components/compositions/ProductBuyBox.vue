@@ -1,7 +1,7 @@
 <template lang="pug">
 form(
   @submit.prevent='$emit("addToCart", quantity)'
-  class=''
+  class='buy-box'
 )
   ProductBuyBoxOptions(
     :options='options'
@@ -15,6 +15,8 @@ form(
     @decreaseQuantity='quantity--'
   )
   Button(
+    :disabled='isCheckoutUpdateInProgress'
+    :isLoading='isCheckoutUpdateInProgress'
     type='submit'
     text='Add to Cart'
   )
@@ -39,6 +41,10 @@ export default {
     variants: {
       type: Array,
       default: () => []
+    },
+    isCheckoutUpdateInProgress: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -91,6 +97,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.test
-  background: white
+.buy-box
+  display: grid
+  grid-gap: $unit*2
 </style>

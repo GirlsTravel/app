@@ -1,3 +1,5 @@
+import toastConfig from './plugins/nuxt-toast'
+
 const isProd = process.env.NODE_ENV === 'production'
 
 export default {
@@ -72,14 +74,17 @@ export default {
     '@nuxtjs/style-resources',
     'nuxt-svg-loader',
     'nuxt-client-init-module',
-    'nuxt-vuex-router-sync'
+    'nuxt-vuex-router-sync',
+    'vue-scrollto/nuxt'
   ],
   /*
    ** Toast settings
    */
   toast: {
-    position: 'top-right',
-    duration: 5000
+    ...toastConfig.defaultOptions,
+    register: [
+      ...toastConfig.register
+    ]
   },
   /*
    ** Nuxt.js modules

@@ -1,11 +1,66 @@
-.toasted.default
-  // background: rgba(255, 255, 255, 0.6) !important
-  background: $white !important
-  color: $black !important
-  box-shadow: $unit $unit $unit rgba(34, 34, 34, 0.1) !important
-  border-radius: $unit !important
+.toasted-container .toasted
+  position: relative !important
+  display: grid !important
+  grid-gap: $unit*2
+  grid-template-columns: 1fr 1fr
+  padding: $unit*2 $unit*6 !important
   overflow: hidden !important
-  font-size: $fs !important
-  font-weight: $fw-reg !important
-  font-family: $pri-font !important
-  padding: $unit*2 !important
+  border-radius: $border-radius
+  box-shadow: 0 $unit*2 $unit*2 rgba(34, 34, 34, 0.15) !important
+  color: $black !important
+  background: $white !important
+
+  & .action,
+  & .material-icons
+    margin: 0 !important
+
+  & > .material-icons:first-of-type,
+  &__close
+    position: absolute
+    top: $unit*2
+    left: $unit*2
+
+  &__close
+    left: unset
+    right: $unit*2
+    padding: 0 !important
+    color: $dark !important
+
+  &__content
+    display: grid
+    grid-gap: $unit
+    grid-column: 1 / -1
+    max-width: 60ch
+
+  &__title
+    font-weight: $fw-bold
+
+  &__action
+    grid-column: 1 / -1
+    display: flex
+    justify-content: center
+    align-items: center
+    min-height: $unit*6
+    padding: $unit !important
+    background: $pri-cl
+    color: $blue !important
+    font-size: $fs !important
+    font-weight: $fw-reg !important
+    text-transform: initial !important
+
+    &:hover
+      text-decoration: none !important
+
+    &:nth-last-child(n+2),
+    &:nth-last-child(n+2) ~ .toasted__action
+      grid-column: unset
+
+  &.success
+
+    & > .material-icons:first-of-type
+      color: $success
+
+  &.error
+
+    & > .material-icons:first-of-type
+      color: $error

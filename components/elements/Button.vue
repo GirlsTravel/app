@@ -1,5 +1,6 @@
 <template lang="pug">
 button(
+  :class='{ loading: isLoading }'
   type='button'
   class='button'
 )
@@ -18,6 +19,10 @@ export default {
     text: {
       type: String,
       default: 'Submit'
+    },
+    isLoading: {
+      type: Boolean,
+      default: false
     }
   },
   data() {

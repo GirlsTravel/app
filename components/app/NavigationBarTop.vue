@@ -34,8 +34,11 @@ div(class='navigation-bar')
     //- )
   nuxt-link(
     :to='{ name: "shop-cart" }'
+    :class='{ empty: checkout.lineItems.length === 0 }'
+    class='navigation-bar__cart'
   )
-    span(class='material-icons-outlined') shopping_basket
+    span(class='material-icons-outlined') shopping_cart
+
   nuxt-link(
     v-if='isAuthUser'
     :to='{ name: "account-settings" }'
@@ -80,7 +83,8 @@ export default {
   computed: {
     ...mapGetters({
       isAuthUser: 'auth/isAuthUser',
-      currentUser: 'users/currentUser'
+      currentUser: 'users/currentUser',
+      checkout: 'shop/checkout'
     })
   },
   mounted() {
@@ -129,6 +133,22 @@ export default {
         +mq-xs
           display: flex
 
+  &__cart
+    @extend %flex--column-center
+    position: relative
+    height: inherit
+    padding: 0 $unit*2
+
+    &:not(.empty)::before
+      content: ''
+      position: absolute
+      top: $unit*1.5
+      right: $unit*1.5
+      width: $unit
+      height: $unit
+      background: $error
+      border-radius: 50%
+
   &__search-form
     display: none
 
@@ -139,6 +159,9 @@ export default {
     grid-gap: $unit*2
 
   &__link
+    display: none
+    +mq-m
+      display: initial
 
     &.nuxt-link-active,
     &:hover

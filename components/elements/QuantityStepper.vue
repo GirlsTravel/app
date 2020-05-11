@@ -47,14 +47,8 @@ export default {
 <style lang="sass" scoped>
 .quantity-stepper
   width: min-content
-  grid-row: 5 / 6
-  grid-column: 1 / 4
   display: grid
   grid-auto-flow: column
-  +mq-xs
-    grid-row: 4 / 5
-    grid-column: 2 / 4
-    align-self: end
 
   &__button,
   &__input

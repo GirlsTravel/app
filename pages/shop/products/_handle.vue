@@ -1,14 +1,21 @@
 <template lang="pug">
 div(class='product')
-  ProductDetails(
+  NotchBar(
+    expandSelector='#product-page-header'
+    contractSelector='#product-page-gallery'
+    class='product__notch-bar'
+  )
+  ProductHeader(
     :compareAtPrice='variant ? variant.compareAtPrice : ""'
     :price='variant ? variant.price : ""'
     :title='product.title'
-    class='product__details'
+    class='product__header'
+    id='product-page-header'
   )
   ProductBuyBox(
     :options='product.options'
     :variants='product.variants'
+    :isCheckoutUpdateInProgress='isCheckoutUpdateInProgress'
     @addToCart='onAddToCart'
     @variantSelection='onVariantSelection'
     class='product__buy-box'
@@ -16,6 +23,7 @@ div(class='product')
   ProductGalleryGrid(
     :images='product.images'
     class='product__gallery'
+    id='product-page-gallery'
   )
   ProductSections(
     :descriptionHtml='product.descriptionHtml'
@@ -25,16 +33,18 @@ div(class='product')
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import NotchBar from '~/components/elements/NotchBar.vue'
 import ProductBuyBox from '~/components/compositions/ProductBuyBox.vue'
-import ProductDetails from '~/components/modules/ProductDetails.vue'
+import ProductHeader from '~/components/modules/ProductHeader.vue'
 import ProductGalleryGrid from '~/components/modules/ProductGalleryGrid.vue'
 import ProductSections from '~/components/modules/ProductSections.vue'
 
 export default {
   layout: 'custom',
   components: {
+    NotchBar,
     ProductBuyBox,
-    ProductDetails,
+    ProductHeader,
     ProductGalleryGrid,
     ProductSections
   },
@@ -44,7 +54,8 @@ export default {
   },
   data() {
     return {
-      variant: {}
+      variant: {},
+      isCheckoutUpdateInProgress: false
     }
   },
   computed: {
@@ -54,12 +65,27 @@ export default {
   },
   methods: {
     async onAddToCart(quantity) {
-      await this.checkoutAddLineItems([
-        {
-          variantId: this.variant.id,
-          quantity
-        }
-      ])
+      try {
+        this.isCheckoutUpdateInProgress = true
+        await this.checkoutAddLineItems([
+          {
+            variantId: this.variant.id,
+            quantity
+          }
+        ])
+        this.$toasted.global.success({
+          title: `Success`,
+          message: `${quantity} item${quantity > 1 ? 's' : ''} added to cart.`
+        })
+      } catch (e) {
+        console.error(e)
+        this.$toasted.global.error({
+          title: `Error`,
+          message: `An error occurred. Try again.`
+        })
+      } finally {
+        this.isCheckoutUpdateInProgress = false
+      }
     },
 
     onVariantSelection(variant) {
@@ -77,10 +103,17 @@ export default {
 .product
   display: grid
   grid-gap: $unit*4
+  grid-auto-rows: min-content
   +mq-m
     grid-template-columns: 2fr 1fr
 
-  &__details
+  &__notch-bar
+    border-radius: $unit*3
+    box-shadow: 0px -#{$unit} $unit rgba(34, 34, 34, 0.1)
+    +mq-m
+      display: none
+
+  &__header
     +mq-m
       grid-row: 1 / 2
       grid-column: 2 / 3
@@ -94,6 +127,7 @@ export default {
     grid-row: 1 / 2
     height: 75vh
     overflow-y: auto
+    overscroll-behavior: contain
     +mq-m
       grid-row: 1 / 5
       grid-column: 1 / 2

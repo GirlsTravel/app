@@ -21,7 +21,6 @@ export default {
 
 <style lang="sass" scoped>
 .footer
-  margin-top: $unit
   padding: $unit*5
   text-align: center
 

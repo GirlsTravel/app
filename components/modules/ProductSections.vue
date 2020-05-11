@@ -1,9 +1,13 @@
 <template lang="pug">
 div(class='product-sections')
-  div(class='product-sections__description')
-    h3 Description
+  div(
+    v-if='descriptionHtml'
+    class='product-sections__description'
+  )
+    h3(class='product-sections__description-title') Description
     div(
       v-html='descriptionHtml'
+      class='product-sections__description-html'
     )
     button(
       @click='openDrawer("description")'
@@ -85,9 +89,14 @@ export default {
 
 <style lang="sass" scoped>
 .product-sections
-  background: white
 
   &__description
+    padding-top: $unit*3
+    box-shadow: inset 0 1px 0 0 #E5E5E5
+
+    &-title
+      font-weight: $fw-bold
+      margin-bottom: $unit*2
 
   &__button
     display: flex
@@ -101,6 +110,9 @@ export default {
     &--readMore
       padding-left: initial
       box-shadow: initial
+      color: $blue
+      &:hover
+        text-decoration: underline
 
     &-label
       white-space: nowrap
