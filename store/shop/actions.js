@@ -33,6 +33,20 @@ export default {
     }
   },
 
+  async productRecommendationsFetch({ commit }) {
+    const productRecommendationsQuery = shopifyClient.graphQLClient.query(
+      (root) => {
+        root.addConnection('productRecommendations', {}, (product) => {
+          product.add('title')
+        })
+      }
+    )
+    const res = await shopifyClient.graphQLClient.send(
+      productRecommendationsQuery
+    )
+    console.log('res: ', res)
+  },
+
   async checkoutCreate() {
     try {
       const checkout = await shopifyClient.checkout.create()

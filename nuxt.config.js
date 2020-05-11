@@ -52,13 +52,16 @@ export default {
     // Doc: https://github.com/nuxt-community/stylelint-module
     // '@nuxtjs/stylelint-module'
     // Doc: https://matteogabriele.gitbooks.io/vue-analytics/
-    ['@nuxtjs/google-analytics', {
-      id: 'UA-126987500-3',
-      debug: {
-        // enabled: !isProd,
-        sendHitTask: isProd
+    [
+      '@nuxtjs/google-analytics',
+      {
+        id: 'UA-126987500-3',
+        debug: {
+          // enabled: !isProd,
+          sendHitTask: isProd
+        }
       }
-    }]
+    ]
   ],
   /*
    ** Nuxt.js modules
@@ -82,9 +85,7 @@ export default {
    */
   toast: {
     ...toastConfig.defaultOptions,
-    register: [
-      ...toastConfig.register
-    ]
+    register: [...toastConfig.register]
   },
   /*
    ** Nuxt.js modules
@@ -110,9 +111,7 @@ export default {
      ** Add exception
      ** See https://logaretm.github.io/vee-validate/guide/rules.html#importing-rules-in-nuxt-js
      */
-    transpile: [
-      'vee-validate/dist/rules'
-    ],
+    transpile: ['vee-validate/dist/rules'],
     extractCSS: isProd,
     /*
      ** You can extend webpack config here
