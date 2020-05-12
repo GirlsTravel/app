@@ -63,6 +63,9 @@ export default {
       product: 'shop/product'
     })
   },
+  mounted() {
+    this.productRecommendationsFetch(this.product.id)
+  },
   methods: {
     async onAddToCart(quantity) {
       try {
@@ -93,7 +96,8 @@ export default {
     },
 
     ...mapActions({
-      checkoutAddLineItems: 'shop/checkoutAddLineItems'
+      checkoutAddLineItems: 'shop/checkoutAddLineItems',
+      productRecommendationsFetch: 'shop/productRecommendationsFetch'
     })
   }
 }

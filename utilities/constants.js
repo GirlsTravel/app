@@ -2,7 +2,13 @@
  * The Shopify Storefront API token
  * @see https://shopify.dev/docs/storefront-api/getting-started
  */
-// export const storefrontAccessToken = window.app.settings.storefront_access_token
+export const storefrontAccessToken = '27da3b9b6bbb013efbcb8734b9fb127e'
+
+/**
+ * The Shopify Storefront API version
+ * @see https://shopify.dev/concepts/about-apis/versioning
+ */
+export const storefrontApiVerision = '2020-07'
 
 /**
  * The default client's locale (e.g. 'en', 'es', etc)

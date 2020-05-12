@@ -1,10 +1,12 @@
 import { shopifyClient } from '~/services/shopify-buy'
+import { storefront } from '~/services/shopify-storefront'
 
 export default {
   async fetchProduct({ commit }, handle) {
     try {
       const product = await shopifyClient.product.fetchByHandle(handle)
       commit('SET_PRODUCTS', { product })
+      return product
     } catch (e) {
       console.error(e)
     }
@@ -33,18 +35,19 @@ export default {
     }
   },
 
-  async productRecommendationsFetch({ commit }) {
-    const productRecommendationsQuery = shopifyClient.graphQLClient.query(
-      (root) => {
-        root.addConnection('productRecommendations', {}, (product) => {
-          product.add('title')
-        })
-      }
-    )
-    const res = await shopifyClient.graphQLClient.send(
-      productRecommendationsQuery
-    )
-    console.log('res: ', res)
+  async productRecommendationsFetch({ commit }, productId) {
+    try {
+      const {
+        productRecommendations
+      } = await storefront.query.productRecommendations({ productId })
+      console.log('productRecommendations: ', productRecommendations)
+      commit('SET_PRODUCT_RECOMMENDATIONS', {
+        productId,
+        productRecommendations
+      })
+    } catch (e) {
+      console.error('productRecommendationsFetch error: ', e)
+    }
   },
 
   async checkoutCreate() {
