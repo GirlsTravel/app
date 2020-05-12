@@ -7,8 +7,26 @@ import gql from 'graphql-tag'
 export const productRecommendations = gql`
   query($productId: ID!) {
     productRecommendations(productId: $productId) {
-      title
       handle
+      images(first: 1) {
+        edges {
+          node {
+            altText
+            originalSrc
+          }
+        }
+      }
+      priceRange {
+        maxVariantPrice {
+          amount
+          currencyCode
+        }
+        minVariantPrice {
+          amount
+          currencyCode
+        }
+      }
+      title
     }
   }
 `

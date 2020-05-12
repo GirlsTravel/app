@@ -29,6 +29,17 @@ div(class='product')
     :descriptionHtml='product.descriptionHtml'
     class='product__sections'
   )
+  section(class='product__product-recommendations')
+    ProductTile(
+      v-for='(product, index) in productRecommendations'
+      :key='product + index'
+      :handle='product.handle'
+      :imageSrc='product.imageSrc'
+      :imageAltText='product.imageAltText'
+      :price='product.price'
+      :title='product.title'
+      class='product__product-tile'
+    )
 </template>
 
 <script>
@@ -38,6 +49,7 @@ import ProductBuyBox from '~/components/compositions/ProductBuyBox.vue'
 import ProductHeader from '~/components/modules/ProductHeader.vue'
 import ProductGalleryGrid from '~/components/modules/ProductGalleryGrid.vue'
 import ProductSections from '~/components/modules/ProductSections.vue'
+import ProductTile from '~/components/modules/ProductTile.vue'
 
 export default {
   layout: 'custom',
@@ -46,7 +58,8 @@ export default {
     ProductBuyBox,
     ProductHeader,
     ProductGalleryGrid,
-    ProductSections
+    ProductSections,
+    ProductTile
   },
   async fetch({ store, params }) {
     const { handle } = params
@@ -60,7 +73,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      product: 'shop/product'
+      product: 'shop/product',
+      productRecommendations: 'shop/productRecommendations'
     })
   },
   mounted() {
@@ -106,7 +120,7 @@ export default {
 <style lang="sass" scoped>
 .product
   display: grid
-  grid-gap: $unit*4
+  // grid-gap: $unit*4
   grid-auto-rows: min-content
   +mq-m
     grid-template-columns: 2fr 1fr
@@ -137,4 +151,18 @@ export default {
       grid-column: 1 / 2
       height: auto
       overflow: initial
+
+  &__product-recommendations
+    display: grid
+    grid-auto-flow: column
+    overflow-x: auto
+    scroll-snap-type: x mandatory
+    padding: $unit*5
+    +mq-m
+      grid-column: 1 / -1
+
+  &__product-tile
+    width: 280px
+    scroll-snap-align: start
+    padding: 0 $unit*2
 </style>

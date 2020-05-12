@@ -1,15 +1,15 @@
 <template lang="pug">
 nuxt-link(
   :to='{ name: "shop-products-handle", params: { handle }}'
-  class='product'
+  class='product-tile'
 )
   img(
     v-lazy='imageSrc'
     :alt='imageAltText'
-    class='product__image'
+    class='product-tile__image'
   )
-  h1(class='product__title') {{ title }}
-  p(class='product__price') {{ price }}
+  h1(class='product-tile__title') {{ title }}
+  p(class='product-tile__price') {{ price }}
 </template>
 
 <script>
@@ -46,7 +46,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-.product
+.product-tile
   background: white
 
   &__image

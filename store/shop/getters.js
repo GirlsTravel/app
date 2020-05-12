@@ -91,5 +91,30 @@ export default {
       }),
       title: product.title
     }))
+  },
+
+  productRecommendations(state, getters, rootState) {
+    const { productRecommendations, products } = state
+    const { handle } = rootState.route.params
+    const product = Object.values(products).find(
+      (product) => product.handle === handle
+    )
+    if (!productRecommendations[product.id]) return []
+    return productRecommendations[product.id].map((product) => ({
+      handle: product.handle,
+      imageSrc: product.images.edges[0].node.originalSrc,
+      imageAltText: product.images.edges[0].node.altText || '',
+      price: `
+        ${formatCurrency({
+          amount: product.priceRange.minVariantPrice.amount,
+          currencyCode: product.priceRange.minVariantPrice.currencyCode
+        })} —
+        ${formatCurrency({
+          amount: product.priceRange.maxVariantPrice.amount,
+          currencyCode: product.priceRange.maxVariantPrice.currencyCode
+        })}
+      `,
+      title: product.title
+    }))
   }
 }
