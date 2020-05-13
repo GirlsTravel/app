@@ -1,0 +1,13 @@
+#import './ImageEdge.graphql'
+#import './PageInfo.graphql'
+
+# Represents an image resource.
+# @see https://shopify.dev/docs/storefront-api/reference/object/imageconnection
+fragment ImageConnectionFragment on ImageConnection {
+  edges {
+    ...ImageEdgeFragment
+  }
+  pageInfo {
+    ...PageInfoFragment
+  }
+}

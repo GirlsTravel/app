@@ -21,23 +21,32 @@ div(class='shop')
           :price='product.price'
           :title='product.title'
         )
+    InfiniteLoader(
+      v-show='productsQueryCursor'
+      @infinite='loadMoreProducts'
+    )
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import SubscribeHero from '~/components/compositions/SubscribeHero.vue'
 import ContentHeader from '~/components/modules/ContentHeader.vue'
 import ProductTile from '~/components/modules/ProductTile.vue'
+import InfiniteLoader from '~/components/elements/InfiniteLoader.vue'
 
 export default {
   layout: 'custom',
   components: {
     SubscribeHero,
     ContentHeader,
-    ProductTile
+    ProductTile,
+    InfiniteLoader
   },
-  async fetch({ store }) {
-    await store.dispatch('shop/fetchProducts')
+  async asyncData({ store }) {
+    const productsQueryCursor = await store.dispatch('shop/fetchProducts', {
+      first: 4
+    })
+    return { productsQueryCursor }
   },
   data() {
     return {}
@@ -47,7 +56,20 @@ export default {
       products: 'shop/products'
     })
   },
-  methods: {}
+  methods: {
+    async loadMoreProducts(infiniteLoader) {
+      this.productsQueryCursor = await this.fetchProducts({
+        after: this.productsQueryCursor,
+        first: 4
+      })
+      if (!this.productsQueryCursor) infiniteLoader.complete()
+      else infiniteLoader.loaded()
+    },
+
+    ...mapActions({
+      fetchProducts: 'shop/fetchProducts'
+    })
+  }
 }
 </script>
 

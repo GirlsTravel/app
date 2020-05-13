@@ -1,0 +1,6 @@
+# Information about pagination in a connection.
+# @see https://shopify.dev/docs/storefront-api/reference/object/pageinfo
+fragment PageInfoFragment on PageInfo {
+  hasNextPage
+  hasPreviousPage
+}

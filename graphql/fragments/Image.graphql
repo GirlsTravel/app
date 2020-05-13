@@ -1,0 +1,7 @@
+# Represents an image resource.
+# @see https://shopify.dev/docs/storefront-api/reference/object/image
+fragment ImageFragment on Image {
+  altText
+  id
+  originalSrc
+}

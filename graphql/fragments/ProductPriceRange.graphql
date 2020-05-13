@@ -1,0 +1,12 @@
+# The price range of the product.
+# @see https://shopify.dev/docs/storefront-api/reference/object/productpricerange
+fragment ProductPriceRangeFragment on ProductPriceRange {
+  maxVariantPrice {
+    amount
+    currencyCode
+  }
+  minVariantPrice {
+    amount
+    currencyCode
+  }
+}

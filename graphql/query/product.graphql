@@ -1,0 +1,24 @@
+#import '../fragments/PageInfo.graphql'
+#import '../fragments/ProductTile.graphql'
+
+# List of the shop’s products.
+query products($first: Int!, $after: String) {
+  products(first: $first, after: $after) {
+    edges {
+      cursor
+      node {
+        ...ProductTileFragment
+      }
+    }
+    pageInfo {
+      ...PageInfoFragment
+    }
+  }
+}
+
+# Find recommended products related to a given product.
+query productRecommendations($productId: ID!) {
+  productRecommendations(productId: $productId) {
+    ...ProductTileFragment
+  }
+}

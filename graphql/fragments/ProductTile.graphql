@@ -1,0 +1,17 @@
+#import '../fragments/ImageConnection.graphql'
+#import '../fragments/ProductPriceRange.graphql'
+
+# A product tile context as an individual item for sale in a Shopify store.
+# @see https://shopify.dev/docs/storefront-api/reference/object/product
+fragment ProductTileFragment on Product {
+  handle
+  id
+  # Only need the product featured image.
+  images(first: 1) {
+    ...ImageConnectionFragment
+  }
+  priceRange {
+    ...ProductPriceRangeFragment
+  }
+  title
+}

@@ -17,13 +17,14 @@ export default {
 .base-loader
   width: $unit*3
   height: $unit*3
+  color: $white
 
   &__spinner
     width: inherit
     height: inherit
     border-radius: 50%
-    border: $unit/4 solid $white
-    border-color: $white transparent $white transparent
+    border: $unit/4 solid currentColor
+    border-color: currentColor transparent currentColor transparent
     animation: spin 1.2s linear infinite
 
 @keyframes spin

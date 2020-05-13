@@ -5,6 +5,10 @@ export default {
     Vue.set(state, 'checkout', checkout)
   },
 
+  SET_PRODUCT(state, { product }) {
+    Vue.set(state, 'product', product)
+  },
+
   SET_PRODUCTS(state, { product }) {
     Vue.set(state.products, product.id, product)
   },

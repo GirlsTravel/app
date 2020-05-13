@@ -5,17 +5,23 @@ export default {
   async fetchProduct({ commit }, handle) {
     try {
       const product = await shopifyClient.product.fetchByHandle(handle)
-      commit('SET_PRODUCTS', { product })
+      commit('SET_PRODUCT', { product })
       return product
     } catch (e) {
       console.error(e)
     }
   },
 
-  async fetchProducts({ commit }) {
+  async fetchProducts({ commit }, { after = null, first = 5 }) {
     try {
-      const products = await shopifyClient.product.fetchAll()
-      products.forEach((product) => commit('SET_PRODUCTS', { product }))
+      const { products } = await storefront.query.products({ after, first })
+      products.edges.forEach((product) =>
+        commit('SET_PRODUCTS', { product: product.node })
+      )
+      /** The cursor of the last product */
+      const cursor = products.edges[products.edges.length - 1].cursor
+      console.log('hasNextPage: ', products.pageInfo.hasNextPage)
+      return products.pageInfo.hasNextPage ? cursor : ''
     } catch (e) {
       console.error(e)
     }
@@ -40,7 +46,6 @@ export default {
       const {
         productRecommendations
       } = await storefront.query.productRecommendations({ productId })
-      console.log('productRecommendations: ', productRecommendations)
       commit('SET_PRODUCT_RECOMMENDATIONS', {
         productId,
         productRecommendations

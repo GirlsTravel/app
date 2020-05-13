@@ -1,0 +1,10 @@
+#import './Image.graphql'
+
+# Represents an image edge.
+# @see https://shopify.dev/docs/storefront-api/reference/object/imageedge
+fragment ImageEdgeFragment on ImageEdge {
+  cursor
+  node {
+    ...ImageFragment
+  }
+}

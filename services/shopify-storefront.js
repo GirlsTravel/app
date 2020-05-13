@@ -4,7 +4,10 @@ import {
   storefrontAccessToken,
   storefrontApiVerision
 } from '~/utilities/constants'
-import { productRecommendations } from '~/graphql/query/product'
+import {
+  products,
+  productRecommendations
+} from '~/graphql/query/product.graphql'
 
 /**
  * Find recommended products related to a given product.
@@ -42,6 +45,7 @@ const buildRequest = (query) => (variables) =>
  */
 export const storefront = {
   query: {
+    products: buildRequest(products),
     productRecommendations: buildRequest(productRecommendations)
   }
 }

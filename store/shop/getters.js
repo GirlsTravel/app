@@ -1,6 +1,34 @@
 import { isEmpty } from 'lodash'
 import { formatCurrency } from '~/utilities/format-currency'
 
+const defaultProductData = {
+  id: '',
+  price: '',
+  selectedOptions: [],
+  options: [],
+  variants: []
+}
+
+/**
+ * Format product data for product tile context
+ */
+const formatProductTileData = (product) => ({
+  handle: product.handle,
+  imageSrc: product.images.edges[0].node.originalSrc || '',
+  imageAltText: product.images.edges[0].node.altText || '',
+  price: `
+    ${formatCurrency({
+      amount: product.priceRange.minVariantPrice.amount,
+      currencyCode: product.priceRange.minVariantPrice.currencyCode
+    })} —
+    ${formatCurrency({
+      amount: product.priceRange.maxVariantPrice.amount,
+      currencyCode: product.priceRange.maxVariantPrice.currencyCode
+    })}
+  `,
+  title: product.title
+})
+
 export default {
   checkout(state) {
     const { checkout } = state
@@ -48,10 +76,8 @@ export default {
 
   product(state, getters, rootState) {
     const { handle } = rootState.route.params
-    const { products } = state
-    const product = Object.values(products).find(
-      (product) => product.handle === handle
-    )
+    const { product } = state
+    if (product?.handle !== handle) return defaultProductData
     return {
       ...product,
       options: product.options.map((option) => ({
@@ -81,40 +107,17 @@ export default {
 
   products(state, getters, rootState) {
     const { products } = state
-    return Object.values(products).map((product) => ({
-      handle: product.handle,
-      imageSrc: product.images[0].src,
-      imageAltText: product.images[0].altText || '',
-      price: formatCurrency({
-        amount: product.variants[0].priceV2.amount,
-        currencyCode: product.variants[0].priceV2.currencyCode
-      }),
-      title: product.title
-    }))
+    if (isEmpty(products)) return []
+    return Object.values(products).map((product) =>
+      formatProductTileData(product)
+    )
   },
 
   productRecommendations(state, getters, rootState) {
-    const { productRecommendations, products } = state
-    const { handle } = rootState.route.params
-    const product = Object.values(products).find(
-      (product) => product.handle === handle
+    const { productRecommendations, product } = state
+    if (isEmpty(productRecommendations[product.id])) return []
+    return productRecommendations[product.id].map((product) =>
+      formatProductTileData(product)
     )
-    if (!productRecommendations[product.id]) return []
-    return productRecommendations[product.id].map((product) => ({
-      handle: product.handle,
-      imageSrc: product.images.edges[0].node.originalSrc,
-      imageAltText: product.images.edges[0].node.altText || '',
-      price: `
-        ${formatCurrency({
-          amount: product.priceRange.minVariantPrice.amount,
-          currencyCode: product.priceRange.minVariantPrice.currencyCode
-        })} —
-        ${formatCurrency({
-          amount: product.priceRange.maxVariantPrice.amount,
-          currencyCode: product.priceRange.maxVariantPrice.currencyCode
-        })}
-      `,
-      title: product.title
-    }))
   }
 }
