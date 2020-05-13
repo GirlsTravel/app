@@ -30,20 +30,26 @@ div(class='product')
     class='product__sections'
   )
   section(class='product__product-recommendations')
-    ProductTile(
-      v-for='(product, index) in productRecommendations'
-      :key='product + index'
-      :handle='product.handle'
-      :imageSrc='product.imageSrc'
-      :imageAltText='product.imageAltText'
-      :price='product.price'
-      :title='product.title'
-      class='product__product-tile'
+    ContentHeader(
+      title='You Might Also Like'
     )
+    Carousel
+      ProductTile(
+        v-for='(product, index) in productRecommendations'
+        :key='product + index'
+        :handle='product.handle'
+        :imageSrc='product.imageSrc'
+        :imageAltText='product.imageAltText'
+        :price='product.price'
+        :title='product.title'
+        class='product__product-tile'
+      )
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import Carousel from '~/components/slots/Carousel.vue'
+import ContentHeader from '~/components/modules/ContentHeader.vue'
 import NotchBar from '~/components/elements/NotchBar.vue'
 import ProductBuyBox from '~/components/compositions/ProductBuyBox.vue'
 import ProductHeader from '~/components/modules/ProductHeader.vue'
@@ -54,6 +60,8 @@ import ProductTile from '~/components/modules/ProductTile.vue'
 export default {
   layout: 'custom',
   components: {
+    ContentHeader,
+    Carousel,
     NotchBar,
     ProductBuyBox,
     ProductHeader,
@@ -154,15 +162,15 @@ export default {
 
   &__product-recommendations
     display: grid
-    grid-auto-flow: column
-    overflow-x: auto
-    scroll-snap-type: x mandatory
-    padding: $unit*5
-    +mq-m
-      grid-column: 1 / -1
+    grid-column: 1 / -1
+
+    &-wrapper
+      display: grid
+      grid-auto-flow: column
+      overflow-x: auto
+      scroll-snap-type: x mandatory
 
   &__product-tile
-    width: 280px
+    width: 36vw
     scroll-snap-align: start
-    padding: 0 $unit*2
 </style>

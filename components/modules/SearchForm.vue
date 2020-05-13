@@ -66,7 +66,8 @@ export default {
   grid-gap: 0 $unit
   align-items: center
   background: rgba(232, 234, 237, 1)
-  border-radius: $unit*3
+  background: $pri-cl
+  border-radius: $unit/2
   overflow: hidden
   +mq-xs
     grid-template-columns: 1fr $unit*4

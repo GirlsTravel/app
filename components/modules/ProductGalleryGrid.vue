@@ -29,7 +29,7 @@ export default {
 .gallery
   display: grid
   grid-template-columns: repeat(2, 1fr)
-  grid-gap: $unit*4
+  grid-gap: $unit*2
 
   &__button
     width: 100%

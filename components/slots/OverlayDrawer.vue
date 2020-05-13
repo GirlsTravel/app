@@ -1,13 +1,19 @@
 <template lang="pug">
 div(
-  :class='{ "is-open": isOpen }'
+  :class='rootClassObject'
   class='overlay-drawer'
 )
+  button(
+    @click='closeDrawer'
+    class='overlay-drawer__backdrop'
+  )
   header(class='overlay-drawer__header')
     button(
       @click='closeDrawer'
       class='overlay-drawer__button'
-    ) Close
+    )
+      span(class='material-icons') close
+      span Close
     slot(name='header')
   div(
     v-scroll-lock='isOpen'
@@ -25,12 +31,23 @@ export default {
     drawerId: {
       type: String,
       required: true
+    },
+    openDirection: {
+      type: String,
+      default: 'left'
     }
   },
   data() {
     return {}
   },
   computed: {
+    rootClassObject() {
+      return {
+        isOpen: this.isOpen,
+        [this.openDirection]: true
+      }
+    },
+
     isOpen() {
       return this.drawer === this.drawerId
     },
@@ -51,33 +68,77 @@ export default {
 .overlay-drawer
   position: fixed
   z-index: 200
-  top: 100%
-  left: 0
   width: 100vw
   height: 100%
-  display: flex
-  flex-direction: column
+  display: grid
+  grid-template-rows: auto 1fr
+  grid-template-columns: 1fr auto
   overflow: hidden
-  background: $white
   transition: transform 150ms ease-out
 
-  &.is-open
-    transform: translateY(-100%)
+  /** Close position */
+  &.top
+    top: 100%
+    left: 0
+
+  &.right
+    top: 0
+    left: -100%
+
+  &.bottom
+    top: -100%
+    left: 0
+
+  &.left
+    top: 0
+    right: -100%
+
+  /** Open direction */
+  &.isOpen
+
+    &.top
+      transform: translateY(-100%)
+
+    &.right
+      direction: rtl
+      transform: translateX(100%)
+
+    &.bottom
+      transform: translateY(100%)
+
+    &.left
+      transform: translateX(-100%)
+
+    & .overlay-drawer__backdrop
+      background: rgba(34, 34, 34, 0.2)
+      transition: background-color 150ms 150ms ease-out
+
+  &__backdrop
+    grid-row: 1 / -1
+    background: transparent
+    transition: background-color 25ms ease-out
 
   &__header
     display: grid
     grid-template-columns: 1fr auto
     grid-auto-flow: column
+    grid-gap: $unit
     width: 100%
-    padding: $unit 0
+    padding: $unit
+    background: white
 
   &__button
+    @extend %flex--row-center
     grid-row: 1 / 2
     grid-column: 2 / 3
-    padding: 0 $unit*2
+    min-width: $unit*5
+    min-height: $unit*5
+    padding: $unit
+    border-radius: $border-radius
+    background: $pri-cl
 
   &__content
-    overflow-y: auto
     width: 100%
-    flex: 1 1 auto
+    overflow-y: auto
+    background: white
 </style>

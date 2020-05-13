@@ -1,6 +1,7 @@
 <template lang="pug">
 OverlayDrawer(
   drawerId='imageFinder'
+  openDirection='top'
 )
   template(v-slot:header)
     div(class='imageFinder__header')
@@ -82,24 +83,16 @@ export default {
     display: grid
     grid-template-columns: 1fr auto
     grid-auto-flow: column
-    width: 100%
-    padding: $unit 0
-
-  &__search-form
-    margin-left: $unit*2
-
-  &__close
-    padding: 0 $unit*2
 
   &__list
     display: grid
     grid-template-columns: repeat(1, 1fr)
     grid-gap: $unit*2
+    width: 100vw
     +mq-s
       grid-template-columns: repeat(2, 1fr)
     +mq-m
       grid-template-columns: repeat(3, 1fr)
-
 
     &-item
 

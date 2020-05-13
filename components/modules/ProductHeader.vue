@@ -46,6 +46,7 @@ export default {
     font-size: $fs1
 
   &__compare-at-price
-    margin-left: $unit*2
+    align-self: center
     text-decoration: line-through
+    color: $grey
 </style>

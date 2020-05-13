@@ -5,7 +5,8 @@ div(class='quantity-stepper')
     class='quantity-stepper__button'
     :disabled='disableButtons || quantity <= min'
     @click='$emit("decreaseQuantity")'
-  ) -
+  )
+    span(class='material-icons') remove
   input(
     v-model='quantity'
     type='number'
@@ -18,7 +19,8 @@ div(class='quantity-stepper')
     class='quantity-stepper__button'
     :disabled='disableButtons || quantity >= max'
     @click='$emit("increaseQuantity")'
-  ) +
+  )
+    span(class='material-icons') add
 </template>
 
 <script>
