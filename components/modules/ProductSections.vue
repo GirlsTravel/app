@@ -91,12 +91,12 @@ export default {
 .product-sections
 
   &__description
-    padding-top: $unit*3
-    box-shadow: inset 0 1px 0 0 #E5E5E5
+    padding: 0 $unit
 
     &-title
+      display: none
       font-weight: $fw-bold
-      margin-bottom: $unit*2
+      margin-bottom: $unit
 
   &__button
     display: flex

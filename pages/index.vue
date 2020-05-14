@@ -14,13 +14,13 @@ div(class='index')
 
   //- Articles
   aside(class='index__collection')
-    header(class='index__collection-header')
-      h2(class='index__collection-title') Trending Articles
-      p(class='index__collection-text') Learn from your peers. Explore activity recommendations, travel tips and tricks.
-      nuxt-link(
-        :to='{ name: "articles" }'
-        class='index__collection-link'
-      ) See more
+    ContentHeader(
+      title='Trending Articles'
+      text='Learn from your peers. Explore activity recommendations, travel tips and tricks.'
+      :linkTo='{ name: "articles" }'
+      linkText='See more'
+      class='index__collection-header'
+    )
     ul(class='index__list')
       li(
         v-for='(post, index) in Object.values(sortedArticles).filter((p, i) => i < 4)'
@@ -47,13 +47,13 @@ div(class='index')
 
   //- Forum
   aside(class='index__collection')
-    header(class='index__collection-header')
-      h2(class='index__collection-title') Popular Questions
-      p(class='index__collection-text') Have a question? Ask a community of female travelers who've been there.
-      nuxt-link(
-        :to='{ name: "questions" }'
-        class='index__collection-link'
-      ) See more
+    ContentHeader(
+      title='Popular Questions'
+      text='Have a question? Ask a community of female travelers who\'ve been there.'
+      :linkTo='{ name: "questions" }'
+      linkText='See more'
+      class='index__collection-header'
+    )
     ul(class='index__list')
       li(
         v-for='(post, index) in Object.values(sortedQuestions).filter((p, i) => i < 4)'
@@ -129,15 +129,17 @@ div(class='index')
 <script>
 import { mapState } from 'vuex'
 import contentData from '~/data/index/index.json'
-import ContentTile from '~/components/modules/ContentTile.vue'
 import ArticleSummary from '~/components/modules/ArticleSummary.vue'
+import ContentHeader from '~/components/modules/ContentHeader.vue'
+import ContentTile from '~/components/modules/ContentTile.vue'
 import QuestionSummary from '~/components/modules/PostSummary.vue'
 
 export default {
   layout: 'custom',
   components: {
-    ContentTile,
     ArticleSummary,
+    ContentHeader,
+    ContentTile,
     QuestionSummary
   },
   async fetch({ store }) {
@@ -203,33 +205,6 @@ export default {
       width: 75%
     +mq-m
       width: 80%
-
-    &-header
-      display: grid
-      grid-template-columns: 1fr auto
-      grid-gap: $unit/2
-
-    &-title
-      grid-row: 1 / 2
-      grid-column: 1 / 2
-      font-size: $fs2
-      font-weight: $fw-bold
-
-    &-text
-      grid-row: 2 / 3
-      grid-column: 1 / 2
-
-    &-link
-      height: min-content
-      grid-row: 1 / 2
-      grid-column: 2 / 3
-      // background: $pri-cl
-      // padding: $unit $unit*2
-      // border-radius: $unit/2
-      color: $blue
-
-      &:hover
-        text-decoration: underline
 
     &-main-link
       justify-self: center

@@ -53,6 +53,7 @@ export default {
 .notch-bar
   @extend %flex--row-center
   position: sticky
+  z-index: 20
   top: $navigation-bar
   min-height: $notch-bar
   padding: $unit

@@ -18,6 +18,16 @@ section(class='newsletter-hero' id='newsletter-hero')
             text='Join'
             :disabled='invalid && dirty'
           )
+  video(
+    autoplay
+    muted
+    loop
+    class='video'
+  )
+    source(
+      src='~/assets/camping-video.mp4'
+      type='video/mp4'
+    )
     //- IllustrationNewsletter(class='newsletter-hero__illustration')
 </template>
 
@@ -81,11 +91,25 @@ export default {
 
 <style lang="sass" scoped>
 .newsletter-hero
-  min-height: 680px
-  padding: $unit*10 $unit*2
+  position: relative
+  min-height: 400px
+  padding: $unit*5 $unit*2
   background: #fbeeca
 
+  &::before
+    content: ''
+    position: absolute
+    z-index: 2
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+    background: #fbeeca
+    display: none
+
   &__content
+    position: relative
+    z-index: 3
     display: grid
     justify-items: center
     align-items: center
@@ -104,7 +128,7 @@ export default {
       text-align: initial
 
   &__title
-    font-size: $fs3
+    font-size: $fs2
     font-weight: $fw-bold
 
   &__form
@@ -120,4 +144,14 @@ export default {
 
   &__illustration
     max-width: 500px
+
+.video
+  position: absolute
+  z-index: 1
+  top: 0
+  left: 0
+  width: 100%
+  height: 100%
+  object-fit: cover
+  mix-blend-mode: multiply
 </style>

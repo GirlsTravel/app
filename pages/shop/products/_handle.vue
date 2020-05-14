@@ -32,6 +32,7 @@ div(class='product')
   section(class='product__product-recommendations')
     ContentHeader(
       title='You Might Also Like'
+      class='product__product-recommendations-title'
     )
     Carousel
       ProductTile(
@@ -128,7 +129,6 @@ export default {
 <style lang="sass" scoped>
 .product
   display: grid
-  // grid-gap: $unit*4
   grid-auto-rows: min-content
   +mq-m
     grid-template-columns: 2fr 1fr
@@ -140,14 +140,22 @@ export default {
       display: none
 
   &__header
+    padding: 0 $unit
     +mq-m
       grid-row: 1 / 2
       grid-column: 2 / 3
+      padding: $unit*5 $unit*5 0 0
 
   &__buy-box
+    padding: $unit*3 $unit
     +mq-m
       grid-row: 2 / 3
       grid-column: 2 / 3
+      padding: $unit*3 $unit*5 $unit*3 0
+
+  &__sections
+    +mq-m
+      padding-right: $unit*5
 
   &__gallery
     grid-row: 1 / 2
@@ -158,19 +166,28 @@ export default {
       grid-row: 1 / 5
       grid-column: 1 / 2
       height: auto
+      margin: $unit*5 $unit*5 0 $unit*5
       overflow: initial
 
   &__product-recommendations
     display: grid
     grid-column: 1 / -1
+    margin: $unit*3 0
+    +mq-m
+      margin: $unit*10 0
 
-    &-wrapper
-      display: grid
-      grid-auto-flow: column
-      overflow-x: auto
-      scroll-snap-type: x mandatory
+    &-title
+      margin: 0 $unit $unit*2 $unit
+      +mq-m
+        margin: 0 $unit*5 $unit*3 $unit*5
 
   &__product-tile
     width: 36vw
     scroll-snap-align: start
+    margin-right: $unit
+    +mq-m
+      margin-right: $unit*2
+
+    &:last-of-type
+      margin-right: initial
 </style>

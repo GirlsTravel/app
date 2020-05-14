@@ -8,9 +8,7 @@ div(
     class='carousel__button'
   )
     span(class='carousel__button-icon material-icons') chevron_left
-
   slot
-
   button(
     @click='onNavigation(1)'
     class='carousel__button'
@@ -47,12 +45,12 @@ export default {
 .carousel
   display: grid
   grid-auto-flow: column
-  grid-gap: $unit*2
   overflow-x: auto
   scroll-snap-type: x mandatory
-  scroll-padding: 0 $unit*7
   /** Hide scrollbar for IE and Edge */
   -ms-overflow-style: none
+  +mq-m
+    scroll-padding: 0 $unit*7
 
   /** Hide scrollbar for Chrome, Safari and Opera */
   &::-webkit-scrollbar

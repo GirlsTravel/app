@@ -47,7 +47,7 @@ export default {
   &__title
     grid-row: 1 / 2
     grid-column: 1 / 2
-    font-size: $fs2
+    font-size: $fs1
     font-weight: $fw-bold
 
   &__text

@@ -62,7 +62,7 @@ export default {
 
   &__section
     display: grid
-    grid-gap: $unit*2
+    grid-gap: $unit
 
   &__header
     display: flex
