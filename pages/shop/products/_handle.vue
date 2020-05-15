@@ -43,6 +43,7 @@ div(class='product')
         :imageAltText='product.imageAltText'
         :price='product.price'
         :title='product.title'
+        :flagText='product.isOnSale ? "Sale" : ""'
         class='product__product-tile'
       )
 </template>

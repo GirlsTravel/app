@@ -17,7 +17,7 @@ export const defaultLocale = 'en'
 
 /**
  * Order fulfillment status UI friendly equivalent values
- * @see https://shopify.dev/docs/storefront-api/reference/object/order/orderfulfillmentstatus?api[version]=2020-07
+ * @see https://shopify.dev/docs/storefront-api/reference/object/order/orderfulfillmentstatus
  */
 export const orderFulfillmentStatusMap = {
   FULFILLED: 'Fulfilled',
@@ -31,7 +31,7 @@ export const orderFulfillmentStatusMap = {
 
 /**
  * Order financial status UI friendly equivalent values
- * @see https://shopify.dev/docs/storefront-api/reference/object/order/orderfinancialstatus?api[version]=2020-07
+ * @see https://shopify.dev/docs/storefront-api/reference/object/order/orderfinancialstatus
  */
 export const orderFinancialStatusMap = {
   AUTHORIZED: 'Authorized',
@@ -45,7 +45,7 @@ export const orderFinancialStatusMap = {
 
 /**
  * Order cancel reason UI friendly equivalent values
- * @see https://shopify.dev/docs/storefront-api/reference/object/order/ordercancelreason?api[version]=2020-07
+ * @see https://shopify.dev/docs/storefront-api/reference/object/order/ordercancelreason
  */
 export const orderCancelReason = {
   CUSTOMER: 'The customer wanted to cancel the order',
@@ -53,4 +53,11 @@ export const orderCancelReason = {
   FRAUD: 'The order was fraudulent',
   INVENTORY: 'There was insufficient inventory',
   OTHER: 'The order was canceled for an unlisted reason'
+}
+
+/**
+ * A mapping for product tags.
+ */
+export const productTags = {
+  isOnSale: 'sale'
 }

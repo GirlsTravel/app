@@ -62,7 +62,7 @@ export default {
 
     &:focus,
     &:hover
-      background: transparent
+      // background: transparent
       border-color: $grey
 
     &:focus

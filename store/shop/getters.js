@@ -1,5 +1,6 @@
 import { isEmpty } from 'lodash'
 import { formatCurrency } from '~/utilities/format-currency'
+import { productTags } from '~/utilities/constants'
 
 const defaultProductData = {
   id: '',
@@ -16,16 +17,18 @@ const formatProductTileData = (product) => ({
   handle: product.handle,
   imageSrc: product.images.edges[0].node.originalSrc || '',
   imageAltText: product.images.edges[0].node.altText || '',
-  price: `
-    ${formatCurrency({
-      amount: product.priceRange.minVariantPrice.amount,
-      currencyCode: product.priceRange.minVariantPrice.currencyCode
-    })} —
-    ${formatCurrency({
-      amount: product.priceRange.maxVariantPrice.amount,
-      currencyCode: product.priceRange.maxVariantPrice.currencyCode
-    })}
-  `,
+  isOnSale: product.tags.includes(productTags.isOnSale),
+  price:
+    product.priceRange.minVariantPrice.amount ===
+    product.priceRange.maxVariantPrice.amount
+      ? formatCurrency({
+          amount: product.priceRange.minVariantPrice.amount,
+          currencyCode: product.priceRange.minVariantPrice.currencyCode
+        })
+      : `${formatCurrency({
+          amount: product.priceRange.minVariantPrice.amount,
+          currencyCode: product.priceRange.minVariantPrice.currencyCode
+        })}+`,
   title: product.title
 })
 

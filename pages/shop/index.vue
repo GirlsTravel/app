@@ -20,6 +20,7 @@ div(class='shop')
           :imageAltText='product.imageAltText'
           :price='product.price'
           :title='product.title'
+          :flagText='product.isOnSale ? "Sale" : ""'
         )
     InfiniteLoader(
       v-show='productsQueryCursor'
@@ -89,6 +90,6 @@ export default {
 
     &-list
       display: grid
-      grid-gap: $unit*4
+      grid-gap: $unit*4 $unit*2
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr))
 </style>

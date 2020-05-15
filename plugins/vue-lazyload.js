@@ -13,6 +13,16 @@ const config = {
     threshold: 0.1
   },
   filter: {
+    shopify(listener) {
+      const isShopifyCDN = /cdn.shopify.com/
+      if (!isShopifyCDN.test(listener.src)) return
+      listener.src = listener.src.replace(
+        '.jpg',
+        `_${Math.round(
+          listener.el.clientWidth * window.devicePixelRatio * 1.25
+        )}x.jpg`
+      )
+    },
     userProfile(listener) {
       const isUserProfile = /user_profile_photo/
       if (!isUserProfile.test(listener.src)) return

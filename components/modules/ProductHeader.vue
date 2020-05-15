@@ -1,7 +1,10 @@
 <template lang="pug">
 header(class='product-header')
   h1(class='product-header__title') {{ title }}
-  p(class='product-header__price') {{ price }}
+  p(
+    :class='{ isOnSale: compareAtPrice }'
+    class='product-header__price'
+  ) {{ price }}
   p(
     v-show='compareAtPrice'
     class='product-header__compare-at-price'
@@ -44,6 +47,9 @@ export default {
 
   &__price
     font-size: $fs1
+
+    &.isOnSale
+      color: $error
 
   &__compare-at-price
     align-self: center

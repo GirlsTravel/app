@@ -13,6 +13,7 @@ section(class='newsletter-hero' id='newsletter-hero')
             v-model='email'
             rules='required|isEmail'
             placeholder='example@gmail.com'
+            class='newsletter-hero__form-input'
           )
           Button(
             text='Join'
@@ -22,19 +23,19 @@ section(class='newsletter-hero' id='newsletter-hero')
     autoplay
     muted
     loop
-    class='video'
+    class='newsletter-hero__video'
   )
     source(
-      src='~/assets/camping-video.mp4'
+      :src='header.backgroundVideo'
       type='video/mp4'
     )
-    //- IllustrationNewsletter(class='newsletter-hero__illustration')
 </template>
 
 <script>
 import { ValidationObserver } from 'vee-validate'
 import Input from '~/components/elements/Input.vue'
 import Button from '~/components/elements/Button.vue'
+import { heroVideo } from '~/data/shop/index.json'
 // import IllustrationNewsletter from '~/assets/svg/illustration-newsletter.svg'
 
 export default {
@@ -58,7 +59,8 @@ export default {
     return {
       header: {
         title: 'This week in the stock market',
-        text: `Never miss out again. Get the most important financial events sent straight to your inbox.`
+        text: `Never miss out again. Get the most important financial events sent straight to your inbox.`,
+        backgroundVideo: heroVideo
       },
       email: ''
     }
@@ -94,18 +96,7 @@ export default {
   position: relative
   min-height: 400px
   padding: $unit*5 $unit*2
-  background: #fbeeca
-
-  &::before
-    content: ''
-    position: absolute
-    z-index: 2
-    top: 0
-    left: 0
-    width: 100%
-    height: 100%
-    background: #fbeeca
-    display: none
+  background: $grey
 
   &__content
     position: relative
@@ -130,6 +121,10 @@ export default {
   &__title
     font-size: $fs2
     font-weight: $fw-bold
+    color: $white
+
+  &__text
+    color: $white
 
   &__form
     display: grid
@@ -142,16 +137,13 @@ export default {
       grid-auto-flow: column
       margin: 0
 
-  &__illustration
-    max-width: 500px
-
-.video
-  position: absolute
-  z-index: 1
-  top: 0
-  left: 0
-  width: 100%
-  height: 100%
-  object-fit: cover
-  mix-blend-mode: multiply
+  &__video
+    position: absolute
+    z-index: 1
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+    object-fit: cover
+    mix-blend-mode: multiply
 </style>

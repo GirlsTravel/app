@@ -62,6 +62,7 @@ export default {
     +mq-m
       display: flex
       position: sticky
+      z-index: 9
       top: 0
       left: 0
       padding: 0 $unit

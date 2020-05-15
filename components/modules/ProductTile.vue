@@ -3,18 +3,26 @@ nuxt-link(
   :to='{ name: "shop-products-handle", params: { handle }}'
   class='product-tile'
 )
-  img(
-    v-lazy='imageSrc'
+  ImageElement(
+    :src='imageSrc'
     :alt='imageAltText'
     class='product-tile__image'
   )
   h1(class='product-tile__title') {{ title }}
   p(class='product-tile__price') {{ price }}
+  p(
+    v-if='flagText'
+    class='product-tile__flag'
+  ) {{ flagText }}
 </template>
 
 <script>
+import ImageElement from '~/components/elements/Image.vue'
+
 export default {
-  components: {},
+  components: {
+    ImageElement
+  },
   props: {
     handle: {
       type: String,
@@ -35,6 +43,10 @@ export default {
     title: {
       type: String,
       required: true
+    },
+    flagText: {
+      type: String,
+      default: ''
     }
   },
   data() {
@@ -47,9 +59,23 @@ export default {
 
 <style lang="sass" scoped>
 .product-tile
+  position: relative
+  display: grid
+  grid-gap: $unit
   background: white
 
   &__image
-    width: 100%
-    background: $pri-cl
+
+  &__price
+    font-weight: $fw-bold
+
+  &__flag
+    position: absolute
+    top: $unit*2
+    right: 0
+    padding: $unit/2 $unit
+    background: $error
+    border-top-left-radius: $border-radius
+    border-bottom-left-radius: $border-radius
+    color: $white
 </style>
