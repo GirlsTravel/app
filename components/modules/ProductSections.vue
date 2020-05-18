@@ -24,35 +24,21 @@ div(class='product-sections')
       span(class='product-sections__button-icon') +
 
   OverlayDrawer(
-    drawerId='description'
+    v-for='(section, index) in sections'
+    :key='section + index'
+    :drawerId='section.id'
   )
     template(v-slot:header)
-      div description
+      div {{ section.label }}
     template(v-slot:default)
-      div(
-        v-html='descriptionHtml'
-      )
-
-  OverlayDrawer(
-    drawerId='shippingReturns'
-  )
-    template(v-slot:header)
-      div shippingReturns
-    template(v-slot:default)
-      div hello world
-
-  OverlayDrawer(
-    drawerId='reviews'
-  )
-    template(v-slot:header)
-      div reviews
-    template(v-slot:default)
-      div hello world
+      div(v-html='section.html')
 </template>
 
 <script>
 import { mapMutations } from 'vuex'
 import OverlayDrawer from '~/components/slots/OverlayDrawer.vue'
+import presetsFaqData from '~/data/pages/presets-faq.json'
+import digitalGoodsPolicyData from '~/data/pages/digital-goods-policy.json'
 
 export default {
   components: {
@@ -68,12 +54,14 @@ export default {
     return {
       sections: [
         {
-          id: 'shippingReturns',
-          label: 'Free Shipping & Returns'
+          id: presetsFaqData.title,
+          label: presetsFaqData.title,
+          html: presetsFaqData.bodyHtml
         },
         {
-          id: 'reviews',
-          label: 'Reviews'
+          id: digitalGoodsPolicyData.title,
+          label: digitalGoodsPolicyData.title,
+          html: digitalGoodsPolicyData.bodyHtml
         }
       ]
     }

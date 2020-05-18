@@ -1,8 +1,17 @@
 {
   "hero": {
+    "headline": "Lightroom Presets",
+    "text": "Edit like a Pro with one simple click.",
+    "backgroundImageURL": "https://images.unsplash.com/photo-1446160657592-4782fb76fb99?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1949&q=80",
+    "primaryLinkLabel": "View presets",
+    "primaryLink": {
+      "name": "shop"
+    }
+  },
+  "feature": {
     "headline": "Travel With Confidence",
     "text": "Join a fearless collective of women with the mission of building an universal community of world travelers.",
-    "backgroundImageURL": "https://images.unsplash.com/photo-1446160657592-4782fb76fb99?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1949&q=80",
+    "backgroundImageURL": "https://images.unsplash.com/photo-1544785260-76a1f4bcf442?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2767&q=80",
     "primaryLinkLabel": "Get started",
     "secondaryLinkLabel": "Learn more",
     "primaryLink": {
@@ -10,15 +19,6 @@
     },
     "secondaryLink": {
       "name": "pages-about-us"
-    }
-  },
-  "feature": {
-    "headline": "Featured Profile",
-    "text": "A travel buddy is never out of reach. Connect with this months featured travel superstar.",
-    "backgroundImageURL": "https://images.unsplash.com/photo-1544785260-76a1f4bcf442?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2767&q=80",
-    "primaryLinkLabel": "Visit profile",
-    "primaryLink": {
-      "name": "articles"
     }
   },
   "contentCreator": {

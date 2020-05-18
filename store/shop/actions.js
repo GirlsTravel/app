@@ -2,31 +2,6 @@ import { shopifyClient } from '~/services/shopify-buy'
 import { storefront } from '~/services/shopify-storefront'
 
 export default {
-  async fetchProduct({ commit }, handle) {
-    try {
-      const product = await shopifyClient.product.fetchByHandle(handle)
-      commit('SET_PRODUCT', { product })
-      return product
-    } catch (e) {
-      console.error(e)
-    }
-  },
-
-  async fetchProducts({ commit }, { after = null, first = 5 }) {
-    try {
-      const { products } = await storefront.query.products({ after, first })
-      products.edges.forEach((product) =>
-        commit('SET_PRODUCTS', { product: product.node })
-      )
-      /** The cursor of the last product */
-      const cursor = products.edges[products.edges.length - 1].cursor
-      console.log('hasNextPage: ', products.pageInfo.hasNextPage)
-      return products.pageInfo.hasNextPage ? cursor : ''
-    } catch (e) {
-      console.error(e)
-    }
-  },
-
   async checkoutInit({ commit, dispatch }) {
     try {
       const checkoutId = localStorage.getItem('checkoutId')
@@ -41,24 +16,9 @@ export default {
     }
   },
 
-  async productRecommendationsFetch({ commit }, productId) {
-    try {
-      const {
-        productRecommendations
-      } = await storefront.query.productRecommendations({ productId })
-      commit('SET_PRODUCT_RECOMMENDATIONS', {
-        productId,
-        productRecommendations
-      })
-    } catch (e) {
-      console.error('productRecommendationsFetch error: ', e)
-    }
-  },
-
   async checkoutCreate() {
     try {
       const checkout = await shopifyClient.checkout.create()
-      // console.log('createCheckout: ', checkout)
       return checkout
     } catch (e) {
       console.error(e)
@@ -131,6 +91,45 @@ export default {
     } catch (e) {
       console.error(e)
       throw e
+    }
+  },
+
+  async fetchProduct({ commit }, handle) {
+    try {
+      const product = await shopifyClient.product.fetchByHandle(handle)
+      commit('SET_PRODUCT', { product })
+      return product
+    } catch (e) {
+      console.error(e)
+    }
+  },
+
+  async fetchProducts({ commit }, { after = null, first = 5 }) {
+    try {
+      const { products } = await storefront.query.products({ after, first })
+      products.edges.forEach((product) =>
+        commit('SET_PRODUCTS', { product: product.node })
+      )
+      /** The cursor of the last product */
+      const cursor = products.edges[products.edges.length - 1].cursor
+      console.log('hasNextPage: ', products.pageInfo.hasNextPage)
+      return products.pageInfo.hasNextPage ? cursor : ''
+    } catch (e) {
+      console.error(e)
+    }
+  },
+
+  async productRecommendationsFetch({ commit }, productId) {
+    try {
+      const {
+        productRecommendations
+      } = await storefront.query.productRecommendations({ productId })
+      commit('SET_PRODUCT_RECOMMENDATIONS', {
+        productId,
+        productRecommendations
+      })
+    } catch (e) {
+      console.error('productRecommendationsFetch error: ', e)
     }
   }
 }

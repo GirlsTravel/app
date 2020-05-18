@@ -85,8 +85,6 @@ export default {
     max-width: $fs*56
     font-size: $fs2
     font-weight: $fw-bold
-    +mq-s
-      font-size: $fs3
 
   &__text
     max-width: $fs*28

@@ -101,7 +101,7 @@ div(class='index')
     class='index__content-creator'
   )
 
-  //- Profiles
+  //- Presets
   ContentTile(
     :headline='tiles.feature.headline'
     :text='tiles.feature.text'

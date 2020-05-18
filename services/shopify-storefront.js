@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { print } from 'graphql'
 import {
+  shopDomain,
   storefrontAccessToken,
   storefrontApiVerision
 } from '~/utilities/constants'
@@ -17,7 +18,7 @@ import {
  */
 const handleRequest = async ({ query, variables = {} }) => {
   const config = {
-    url: `https://feed-me-sugar.myshopify.com/api/${storefrontApiVerision}/graphql`,
+    url: `https://${shopDomain}/api/${storefrontApiVerision}/graphql`,
     method: 'post',
     headers: {
       Accept: 'application/json',

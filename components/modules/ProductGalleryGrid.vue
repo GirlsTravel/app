@@ -3,10 +3,15 @@ section(class='gallery')
   button(
     v-for='(image, index) in images'
     :key='image + index'
+    class='gallery__button'
   )
+    span(
+      class='gallery__flag'
+    ) {{ index % 2 === 0 ? 'Before' : 'After' }}
     ImageElement(
       :src='image.src'
       :isBackgroundImage='true'
+      :aspectRatio='5 / 4'
     )
 </template>
 
@@ -37,6 +42,17 @@ export default {
   grid-auto-rows: min-content
   grid-template-columns: repeat(2, 1fr)
   grid-gap: $unit
-  +mq-m
-    grid-gap: $unit*2
+
+  &__button
+    position: relative
+
+  &__flag
+    position: absolute
+    z-index: 9
+    top: $unit*2
+    right: 0
+    padding: $unit/2 $unit
+    background: $white
+    border-top-left-radius: $border-radius
+    border-bottom-left-radius: $border-radius
 </style>

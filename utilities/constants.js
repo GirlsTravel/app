@@ -1,8 +1,14 @@
 /**
+ * The Shopify shop domain
+ */
+export const shopDomain = 'girls-travel.myshopify.com'
+
+/**
  * The Shopify Storefront API token
  * @see https://shopify.dev/docs/storefront-api/getting-started
+ * Old key: '27da3b9b6bbb013efbcb8734b9fb127e'
  */
-export const storefrontAccessToken = '27da3b9b6bbb013efbcb8734b9fb127e'
+export const storefrontAccessToken = '64f6efd326ef5369775d0f398153eab9'
 
 /**
  * The Shopify Storefront API version

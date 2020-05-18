@@ -3,11 +3,21 @@ nuxt-link(
   :to='{ name: "shop-products-handle", params: { handle }}'
   class='product-tile'
 )
-  ImageElement(
-    :src='imageSrc'
-    :alt='imageAltText'
-    class='product-tile__image'
+  div(
+    class='product-tile__images'
   )
+    ImageElement(
+      :src='imageSrc'
+      :alt='imageAltText'
+      :aspectRatio='5 / 4'
+      class='product-tile__image'
+    )
+    ImageElement(
+      :src='imageSrc'
+      :alt='imageAltText'
+      :aspectRatio='5 / 4'
+      class='product-tile__image'
+    )
   h1(class='product-tile__title') {{ title }}
   p(class='product-tile__price') {{ price }}
   p(
@@ -64,13 +74,17 @@ export default {
   grid-gap: $unit
   background: white
 
-  &__image
+  &__images
+    display: grid
+    grid-auto-flow: column
+    grid-gap: $unit
 
   &__price
     font-weight: $fw-bold
 
   &__flag
     position: absolute
+    z-index: 9
     top: $unit*2
     right: 0
     padding: $unit/2 $unit
