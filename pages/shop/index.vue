@@ -16,6 +16,7 @@ div(class='shop')
       )
         ProductTile(
           :handle='product.handle'
+          :images='product.images'
           :imageSrc='product.imageSrc'
           :imageAltText='product.imageAltText'
           :price='product.price'

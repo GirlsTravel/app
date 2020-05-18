@@ -29,9 +29,12 @@ div(class='product-sections')
     :drawerId='section.id'
   )
     template(v-slot:header)
-      div {{ section.label }}
+      div(class='product-sections__drawer-header') {{ section.label }}
     template(v-slot:default)
-      div(v-html='section.html')
+      div(
+        v-html='section.html'
+        class='product-sections__drawer-content'
+      )
 </template>
 
 <script>
@@ -96,9 +99,11 @@ export default {
     align-items: center
 
     &--readMore
-      padding-left: initial
+      padding: initial
+      margin-top: $unit*3
       box-shadow: initial
       color: $blue
+      display: none
       &:hover
         text-decoration: underline
 
@@ -109,4 +114,15 @@ export default {
 
     &-icon
       margin-left: $unit
+
+  &__description
+    margin-bottom: $unit*3
+
+  &__drawer-header
+    @extend %flex--row-center
+    font-weight: $fw-bold
+
+  &__drawer-content
+    margin: $unit*2
+    max-width: 480px
 </style>

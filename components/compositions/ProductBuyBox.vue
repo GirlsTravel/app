@@ -8,12 +8,12 @@ form(
     :selectedOptions='selectedOptions'
     @optionSelection='onOptionSelection'
   )
-  QuantityStepper(
-    :quantity='quantity'
-    :min='1'
-    @increaseQuantity='quantity++'
-    @decreaseQuantity='quantity--'
-  )
+  //- QuantityStepper(
+  //-   :quantity='quantity'
+  //-   :min='1'
+  //-   @increaseQuantity='quantity++'
+  //-   @decreaseQuantity='quantity--'
+  //- )
   Button(
     :disabled='isCheckoutUpdateInProgress'
     :isLoading='isCheckoutUpdateInProgress'

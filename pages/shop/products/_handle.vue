@@ -29,47 +29,47 @@ div(class='product')
     :descriptionHtml='product.descriptionHtml'
     class='product__sections'
   )
-  section(class='product__product-recommendations')
-    ContentHeader(
-      title='You Might Also Like'
-      class='product__product-recommendations-title'
-    )
-    Carousel
-      ProductTile(
-        v-for='(product, index) in productRecommendations'
-        :key='product + index'
-        :handle='product.handle'
-        :imageSrc='product.imageSrc'
-        :imageAltText='product.imageAltText'
-        :price='product.price'
-        :title='product.title'
-        :flagText='product.isOnSale ? "Sale" : ""'
-        class='product__product-tile'
-      )
+  //- section(class='product__product-recommendations')
+  //-   ContentHeader(
+  //-     title='You Might Also Like'
+  //-     class='product__product-recommendations-title'
+  //-   )
+  //-   Carousel
+  //-     ProductTile(
+  //-       v-for='(product, index) in productRecommendations'
+  //-       :key='product + index'
+  //-       :handle='product.handle'
+  //-       :imageSrc='product.imageSrc'
+  //-       :imageAltText='product.imageAltText'
+  //-       :price='product.price'
+  //-       :title='product.title'
+  //-       :flagText='product.isOnSale ? "Sale" : ""'
+  //-       class='product__product-tile'
+  //-     )
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import Carousel from '~/components/slots/Carousel.vue'
-import ContentHeader from '~/components/modules/ContentHeader.vue'
+// import Carousel from '~/components/slots/Carousel.vue'
+// import ContentHeader from '~/components/modules/ContentHeader.vue'
 import NotchBar from '~/components/elements/NotchBar.vue'
 import ProductBuyBox from '~/components/compositions/ProductBuyBox.vue'
 import ProductHeader from '~/components/modules/ProductHeader.vue'
 import ProductGalleryGrid from '~/components/modules/ProductGalleryGrid.vue'
 import ProductSections from '~/components/modules/ProductSections.vue'
-import ProductTile from '~/components/modules/ProductTile.vue'
+// import ProductTile from '~/components/modules/ProductTile.vue'
 
 export default {
   layout: 'custom',
   components: {
-    ContentHeader,
-    Carousel,
+    // ContentHeader,
+    // Carousel,
     NotchBar,
     ProductBuyBox,
     ProductHeader,
     ProductGalleryGrid,
-    ProductSections,
-    ProductTile
+    ProductSections
+    // ProductTile
   },
   async fetch({ store, params }) {
     const { handle } = params
@@ -133,6 +133,7 @@ export default {
   grid-auto-rows: min-content
   +mq-m
     grid-template-columns: 2fr 1fr
+    padding-bottom: $unit*5
 
   &__notch-bar
     border-radius: $unit*3

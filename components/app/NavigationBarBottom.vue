@@ -18,7 +18,10 @@ export default {
     return {
       links: [
         {
-          to: { name: 'shop' },
+          to: {
+            name: 'shop-products-handle',
+            params: { handle: 'bali-collection' }
+          },
           icon: 'storefront',
           text: 'Shop'
         },

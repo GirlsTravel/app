@@ -7,7 +7,7 @@ fragment ProductTileFragment on Product {
   handle
   id
   # Only need the product featured image.
-  images(first: 1) {
+  images(first: 2) {
     ...ImageConnectionFragment
   }
   priceRange {

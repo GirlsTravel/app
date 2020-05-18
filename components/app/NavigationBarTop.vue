@@ -73,7 +73,13 @@ export default {
   data() {
     return {
       links: [
-        { to: { name: 'shop' }, text: 'Shop' },
+        {
+          to: {
+            name: 'shop-products-handle',
+            params: { handle: 'bali-collection' }
+          },
+          text: 'Shop'
+        },
         { to: { name: 'articles' }, text: 'Articles' },
         { to: { name: 'questions' }, text: 'Questions' }
       ],

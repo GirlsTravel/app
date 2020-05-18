@@ -7,14 +7,10 @@ nuxt-link(
     class='product-tile__images'
   )
     ImageElement(
-      :src='imageSrc'
-      :alt='imageAltText'
-      :aspectRatio='5 / 4'
-      class='product-tile__image'
-    )
-    ImageElement(
-      :src='imageSrc'
-      :alt='imageAltText'
+      v-for='(image, index) in images'
+      :key='image + index'
+      :src='image.imageSrc'
+      :alt='image.imageAltText'
       :aspectRatio='5 / 4'
       class='product-tile__image'
     )
@@ -37,6 +33,10 @@ export default {
     handle: {
       type: String,
       required: true
+    },
+    images: {
+      type: Array,
+      default: () => []
     },
     imageSrc: {
       type: String,

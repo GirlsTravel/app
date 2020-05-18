@@ -1,5 +1,5 @@
 {
   "title": "Delivery & Returns",
-  "bodyHtml": "<div><h3>Are your downloads instant? How do I receive them?</h3><p>Yes, all of our downloads are instant. They are sent to you via email immediately after payment is completed.</p><h3>Do you accept returns?</h3><p>Since presets are digital goods and cannot be returned, we are unable to issue refunds. If you are unhappy with the results you are getting, shoot us an email.</p></div>",
+  "bodyHtml": "<div class='u-data__grid'><h3 class='u-data__subtitle'>Are your downloads instant? How do I receive them?</h3><p>Yes, all of our downloads are instant. They are sent to you via email immediately after payment is completed.</p><h3 class='u-data__subtitle'>Do you accept returns?</h3><p>Since presets are digital goods and cannot be returned, we are unable to issue refunds. If you are unhappy with the results you are getting, shoot us an email.</p></div>",
   "heroImageURL": ""
 }

@@ -5,7 +5,8 @@
     "backgroundImageURL": "https://images.unsplash.com/photo-1446160657592-4782fb76fb99?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1949&q=80",
     "primaryLinkLabel": "View presets",
     "primaryLink": {
-      "name": "shop"
+      "name": "shop-products-handle",
+      "params": { "handle": "bali-collection" }
     }
   },
   "feature": {

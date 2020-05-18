@@ -6,9 +6,7 @@ div(class='index')
     :text='tiles.hero.text'
     :backgroundImageURL='tiles.hero.backgroundImageURL'
     :primaryLinkLabel='tiles.hero.primaryLinkLabel'
-    :secondaryLinkLabel='tiles.hero.secondaryLinkLabel'
     :primaryLink='tiles.hero.primaryLink'
-    :secondaryLink='tiles.hero.secondaryLink'
     class='index__hero'
   )
 

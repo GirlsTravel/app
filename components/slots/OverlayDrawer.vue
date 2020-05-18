@@ -125,7 +125,7 @@ export default {
     grid-gap: $unit
     width: 100%
     padding: $unit
-    background: white
+    background: $white
 
   &__button
     @extend %flex--row-center
@@ -140,5 +140,5 @@ export default {
   &__content
     width: 100%
     overflow-y: auto
-    background: white
+    background: $white
 </style>

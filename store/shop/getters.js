@@ -15,6 +15,16 @@ const defaultProductData = {
  */
 const formatProductTileData = (product) => ({
   handle: product.handle,
+  images: [
+    {
+      imageSrc: product.images.edges[0].node.originalSrc || '',
+      imageAltText: product.images.edges[0].node.altText || ''
+    },
+    {
+      imageSrc: product.images.edges[1].node.originalSrc || '',
+      imageAltText: product.images.edges[1].node.altText || ''
+    }
+  ],
   imageSrc: product.images.edges[0].node.originalSrc || '',
   imageAltText: product.images.edges[0].node.altText || '',
   isOnSale: product.tags.includes(productTags.isOnSale),
