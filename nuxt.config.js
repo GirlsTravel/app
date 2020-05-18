@@ -41,7 +41,8 @@ export default {
     { src: '~/plugins/vee-validate', ssr: false },
     { src: '~/plugins/vue-lazyload', ssr: false },
     { src: '~/plugins/vue-scroll-lock', ssr: false },
-    { src: '~plugins/vue-quill-editor.js', ssr: false }
+    // { src: '~/plugins/vue-quill-editor.js', ssr: false },
+    { src: '~/plugins/hotjar.js', ssr: false }
   ],
   /*
    ** Nuxt.js dev-modules
