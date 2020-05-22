@@ -123,6 +123,8 @@ export default {
         exclude: /node_modules/,
         loader: 'graphql-tag/loader'
       })
+      /** Needed in order to compile on-the-fly Vue.js templates */
+      config.resolve.alias.vue = 'vue/dist/vue.common'
     }
   }
 }

@@ -5,15 +5,19 @@ div(class='page-content')
     class='page-content__hero-image'
   )
   h1(class='page-content__title') {{ title }}
-  div(
-    v-html='bodyHtml'
+  RichText(
+    :html='bodyHtml'
     class='page-content__body'
   )
 </template>
 
 <script>
+import RichText from '~/components/elements/RichText.vue'
+
 export default {
-  components: {},
+  components: {
+    RichText
+  },
   props: {
     title: {
       type: String,
@@ -57,8 +61,6 @@ export default {
     font-size: $fs2
     font-weight: $fw-bold
     text-align: center
-    +mq-s
-      font-size: $fs3
 
   &__body
     grid-column: 2 / 3

@@ -19,7 +19,8 @@
       "name": "auth-signup"
     },
     "secondaryLink": {
-      "name": "pages-about-us"
+      "name": "pages-handle",
+      "params": { "handle": "about-us" }
     }
   },
   "contentCreator": {

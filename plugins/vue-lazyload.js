@@ -13,6 +13,13 @@ const config = {
     threshold: 0.1
   },
   filter: {
+    contentful(listener) {
+      const isContentfulCDN = /images.ctfassets.net/
+      if (!isContentfulCDN.test(listener.src)) return
+      listener.src = `${listener.src}?w=${Math.round(
+        listener.el.clientWidth * window.devicePixelRatio * 1.25
+      )}`
+    },
     shopify(listener) {
       const isShopifyCDN = /cdn.shopify.com/
       if (!isShopifyCDN.test(listener.src)) return

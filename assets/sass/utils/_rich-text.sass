@@ -1,0 +1,37 @@
+.rich-text
+  display: grid
+  grid-gap: $unit*2
+  white-space: pre-line
+
+  /** Contentful rich text marks */
+  &__bold
+    font-weight: $fw-bold
+
+  &__italic
+    font-style: italic
+
+  &__underline
+    text-decoration: underline
+
+  &__code
+    background: $pri-cl
+
+  /** Contentful rich text blocks */
+  &__heading-1
+    font-size: $fs2
+    font-weight: $fw-bold
+
+  &__heading-2
+    font-size: $fs1
+    font-weight: $fw-bold
+
+  &__heading-3
+    font-size: $fs
+    font-weight: $fw-bold
+
+  &__ol-list
+    list-style: decimal
+    margin-left: $unit*3
+
+  &__image
+    margin: $unit*5 auto

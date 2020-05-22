@@ -1,19 +1,26 @@
 <template lang="pug">
 div(
-  :style='aspectRatioStyle'
+  :style='maxHeightStyle'
   class='image-container'
 )
-  img(
-    v-if='!isBackgroundImage'
-    v-lazy='src'
-    :alt='alt'
-    class='image-container__image'
-  )
   div(
-    v-else
-    v-lazy:background-image='src'
-    class='image-container__background-image'
+    :style='aspectRatioStyle'
+    :class='{ isLoaded }'
+    class='image-container__inner-wrapper'
   )
+    img(
+      v-if='!isBackgroundImage'
+      v-lazy='src'
+      @load='onLoad'
+      :alt='alt'
+      class='image-container__image'
+    )
+    div(
+      v-else
+      v-lazy:background-image='src'
+      @load='onLoad'
+      class='image-container__background-image'
+    )
 </template>
 
 <script>
@@ -32,6 +39,10 @@ export default {
       type: Boolean,
       default: false
     },
+    maxHeight: {
+      type: Number,
+      default: 0
+    },
     src: {
       type: String,
       default: ''
@@ -41,21 +52,36 @@ export default {
     return {
       aspectRatioStyle: {
         paddingTop: `calc(${this.aspectRatio} * 100%)`
-      }
+      },
+      isLoaded: false,
+      maxHeightStyle: this.maxHeight
+        ? {
+            maxWidth: `calc(${this.maxHeight}px / ${this.aspectRatio})`
+          }
+        : {}
     }
   },
   computed: {},
-  methods: {}
+  methods: {
+    onLoad() {
+      this.isLoaded = true
+    }
+  }
 }
 </script>
 
 <style lang="sass" scoped>
 .image-container
-  position: relative
-  z-index: 1
   width: 100%
-  height: 0
-  background: #fafafa
+
+  &__inner-wrapper
+    position: relative
+    z-index: 1
+    width: 100%
+    height: 0
+
+    &:not(.isLoaded)
+      background: #fafafa
 
   &__image,
   &__background-image
